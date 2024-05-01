@@ -14,10 +14,10 @@ const routes: Routes = [
     children: [
       {path: 'clients-list', component: ClientsListComponent},
       {path: 'clients-list/:id', component: ClientsComponent},
-      // {path: '', redirectTo: 'clients-list', pathMatch: 'full'} // Default to clients
+      {path: '', redirectTo: 'clients-list', pathMatch: 'full'} // Default to clients
     ]
   },
-  // {path: '', redirectTo: '/clients-list', pathMatch: 'full'} // Redirect to login by default
+  {path: '', redirectTo: '/login', pathMatch: 'full'} // Redirect to login by default
 ];
 
 @NgModule({
