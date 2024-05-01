@@ -1,0 +1,53 @@
+<div class="clients-container">
+  <div style="display: flex;justify-content: space-between;align-items: center">
+  <h2>Klientet</h2>
+    <h2 (click)="addClient()">
+      Regjistro Klient
+    </h2>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
+  </div>
+  <ul class="client-list">
+    <li *ngFor="let client of filteredClients">
+
+      <div [routerLink]="client.id" class="client-details">
+        <div class="client-info">
+          <span class="client-label">Name:</span>
+          <span class="client-name">{{ client.name }}</span>
+        </div>
+        <div class="client-info">
+          <span class="client-label">Email:</span>
+          <span class="client-email">{{ client.email }}</span>
+        </div>
+        <!-- Add more client fields as needed -->
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="modal" [class.show-modal]="showModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Shto Klient</h2>
+    <form (submit)="addClient()">
+      <div class="form-group">
+        <label for="name">Emri dhe Mbiemri:</label>
+        <input type="text" id="name" name="name" [(ngModel)]="newClient.name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="newClient.email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Telefoni:</label>
+        <input type="tel" id="phone" name="phone" [(ngModel)]="newClient.phone">
+      </div>
+      <div class="form-group">
+        <label for="address">Adresa:</label>
+        <input type="text" id="address" name="address" [(ngModel)]="newClient.address">
+      </div>
+      <button class="buttoni" type="submit">Add</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<!-- Client's History Block -->
+<div class="history-block">
+  <h2>Historia</h2>
+  <ul class="history-list">
+    <li (click)="openModal()">
+      <div class="history-item" style="cursor: pointer" data-date="2024-04-25" data-price="$500">April 25, 2024 - $500
+      </div>
+    </li>
+    <li>
+      <div class="history-item" style="cursor: pointer" data-date="2024-04-18" data-price="$700">April 18, 2024 - $700
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="modal" [class.show-modal]="showModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+    <h2>Informacionet e fundit</h2>
+    <div class="info-container">
+      <div class="info-section">
+        <h3>Kilometrat</h3>
+        <div> {{info.aftertKm}}</div>
+      </div>
+      <div class="info-section">
+        <h3>Filteri Ajrit</h3>
+        <span class="material-symbols-outlined">{{info.airFilter ? 'close' : 'done'}}</span>
+      </div>
+      <div class="info-section">
+        <h3>Filteri Uljes</h3>
+        <span class="material-symbols-outlined">{{info.oilFilter ? 'close' : 'done'}}</span>
+      </div>
+      <div class="info-section">
+        <h3>Vaji i motorit</h3>
+        <span class="material-symbols-outlined">{{info.engineOil ? 'close' : 'done'}}</span>
+      </div>
+      <div class="info-section">
+        <h3>Filteri pompes</h3>
+        <span class="material-symbols-outlined">{{info.pumpFilter ? 'close' : 'done'}}</span>
+      </div>
+    </div>
+    <div class="description">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt ligula nec libero semper egestas.
+      Quisque rutrum risus a interdum scelerisque. Nunc quis molestie dui. Integer non magna eros. Maecenas eget ornare
+      diam. Aliquam eget libero nec arcu faucibus mollis. Fusce scelerisque felis vitae tincidunt mollis. Aliquam
+      vehicula justo vitae nisi pellentesque imperdiet. Vivamus quis arcu sed elit feugiat commodo ultrices a nunc.
+      Suspendisse quis dignissim elit.
+    </div>
+  </div>
+</div>
+

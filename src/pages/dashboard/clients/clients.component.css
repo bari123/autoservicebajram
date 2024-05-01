@@ -1,0 +1,25 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.info-block, .cars-block, .history-block {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-block h2, .cars-block h2, .history-block h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.info-block, .history-block {
+  grid-column: span 2;
+}
+
+.cars-block  {
+  grid-column: span 6;
+}

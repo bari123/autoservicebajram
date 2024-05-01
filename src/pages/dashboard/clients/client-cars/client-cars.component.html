@@ -1,0 +1,90 @@
+<div class="history-block">
+  <h2>Makinat e Klientit</h2>
+  <div style="display: flex;justify-content: center;align-items: center;cursor: pointer" (click)="openModal('edit')">
+    Shto Makina
+    <span class="material-symbols-outlined">add</span>
+  </div>
+  <ul class="client-list">
+    <li *ngFor="let car of filteredClients">
+
+      <div [routerLink]="car.id" class="client-details">
+        <div class="client-info">
+          <span class="client-label">Brendi:</span>
+          <span class="client-name">{{ car.brand }}</span>
+        </div>
+        <div class="client-info">
+          <span class="client-label">Motori:</span>
+          <span class="client-email">{{ car.engine }}</span>
+        </div>
+        <div class="client-info">
+          <span class="client-label">Viti:</span>
+          <span class="client-email">{{ car.year }}</span>
+        </div>
+
+
+        <span class="material-symbols-outlined">close</span>
+        <span class="material-symbols-outlined" (click)="openModal('edit')">edit</span>
+        <span class="material-symbols-outlined" (click)="openModal('service')">add</span>
+
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="modal" [class.show-modal]="serviceModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+    <h2>Servis</h2>
+    <div class="info-container">
+      <div class="info-section">
+        <h3>Kilometrat</h3>
+        <input type="checkbox">
+      </div>
+      <div class="info-section">
+        <h3>Filteri Ajrit</h3>
+        <input type="checkbox">
+      </div>
+      <div class="info-section">
+        <h3>Filteri Uljes</h3>
+        <input type="checkbox">
+
+      </div>
+      <div class="info-section">
+        <h3>Vaji i motorit</h3>
+        <input type="checkbox">
+      </div>
+      <div class="info-section">
+        <h3>Filteri pompes</h3>
+        <input type="checkbox">
+      </div>
+    </div>
+    <div class="description">
+      <textarea style="width: 100%;height: 100%"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show-modal]="showModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+    <h2>Informacionet e makines</h2>
+    <div class="info-container">
+      <div class="info-section">
+        <h3>Brendi</h3>
+        <input type="text">
+      </div>
+      <div class="info-section">
+        <h3>Viti</h3>
+        <input type="date">
+      </div>
+      <div class="info-section">
+        <h3>Motori</h3>
+        <input type="text">
+      </div>
+    </div>
+
+    <button style="margin-top: 20px" class="buttoni" type="submit">Ndrysho</button>
+  </div>
+</div>
+
+
