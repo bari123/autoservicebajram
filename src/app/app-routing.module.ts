@@ -5,6 +5,7 @@ import {DashboardComponent} from "../pages/dashboard/dashboard/dashboard.compone
 import {ClientsComponent} from "../pages/dashboard/clients/clients.component";
 import {ClientsListComponent} from "../pages/dashboard/clients-list/clients-list.component";
 import {CalendarComponent} from "../pages/dashboard/dashboard/calendar/calendar.component";
+import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.component";
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path: 'clients-list', component: ClientsListComponent},
       {path: 'clients-list/:id', component: ClientsComponent},
       {path:'calendar',component:CalendarComponent},
+      {path:'storage',component:StorageComponent},
       {path: '', redirectTo: 'clients-list', pathMatch: 'full'},
     ]
   },
