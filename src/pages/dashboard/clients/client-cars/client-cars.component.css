@@ -114,3 +114,18 @@
   height: 28px;
   width: 28px;
 }
+
+.delete-button:hover{
+  color: red;
+  font-size: 30px;
+}
+
+.edit-button:hover{
+  color: blue;
+  font-size: 30px;
+}
+
+.add-button:hover{
+  color: green;
+  font-size: 30px;
+}

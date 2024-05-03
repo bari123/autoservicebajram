@@ -9,18 +9,19 @@ export class ClientCarsComponent implements OnInit {
 
   showModal = false;
   serviceModal = false;
-  cars:any
+  deleteModal = false;
+  cars: any
 
   filteredClients: any[] = [
     {
       brand: 'Benz',
       engine: 2.2,
-      model:'C-klasse',
+      model: 'C-klasse',
       year: 2020
     },
     {
       brand: 'BMW',
-      model:'320i',
+      model: '320i',
       engine: 3.1,
       year: 2023
     }]
@@ -28,20 +29,24 @@ export class ClientCarsComponent implements OnInit {
   openModal(modal: string) {
     if (modal === 'edit') {
       this.showModal = true
+    } else if (modal === 'delete') {
+      this.deleteModal = true
     } else {
       this.serviceModal = true
     }
   }
 
+
   closeModal() {
-    this.serviceModal=false
+    this.serviceModal = false
     this.showModal = false
+    this.deleteModal = false
   }
 
   constructor() {
   }
 
-  async getCars(){
+  async getCars() {
     const requestOptions = {
       method: "GET",
       redirect: "follow"
@@ -57,7 +62,7 @@ export class ClientCarsComponent implements OnInit {
   }
 
 
-  async ngOnInit() {
+  async  ngOnInit() {
     await this.getCars()
   }
 

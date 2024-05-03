@@ -26,9 +26,9 @@
         </div>
 
 
-        <span class="material-symbols-outlined">close</span>
-        <span class="material-symbols-outlined" (click)="openModal('edit')">edit</span>
-        <span class="material-symbols-outlined" (click)="openModal('service')">add</span>
+        <span class="material-symbols-outlined delete-button" (click)="openModal('delete')">close</span>
+        <span class="material-symbols-outlined edit-button" (click)="openModal('edit')">edit</span>
+        <span class="material-symbols-outlined add-button" (click)="openModal('service')">add</span>
 
       </div>
     </li>
@@ -101,5 +101,41 @@
     <button style="margin-top: 20px" class="buttoni" type="submit">Ndrysho</button>
   </div>
 </div>
+
+<div class="modal" [class.show-modal]="deleteModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+    <div>
+      &nbsp;
+    </div> <div>
+    &nbsp;
+  </div> <div>
+    &nbsp;
+  </div> <div>
+    &nbsp;
+  </div> <div>
+    &nbsp;
+  </div>
+    <h2>
+      A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
+    </h2>
+    <div>
+      &nbsp;
+    </div> <div>
+      &nbsp;
+    </div> <div>
+      &nbsp;
+    </div> <div>
+      &nbsp;
+    </div> <div>
+      &nbsp;
+    </div>
+    <h3>
+      Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do vazhdoni ti keni ne arhive
+    </h3>
+    <button style="margin-top: 20px" class="buttoni" type="submit">FSHI</button>
+  </div>
+</div>
+
 
 
