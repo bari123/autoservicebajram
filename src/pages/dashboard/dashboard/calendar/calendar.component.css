@@ -1,0 +1,87 @@
+.agenda-slot {
+  width: 300px;
+  height: 60px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.agenda-slot:hover {
+  background-color: #ccc;
+}
+
+.time {
+  font-size: 30px;
+}
+
+.reserved {
+  background-color: #ffcccc;
+  color: #ff0000;
+}
+
+.available {
+  background-color: #ccffcc;
+  color: #008000;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: -120px;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 50px;
+  border: 1px solid #888;
+  border-radius: 20px;
+  width: 50%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.show-modal {
+  display: block;
+}
+
+.buttoni {
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttoni:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.buttoni:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}

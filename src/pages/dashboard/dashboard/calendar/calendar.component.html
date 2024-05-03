@@ -1,0 +1,64 @@
+<div style="display: flex;justify-content: space-evenly">
+  <div class="time" style="display: flex;justify-content: inherit;flex-direction: column">
+    <!-- Print the times here -->
+    <div *ngFor="let slot of lifts[0].timeslots">
+
+      {{ slot.time }}
+    </div>
+  </div>
+  <div *ngFor="let item of lifts">
+    <h3>Lifti {{item.lift}}</h3>
+    <div>
+      <div *ngFor="let slot of item.timeslots;index as i">
+        <div class="agenda-slot">
+          <div [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
+               style="width: 300px; height: 50px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; transition: background-color 0.3s ease;"
+               (click)="reserveSlot(item.lift - 1, i);openModal()">
+            {{ slot.reserved ? 'I Rezervuar' : 'I Lir' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show-modal]="showModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+    <div style="display: flex;justify-content: space-evenly;margin: auto">
+      <div style="width: 50%">
+        <div class="info-section">
+          <h3>KLIENTI</h3>
+          <input placeholder="Emri dhe Mbiemri" type="text">
+        </div>
+        <div class="info-section">
+          <h3>Brendi Makines</h3>
+          <input placeholder="p.sh Mercedes/BMW" type="text">
+        </div>
+        <div class="info-section">
+          <h3>Modeli Makines</h3>
+          <input placeholder="p.sh C-Class/E-Class" type="text">
+        </div>
+        <div class="info-section">
+          <h3>Numri Telefonit</h3>
+          <input placeholder="0701234567" type="text">
+        </div>
+        <div class="info-section">
+          <h3>Numri Oreve te punes te nevojshme</h3>
+          <input value="1" type="number">
+        </div>
+      </div>
+      <div style="width: 50%;">
+        <div class="info-section" style="height: 80%">
+          <h3>Cka duhet te punohet</h3>
+          <textarea placeholder="Cka duhet bere" style="height: 100%;width: 90%;font-size: 20px"></textarea>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button style="margin-top: 20px" class="buttoni" type="submit">Rezervo</button>
+    </div>
+  </div>
+</div>
+
+
