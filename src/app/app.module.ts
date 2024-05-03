@@ -11,6 +11,7 @@ import {FormsModule} from "@angular/forms";
 import {ClientInfoComponent} from "../pages/dashboard/clients/client-info/client-info.component";
 import {ClientsHistoryComponent} from "../pages/dashboard/clients/clients-history/clients-history.component";
 import {ClientCarsComponent} from "../pages/dashboard/clients/client-cars/client-cars.component";
+import {CalendarComponent} from "../pages/dashboard/dashboard/calendar/calendar.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ClientCarsComponent} from "../pages/dashboard/clients/client-cars/client
     ClientsComponent,
     ClientInfoComponent,
     ClientsHistoryComponent,
-    ClientCarsComponent
+    ClientCarsComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,

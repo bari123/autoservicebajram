@@ -14,15 +14,12 @@ export class ClientsListComponent implements OnInit {
   newClient:any={}
 
   get filteredClients() {
-    // Filter clients based on search term
     return this.clients.filter(client =>
         client.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         client.email.toLowerCase().includes(this.searchTerm.toLowerCase())
-      // Add more fields to search as needed
     );
   }
 
-  // clients=[{name:'test',email:'test12'},{name:'test',email:'test12'}]
   constructor() { }
 
   ngOnInit(): void {

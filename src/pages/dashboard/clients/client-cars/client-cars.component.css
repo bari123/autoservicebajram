@@ -44,6 +44,12 @@
   color: #666; /* Color for email */
 }
 
+.info-container-service {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 
 .modal {
   display: none;
@@ -102,4 +108,9 @@
 .buttoni:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.checkbox{
+  height: 28px;
+  width: 28px;
 }

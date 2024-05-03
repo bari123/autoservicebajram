@@ -24,19 +24,23 @@
       </div>
       <div class="info-section">
         <h3>Filteri Ajrit</h3>
-        <span class="material-symbols-outlined">{{info.airFilter ? 'close' : 'done'}}</span>
+        <span class="material-symbols-outlined" [style.color]="info.airFilter?'green':'red'">{{info.airFilter ? 'done' : 'close'}}</span>
       </div>
       <div class="info-section">
         <h3>Filteri Uljes</h3>
-        <span class="material-symbols-outlined">{{info.oilFilter ? 'close' : 'done'}}</span>
+        <span class="material-symbols-outlined" [style.color]="info.oilFilter?'green':'red'">{{info.oilFilter ? 'done' : 'close'}}</span>
       </div>
       <div class="info-section">
-        <h3>Vaji i motorit</h3>
-        <span class="material-symbols-outlined">{{info.engineOil ? 'close' : 'done'}}</span>
+        <h3>Filteri Klimes</h3>
+        <span class="material-symbols-outlined" [style.color]="info.airConFilter?'green':'red'">{{info.airConFilter ? 'done' : 'close'}}</span>
       </div>
       <div class="info-section">
         <h3>Filteri pompes</h3>
-        <span class="material-symbols-outlined">{{info.pumpFilter ? 'close' : 'done'}}</span>
+        <span class="material-symbols-outlined" [style.color]="info.pumpFilter?'green':'red'">{{info.pumpFilter ? 'done' : 'close'}}</span>
+      </div>
+      <div class="info-section">
+        <h3>Vaji i motorit</h3>
+        <span class="material-symbols-outlined" [style.color]="info.engineOil?'green':'red'">{{info.engineOil ? 'done' : 'close'}}</span>
       </div>
     </div>
     <div class="description">

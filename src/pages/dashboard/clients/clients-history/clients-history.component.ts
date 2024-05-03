@@ -16,6 +16,7 @@ export class ClientsHistoryComponent implements OnInit {
     oilFilter:false,
     engineOil:true,
     pumpFilter:false,
+    airConFilter:true
   }
 
   closeModal(){
