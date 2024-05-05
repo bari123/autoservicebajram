@@ -14,6 +14,8 @@ import {ClientCarsComponent} from "../pages/dashboard/clients/client-cars/client
 import {CalendarComponent} from "../pages/dashboard/dashboard/calendar/calendar.component";
 import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.component";
 import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info/client-car-info.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {CookieInterceptor} from "../interceptor";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,11 @@ import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info
     AppRoutingModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [{
+    provide:HTTP_INTERCEPTORS,
+    useClass:CookieInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

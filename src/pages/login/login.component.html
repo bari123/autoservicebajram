@@ -1,21 +1,21 @@
 <div class="container">
   <div class="left-side">
     <!-- Your company logo/branding -->
-    <img src="path/to/logo.png" alt="Company Logo">
+    <img src="/assets/AA.png" alt="Company Logo">
   </div>
   <div class="right-side">
-    <!-- Your login form -->
     <form>
+
       <h2>Login</h2>
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" class="form-control" required>
+        <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.username" required>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" required>
+        <input type="password" id="password" name="password" [(ngModel)]="user.password" class="form-control" required>
       </div>
-      <button [routerLink]="'/dashboard'" type="submit" class="btn btn-primary">Login</button>
+      <button (click)="login()" class="btn btn-primary">Login</button>
     </form>
   </div>
 </div>
