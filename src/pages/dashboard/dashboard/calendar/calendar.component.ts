@@ -79,9 +79,10 @@ export class CalendarComponent implements OnInit {
   }
 
   async saveAgenda(): Promise<void> {
-    if (this.selectedSlot && this.selectedLift && this.selectedClient && this.description) {
+    if (this.selectedSlot && this.selectedLift  && this.description) {
       await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient);
     }
+    this.closeModal()
   }
 
   async loadAgenda() {
