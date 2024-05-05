@@ -9,7 +9,6 @@ import {retry} from "rxjs";
 export class GlobalService {
   env = environment
   axiosInstance = axios.create({
-    withCredentials:true,
     baseURL: environment.BASE_URL,
   });
 
