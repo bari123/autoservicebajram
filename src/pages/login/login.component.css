@@ -1,8 +1,11 @@
-.container {
+/* Custom styles for the form */
+
+.container{
   display: flex;
+  flex-direction: row;
+  width: 100%;
   height: 97vh;
 }
-
 
 .left-side {
   flex: 1;
@@ -22,31 +25,53 @@
   color: black; /* Text color on the right side */
 }
 
+.form-wrapper {
+  max-width: 400px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333; /* Darker text color */
+}
+
 .form-group {
   margin-bottom: 1.5rem;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #f8f9fa; /* Light gray background */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: black; /* Lighter text color */
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
+.form-control {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
   outline: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-color: #dc3545;
 }
 
 .btn-primary {
-  background-color: #dc3545; /* Red color */
-  border: 1px solid black;
+  width: 100%;
+  margin-top: 1rem;
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
   border-radius: 5px;
-  padding: 1rem 2rem;
+  padding: 1rem;
   font-size: 1rem;
   color: white;
   cursor: pointer;
@@ -54,28 +79,21 @@ input[type="password"]:focus {
 }
 
 .btn-primary:hover {
-  background-color: #c82333; /* Darker red color on hover */
+  background-color: #c82333;
+  border-color: #c82333;
 }
 
-/* Responsive Styles */
+/* Responsive styles */
 @media screen and (max-width: 768px) {
-  .container {
+  .container{
+    overflow: hidden;
     flex-direction: column;
   }
-
-  .left-side,
-  .right-side {
-    flex: none;
-    width: 100%;
+  .form-wrapper {
+    padding: 1rem; /* Reduce padding for smaller screens */
   }
 
-  .right-side {
-    padding: 2rem;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .btn-primary {
-    width: 100%;
+  .form-group {
+    margin-bottom: 1rem; /* Reduce margin for smaller screens */
   }
 }

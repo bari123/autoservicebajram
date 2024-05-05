@@ -1,5 +1,33 @@
 /* General Styles */
 
+.slot {
+  width: 300px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+
+.slot-time{
+  display: none;
+}
+
+
+.is-new-client-button {
+  margin-bottom: 5px;
+  margin-right: 50px
+}
+
+.is-new-client-content {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto
+}
+
 .container {
   width: 100%;
   max-width: 600px;
@@ -77,6 +105,9 @@
 
 .time {
   font-size: 30px;
+  display: flex;
+  justify-content: inherit;
+  flex-direction: column
 }
 
 .reserved {
@@ -166,4 +197,39 @@ input {
 
 .select-car[disabled] {
   opacity: 0.7;
+}
+
+.agneda-container {
+  display: flex;
+  justify-content: space-evenly
+}
+
+@media only screen and (max-width: 600px) {
+
+  .slot-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .agneda-container {
+    flex-direction: column;
+  }
+
+  .time {
+    display: none;
+  }
+
+  .slot {
+    width: 100%;
+  }
+
+  .slot-time{
+    display: block;
+  }
+
+  .agenda-slot {
+    width: 100%;
+    margin: 5px 0; /* Adjust margin for slots */
+  }
 }

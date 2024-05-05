@@ -1,16 +1,16 @@
-<div style="display: flex; justify-content: space-evenly">
-  <div class="time" style="display: flex; justify-content: inherit; flex-direction: column">
-    <div *ngFor="let slot of lifts[0].timeslots">
+<div class="agneda-container" >
+  <div class="time" >
+    <div  *ngFor="let slot of lifts[0].timeslots">
       {{ slot.time }}
     </div>
   </div>
   <div *ngFor="let item of lifts">
     <h3>Lifti {{item.lift}}</h3>
     <div>
-      <div *ngFor="let slot of item.timeslots;index as i">
+      <div class="slot-container"  *ngFor="let slot of item.timeslots;index as i">
+       <div class="slot-time"> {{slot.time}}</div>
         <div class="agenda-slot">
-          <div [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
-               style="width: 300px; height: 50px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; transition: background-color 0.3s ease;"
+          <div class="slot" [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
                (click)="reserveSlot(item.lift - 1, i,slot);openModal(slot.reserved,item.lift,slot.time)">
             {{ slot.reserved ? 'I Rezervuar' : 'I Lir' }}
           </div>
@@ -23,9 +23,8 @@
 <div class="modal" [class.show-modal]="showModal">
   <div class="modal-content">
     <span class="close material-symbols-outlined"  (click)="closeModal()">close</span>
-    <div class="buttoni" (click)="toggleClientSelection()"
-         style="margin-bottom: 5px;margin-right: 50px">{{ isNewClient ? 'Zgjidh Klientin Ekzistues' : 'Shto Klient te Ri' }}</div>
-    <div style="display: flex; justify-content: space-evenly; margin: auto">
+    <div class="buttoni is-new-client-button" (click)="toggleClientSelection()">{{ isNewClient ? 'Zgjidh Klientin Ekzistues' : 'Shto Klient te Ri' }}</div>
+    <div class="is-new-client-content">
       <div *ngIf="isNewClient; else existingClientForm" class="container">
         <div class="info-section">
           <h3>Emri dhe Mbiemri</h3>

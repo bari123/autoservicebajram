@@ -33,37 +33,42 @@
     <div class="service-info">
       <h1>Informacionet e Servisit</h1>
 
-        <div class="info-container-service">
-          <div class="info-section">
-            <h3>Kilometrat</h3>
-            <h2 > {{newService.km}}km</h2>
-          </div>
-          <div class="info-section">
-            <h3>Filteri Ajrit</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="newService.airFilter?'green':'red'">{{newService.airFilter ? 'done' : 'close'}}</span>
-          </div>
-          <div class="info-section">
-            <h3>Filteri Uljes</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="newService.oilFilter?'green':'red'">{{newService.oilFilter ? 'done' : 'close'}}</span>
-          </div>
-          <div class="info-section">
-            <h3>Filteri Klimes</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="newService.airConFilter?'green':'red'">{{newService.airConFilter ? 'done' : 'close'}}</span>
-          </div>
-          <div class="info-section">
-            <h3>Filteri pompes</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="newService.pumpFilter?'green':'red'">{{newService.pumpFilter ? 'done' : 'close'}}</span>
-          </div>
-          <div class="info-section">
-            <h3>Vaji i motorit</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="newService.engineOil?'green':'red'">{{newService.engineOil ? 'done' : 'close'}}</span>
-          </div>
+      <div class="info-container-service">
+        <div class="info-section">
+          <h3>Kilometrat</h3>
+          <h2>{{ newService.km }}km</h2>
         </div>
+        <div class="info-section">
+          <h3>Filteri Ajrit</h3>
+          <span class="material-symbols-outlined" [style.color]="newService.airFilter ? 'green' : 'red'">{{
+            newService.airFilter ? 'done' : 'close'
+            }}</span>
+        </div>
+        <div class="info-section">
+          <h3>Filteri Uljes</h3>
+          <span class="material-symbols-outlined" [style.color]="newService.oilFilter ? 'green' : 'red'">{{
+            newService.oilFilter ? 'done' : 'close'
+            }}</span>
+        </div>
+        <div class="info-section">
+          <h3>Filteri Klimes</h3>
+          <span class="material-symbols-outlined" [style.color]="newService.airConFilter ? 'green' : 'red'">{{
+            newService.airConFilter ? 'done' : 'close'
+            }}</span>
+        </div>
+        <div class="info-section">
+          <h3>Filteri pompes</h3>
+          <span class="material-symbols-outlined" [style.color]="newService.pumpFilter ? 'green' : 'red'">{{
+            newService.pumpFilter ? 'done' : 'close'
+            }}</span>
+        </div>
+        <div class="info-section">
+          <h3>Vaji i motorit</h3>
+          <span class="material-symbols-outlined" [style.color]="newService.engineOil ? 'green' : 'red'">{{
+            newService.engineOil ? 'done' : 'close'
+            }}</span>
+        </div>
+      </div>
       <div>
         <h3>Description</h3>
         <textarea class="textarea" [(ngModel)]="newService.description"></textarea>
