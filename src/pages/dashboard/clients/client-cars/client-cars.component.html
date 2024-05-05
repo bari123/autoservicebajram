@@ -1,16 +1,17 @@
 <div class="history-block">
   <h2>Makinat e Klientit</h2>
-  <div style="display: flex;justify-content: center;align-items: center;cursor: pointer" (click)="openModal('edit')">
+  <div style="display: flex;justify-content: center;align-items: center;cursor: pointer" (click)="openModal('edit','')">
     Shto Makina
     <span class="material-symbols-outlined">add</span>
   </div>
   <ul class="client-list">
+
     <li *ngFor="let car of filteredClients">
 
-      <div [routerLink]="car.id" class="client-details">
+      <div (click)="openCarInfo()" [routerLink]="['car/'+car._id]" class="client-details">
         <div class="client-info">
           <span class="client-label">Brendi:</span>
-          <span class="client-name">{{ car.brand }}</span>
+          <span class="client-name">{{ car.make }}</span>
         </div>
         <div class="client-info">
           <span class="client-label">Modeli:</span>
@@ -26,9 +27,9 @@
         </div>
 
 
-        <span class="material-symbols-outlined delete-button" (click)="openModal('delete')">close</span>
-        <span class="material-symbols-outlined edit-button" (click)="openModal('edit')">edit</span>
-        <span class="material-symbols-outlined add-button" (click)="openModal('service')">add</span>
+        <span class="material-symbols-outlined delete-button" (click)="openModal('delete',car)">close</span>
+        <span class="material-symbols-outlined edit-button" (click)="openModal('edit',car)">edit</span>
+        <span class="material-symbols-outlined add-button" (click)="openModal('service',car)">add</span>
 
       </div>
     </li>
@@ -42,36 +43,36 @@
     <div class="info-container-service">
       <div class="info-section">
         <h3>Kilometrat</h3>
-        <input type="text" placeholder="km" style="height: 34px;font-size: 20px" maxlength="6">
+        <input type="text" placeholder="km" [(ngModel)]="newService.km" style="height: 34px;font-size: 20px" maxlength="6">
       </div>
       <div class="info-section">
         <h3>Filteri Ajrit</h3>
-        <input class="checkbox" type="checkbox">
+        <input class="checkbox" [(ngModel)]="newService.airFilter" type="checkbox">
       </div>
       <div class="info-section">
         <h3>Filteri Uljes</h3>
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="newService.oilFilter">
 
       </div>
       <div class="info-section">
         <h3>Filteri Klimes</h3>
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="newService.airConFilter">
       </div>
       <div class="info-section">
         <h3>Filteri pompes</h3>
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="newService.pumpFilter">
       </div>
       <div class="info-section">
         <h3>Vaji i motorit</h3>
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" class="checkbox" [(ngModel)]="newService.engineOil">
       </div>
 
     </div>
     <div class="description">
       <h2>Pershkruaj punen</h2>
-      <textarea style="width: 100%;height: 200px;font-size: 30px"></textarea>
+      <textarea style="width: 100%;height: 200px;font-size: 30px" [(ngModel)]="newService.description"></textarea>
     </div>
-    <button style="margin-top: 20px" class="buttoni" type="submit">Shto Servis</button>
+    <div (click)="addService()" style="margin-top: 20px" class="buttoni" >Shto Servis</div>
 
   </div>
 </div>
@@ -83,22 +84,22 @@
     <div class="info-container">
       <div class="info-section">
         <h3>Brendi</h3>
-        <input type="text">
+        <input [(ngModel)]="newCar.model" type="text">
       </div>
       <div class="info-section">
         <h3>Modeli</h3>
-        <input type="text">
+        <input [(ngModel)]="newCar.make" type="text">
       </div>
       <div class="info-section">
         <h3>Motori</h3>
-        <input type="text">
+        <input [(ngModel)]="newCar.engine" type="text">
       </div>
       <div class="info-section">
         <h3>Viti</h3>
-        <input type="date">
+        <input [(ngModel)]="newCar.year" type="text">
       </div>
     </div>
-    <button style="margin-top: 20px" class="buttoni" type="submit">Ndrysho</button>
+    <button (click)="addCar()" style="margin-top: 20px" class="buttoni" type="submit">Ruaj</button>
   </div>
 </div>
 
@@ -107,33 +108,42 @@
     <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
     <div>
       &nbsp;
-    </div> <div>
-    &nbsp;
-  </div> <div>
-    &nbsp;
-  </div> <div>
-    &nbsp;
-  </div> <div>
-    &nbsp;
-  </div>
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <div>
+      &nbsp;
+    </div>
     <h2>
       A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
     </h2>
     <div>
       &nbsp;
-    </div> <div>
+    </div>
+    <div>
       &nbsp;
-    </div> <div>
+    </div>
+    <div>
       &nbsp;
-    </div> <div>
+    </div>
+    <div>
       &nbsp;
-    </div> <div>
+    </div>
+    <div>
       &nbsp;
     </div>
     <h3>
-      Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do vazhdoni ti keni ne arhive
+      Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
+      vazhdoni ti keni ne arhive
     </h3>
-    <button style="margin-top: 20px" class="buttoni" type="submit">FSHI</button>
+    <div (click)="deleteCar()" style="margin-top: 20px" class="buttoni" >FSHI</div>
   </div>
 </div>
 

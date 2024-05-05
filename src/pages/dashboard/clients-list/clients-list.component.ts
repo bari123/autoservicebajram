@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GlobalService} from "../../../app/global.service";
 
 @Component({
   selector: 'app-clients-list',
@@ -6,31 +7,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./clients-list.component.css']
 })
 export class ClientsListComponent implements OnInit {
-  clients: any[] = [{name:'Client 1',email:'email@test.com',id:2},
-    {name:'Client 1',email:'email@test.com',id:1}]; // Array of clients
-  searchTerm: string = ''; // Search term entered by the user
+  clients: any[] = [];
+  searchTerm: string = '';
+  newClient = {
+    fullname: '',
+    address: '',
+    phone: '',
+    email: ''
+  }
 
-  showModal=false
-  newClient:any={}
+  showModal = false
 
   get filteredClients() {
     return this.clients.filter(client =>
-        client.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        client.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+      client.fullname?.toLowerCase().includes(this.searchTerm?.toLowerCase()) ||
+      client.email?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private service: GlobalService) {
   }
 
-  addClient(){
-    this.showModal=true
+  async ngOnInit() {
+    this.clients = await this.service.getClients()
   }
 
-  closeModal(){
-    this.showModal=false
+
+  switchModal(){
+    this.showModal=!this.showModal
+  }
+  async saveClient() {
+    await this.service.createClient(this.newClient)
+    this.switchModal()
   }
 
 }

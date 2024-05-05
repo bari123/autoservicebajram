@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GlobalService} from "../../../../app/global.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-clients-history',
@@ -7,28 +9,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientsHistoryComponent implements OnInit {
 
-  showModal=false;
-
-  info={
-    aftertKm:350000,
-    preKm:320000,
-    airFilter:true,
-    oilFilter:false,
-    engineOil:true,
-    pumpFilter:false,
-    airConFilter:true
+  constructor(private service: GlobalService, private route: ActivatedRoute) {
   }
 
-  closeModal(){
-    this.showModal=false
+  showModal = false;
+
+  info = {
+    km: '',
+    airFilter: true,
+    oilFilter: false,
+    engineOil: true,
+    pumpFilter: false,
+    airConFilter: true,
+    description: ''
   }
 
-  openModal(){
-    this.showModal=true
-  }
-  constructor() { }
+  history: any[] = []
 
-  ngOnInit(): void {
+  closeModal() {
+    this.showModal = false
+  }
+
+  openModal(test: any) {
+    this.showModal = true
+    this.info = test
+  }
+
+  async getService() {
+    return await this.service.getServices(this.route.snapshot.paramMap.get('id'))
+  }
+
+  async ngOnInit() {
+    this.history = await this.getService()
   }
 
 }

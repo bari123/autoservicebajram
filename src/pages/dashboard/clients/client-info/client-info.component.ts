@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GlobalService} from "../../../../app/global.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-client-info',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientInfoComponent implements OnInit {
 
-  constructor() { }
+  client: any
 
-  ngOnInit(): void {
+  constructor(private service: GlobalService, private route: ActivatedRoute) {
+  }
+
+
+  async ngOnInit() {
+    this.client = await this.service.getClientById(this.route.snapshot.paramMap.get('id'))
   }
 
 }

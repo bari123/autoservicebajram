@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {GlobalService} from "../../../../app/global.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-client-cars',
@@ -10,28 +12,37 @@ export class ClientCarsComponent implements OnInit {
   showModal = false;
   serviceModal = false;
   deleteModal = false;
-  cars: any
+  carIdSelected: any
+  newCar = {
+    model: '',
+    make: '',
+    year: '',
+    engine: ''
+  }
 
-  filteredClients: any[] = [
-    {
-      brand: 'Benz',
-      engine: 2.2,
-      model: 'C-klasse',
-      year: 2020
-    },
-    {
-      brand: 'BMW',
-      model: '320i',
-      engine: 3.1,
-      year: 2023
-    }]
+  newService = {
+    km:'',
+    airFilter: undefined,
+    oilFilter: undefined,
+    engineOil: undefined,
+    pumpFilter: undefined,
+    airConFilter: undefined,
+    description:'',
+    carId:''
+  }
 
-  openModal(modal: string) {
+  filteredClients: any [] = []
+
+  openModal(modal: string, carId: any | null) {
     if (modal === 'edit') {
       this.showModal = true
+      this.newCar = carId
     } else if (modal === 'delete') {
+      this.carIdSelected = carId._id
       this.deleteModal = true
     } else {
+      console.log(carId)
+      this.carIdSelected=carId._id
       this.serviceModal = true
     }
   }
@@ -43,27 +54,43 @@ export class ClientCarsComponent implements OnInit {
     this.deleteModal = false
   }
 
-  constructor() {
+  constructor(private service: GlobalService, private route: ActivatedRoute) {
+  }
+
+
+  async addCar() {
+    return this.service.addCarsToClients(this.newCar, this.route.snapshot.paramMap.get('id')).then(res => {
+        this.closeModal()
+        this.getCars()
+      }
+    )
+  }
+
+  async deleteCar() {
+    return this.service.deleteCar(this.carIdSelected, this.route.snapshot.paramMap.get('id')).then(res => {
+      this.closeModal()
+      this.getCars()
+    })
   }
 
   async getCars() {
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow"
-    };
+    this.filteredClients = await this.service.getClientCarsById(this.route.snapshot.paramMap.get('id'))
+  }
 
-    // @ts-ignore
-    fetch("https://carapi.app/api/makes", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
-    // this.cars=await axios.get('https://carapi.app/api/makes')
-    // console.log(this.cars)
+  async addService(){
+    this.newService.carId=this.carIdSelected
+    await this.service.addService(this.newService,this.route.snapshot.paramMap.get('id'))
+    this.closeModal()
   }
 
 
-  async  ngOnInit() {
+  async ngOnInit() {
     await this.getCars()
+  }
+
+
+  openCarInfo(){
+    // this.route.s
   }
 
 }

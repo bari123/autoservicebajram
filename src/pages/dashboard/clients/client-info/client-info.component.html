@@ -1,10 +1,7 @@
-<!-- Client Information Block -->
-<div class="info-block">
   <h2>Informacionet e klientit</h2>
   <div class="info-content">
-    <p><strong>Emri dhe Mbiemri:</strong> John Doe</p>
-    <p><strong>Email:</strong> john.doe@example.com</p>
-    <p><strong>Telefoni:</strong> +1 (123) 456-7890</p>
-    <p><strong>Adresa:</strong> 123 Main St, City, Country</p>
+    <p><strong>Emri dhe Mbiemri:</strong> {{client?.fullname}}</p>
+    <p><strong>Email:</strong> {{client?.email}}</p>
+    <p><strong>Telefoni:</strong>{{client?.phone}}</p>
+    <p><strong>Adresa:</strong> {{client?.address}}</p>
   </div>
-</div>

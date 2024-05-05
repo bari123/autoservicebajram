@@ -13,6 +13,7 @@ import {ClientsHistoryComponent} from "../pages/dashboard/clients/clients-histor
 import {ClientCarsComponent} from "../pages/dashboard/clients/client-cars/client-cars.component";
 import {CalendarComponent} from "../pages/dashboard/dashboard/calendar/calendar.component";
 import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.component";
+import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info/client-car-info.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.com
     ClientsHistoryComponent,
     ClientCarsComponent,
     CalendarComponent,
-    StorageComponent
+    StorageComponent,
+    ClientCarInfoComponent
   ],
   imports: [
     BrowserModule,

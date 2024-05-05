@@ -1,3 +1,65 @@
+/* General Styles */
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+}
+
+.show-modal {
+  display: flex;
+}
+
+/* Agenda Slot Styles */
+
 .agenda-slot {
   width: 300px;
   height: 60px;
@@ -27,42 +89,51 @@
   color: #008000;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: -120px;
+/* Client and Car Select Styles */
+
+.select-wrapper {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #666;
+}
+
+select,
+input {
   width: 100%;
-  overflow: hidden;
-  background-color: rgba(0,0,0,0.4);
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 50px;
-  border: 1px solid #888;
-  border-radius: 20px;
-  width: 50%;
+/* Client and Car Info Styles */
+
+.info-section {
+  margin-bottom: 10px;
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+.client-info h2,
+.car-info h2 {
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.show-modal {
-  display: block;
+.client-info p,
+.car-info p {
+  margin-bottom: 5px;
+  font-family: Arial, sans-serif;
 }
 
 .buttoni {
@@ -73,7 +144,6 @@
   padding: 12px 20px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .buttoni:hover {
@@ -84,4 +154,16 @@
 .buttoni:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.select-client {
+  font-weight: bold;
+}
+
+.select-car {
+  opacity: 1;
+}
+
+.select-car[disabled] {
+  opacity: 0.7;
 }

@@ -1,0 +1,73 @@
+<div class="main-container">
+  <div class="service-history">
+    <div *ngFor="let history of serviceHistory">
+      <div (click)="setService(history)">
+        {{ history?.createdAt }}
+      </div>
+    </div>
+  </div>
+
+  <div class="service-description">
+    <div class="car-info">
+      <h1>Informacionet e makines</h1>
+      <div class="car-details" *ngFor="let car of car">
+        <div>
+          <h2>Brendi</h2>
+          {{ car.model }}
+        </div>
+        <div>
+          <h2>Modeli</h2>
+          {{ car.make }}
+        </div>
+        <div>
+          <h2>Viti</h2>
+          {{ car.year }}
+        </div>
+        <div>
+          <h2>Motori</h2>
+          {{ car.engine }}
+        </div>
+      </div>
+    </div>
+
+    <div class="service-info">
+      <h1>Informacionet e Servisit</h1>
+
+        <div class="info-container-service">
+          <div class="info-section">
+            <h3>Kilometrat</h3>
+            <h2 > {{newService.km}}km</h2>
+          </div>
+          <div class="info-section">
+            <h3>Filteri Ajrit</h3>
+            <span class="material-symbols-outlined"
+                  [style.color]="newService.airFilter?'green':'red'">{{newService.airFilter ? 'done' : 'close'}}</span>
+          </div>
+          <div class="info-section">
+            <h3>Filteri Uljes</h3>
+            <span class="material-symbols-outlined"
+                  [style.color]="newService.oilFilter?'green':'red'">{{newService.oilFilter ? 'done' : 'close'}}</span>
+          </div>
+          <div class="info-section">
+            <h3>Filteri Klimes</h3>
+            <span class="material-symbols-outlined"
+                  [style.color]="newService.airConFilter?'green':'red'">{{newService.airConFilter ? 'done' : 'close'}}</span>
+          </div>
+          <div class="info-section">
+            <h3>Filteri pompes</h3>
+            <span class="material-symbols-outlined"
+                  [style.color]="newService.pumpFilter?'green':'red'">{{newService.pumpFilter ? 'done' : 'close'}}</span>
+          </div>
+          <div class="info-section">
+            <h3>Vaji i motorit</h3>
+            <span class="material-symbols-outlined"
+                  [style.color]="newService.engineOil?'green':'red'">{{newService.engineOil ? 'done' : 'close'}}</span>
+          </div>
+        </div>
+      <div>
+        <h3>Description</h3>
+        <textarea class="textarea" [(ngModel)]="newService.description"></textarea>
+      </div>
+    </div>
+  </div>
+</div>

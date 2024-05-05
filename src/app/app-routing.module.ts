@@ -6,6 +6,7 @@ import {ClientsComponent} from "../pages/dashboard/clients/clients.component";
 import {ClientsListComponent} from "../pages/dashboard/clients-list/clients-list.component";
 import {CalendarComponent} from "../pages/dashboard/dashboard/calendar/calendar.component";
 import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.component";
+import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info/client-car-info.component";
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
       {path: 'clients-list', component: ClientsListComponent},
       {path: 'clients-list/:id', component: ClientsComponent},
+      {path: 'clients-list/:id/car/:carId', component: ClientCarInfoComponent},
       {path:'calendar',component:CalendarComponent},
       {path:'storage',component:StorageComponent},
       {path: '', redirectTo: 'clients-list', pathMatch: 'full'},
