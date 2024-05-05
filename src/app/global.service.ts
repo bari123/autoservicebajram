@@ -7,11 +7,12 @@ import {retry} from "rxjs";
   providedIn: 'root'
 })
 export class GlobalService {
+  env = environment
   axiosInstance = axios.create({
-    baseURL: 'https://asbajram.vercel.app/',
+    withCredentials:true,
+    baseURL: environment.BASE_URL,
   });
 
-  env = environment
 
   constructor() {
   }
