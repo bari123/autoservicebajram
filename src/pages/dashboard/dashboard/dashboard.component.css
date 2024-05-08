@@ -63,5 +63,14 @@
 
   .menu ul li {
     margin-bottom: 5px;
+    display: flex;
+  }
+
+  .menu ul{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
   }
 }
+
+

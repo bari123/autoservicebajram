@@ -16,6 +16,9 @@ import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.com
 import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info/client-car-info.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {CookieInterceptor} from "../interceptor";
+import {DateSliderComponent} from "../pages/dashboard/dashboard/calendar/date-slider/date-slider.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ToasterComponent} from "../pages/compo/toaster/toaster.component";
 
 @NgModule({
   declarations: [
@@ -29,12 +32,15 @@ import {CookieInterceptor} from "../interceptor";
     ClientCarsComponent,
     CalendarComponent,
     StorageComponent,
-    ClientCarInfoComponent
+    ClientCarInfoComponent,
+    DateSliderComponent,
+    ToasterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

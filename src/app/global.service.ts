@@ -50,15 +50,20 @@ export class GlobalService {
     })
   }
 
+  async editCarById( clientId: string | null,carId:string,car:any){
+    return await this.axiosInstance.patch(`/clients/${clientId}/car/${carId}`,car).then(res=>{
+
+    })
+  }
   async deleteCar(carId: string, clientId: string | null) {
     return await this.axiosInstance.delete(`/clients/${clientId}/car/${carId}`).then(res => {
-      console.log(res)
+
     })
   }
 
   async addService(newService: any, clientId: string | null) {
     return await this.axiosInstance.post(`/clients/${clientId}/service`, newService).then(res => {
-      console.log(res)
+
     })
   }
 
@@ -75,7 +80,7 @@ export class GlobalService {
     })
   }
 
-  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any) {
+  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any,date:string) {
     let body = {
       lift: {
         time: slot,
@@ -84,17 +89,15 @@ export class GlobalService {
         car: car,
         service: service
       },
-      date: new Date().toLocaleDateString()
+      date: date
     }
-    console.log(body)
     return await this.axiosInstance.post(`/agenda`, body).then(res => {
-      console.log(res)
       return 'Success'
     })
   }
 
-  async getAgenda() {
-    return await this.axiosInstance.get(`/agenda/getAll`).then(res => {
+  async getAgenda(currentDate:string|null) {
+    return await this.axiosInstance.post(`/agenda/getAll`,{currentDate:currentDate}).then(res => {
       return res.data
     })
   }

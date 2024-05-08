@@ -1,0 +1,41 @@
+.success-toast, .error-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  z-index: 99999;
+  width: 30%;
+  height: 5%;
+  animation-duration: 4s; /* Adjust the duration as per your preference */
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+}
+
+.success-toast {
+  background-color: #4CAF50; /* Green */
+}
+
+.error-toast {
+  background-color: #f44336; /* Red */
+}
+
+
+.fade-out {
+  animation-name: fadeOut;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,20 @@
+<div class="container">
+  <span  class="icons material-symbols-outlined" (click)="isMobile() ? prevDay() : prevWeek()">
+    arrow_back
+  </span>
+  <div class="dates">
+    <div class="date"
+         *ngFor="let date of dates; let i = index;"
+         [class.selected]="isSelected(i,selectedIndex,date,selectedDate)"
+         (mouseenter)="hoverIndex = i"
+         (mouseleave)="hoverIndex = null"
+         [class.hovered]="hoverIndex === i"
+         (click)="selectedIndex=i;emitDate(date);selectedDate=date">
+      <span>{{ date.format('dddd') }}</span>
+      <span>{{ date.format('DD-MM-YYYY') }}</span>
+    </div>
+  </div>
+  <span class="icons material-symbols-outlined" (click)="isMobile() ? nextDay() : nextWeek()">
+    arrow_right_alt
+  </span>
+</div>

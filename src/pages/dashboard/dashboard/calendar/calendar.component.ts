@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { GlobalService } from '../../../../app/global.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {GlobalService} from '../../../../app/global.service';
+import * as moment from "moment";
+import {ToasterComponent} from "../../../compo/toaster/toaster.component";
 
 interface Client {
   _id: string;
@@ -44,15 +46,17 @@ interface AgendaSlot {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+  @ViewChild(ToasterComponent) toast?:ToasterComponent
   agenda: AgendaSlot[] = [];
   clients: Client[] = [];
   cars: Car[] = [];
-  newClient: Client = {_id:'', fullname: '', address: '', phone: '', email: '' };
-  newCar: Car = { make: '', model: '', year: '', engine: '' };
+  newClient: Client = {_id: '', fullname: '', address: '', phone: '', email: ''};
+  newCar: Car = {make: '', model: '', year: '', engine: ''};
   selectedClient: Client | null = null;
   selectedSlot: string | null = null;
   selectedLift: number | null = null;
   description: string | null = null;
+  currentDate: moment.Moment
   isNewClient = false;
   showModal = false;
   infoModal = false;
@@ -60,7 +64,9 @@ export class CalendarComponent implements OnInit {
   car: Car | null = null;
   lifts: Lift[] = [];
 
-  constructor(private service: GlobalService) {}
+  constructor(private service: GlobalService) {
+    this.currentDate = moment();
+  }
 
   ngOnInit(): void {
     this.initializeLifts();
@@ -68,7 +74,13 @@ export class CalendarComponent implements OnInit {
     this.loadClients();
   }
 
-  async loadClients(): Promise<void> {
+  selectedDate(date: moment.Moment) {
+    this.initializeLifts()
+    this.currentDate = date
+    this.loadAgenda()
+  }
+
+  async loadClients() {
     this.clients = await this.service.getClients();
   }
 
@@ -78,25 +90,29 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  async saveAgenda(): Promise<void> {
-    if (this.selectedSlot && this.selectedLift  && this.description) {
-      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient);
+  async saveAgenda() {
+    if (this.selectedSlot && this.selectedLift && this.description) {
+      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient,this.currentDate.toDate().toLocaleDateString());
     }
+    this.loadAgenda()
+    this.description=''
+    this.toast?.show(false,'Termini u rezervua me sukses')
     this.closeModal()
   }
 
   async loadAgenda() {
-    this.agenda = await this.service.getAgenda();
+    this.description=''
+    this.agenda = await this.service.getAgenda(this.currentDate.toDate().toLocaleDateString());
     for (const lift of this.agenda) {
       for (const slot of lift.lift) {
-        this.updateReservedStatus(slot.lift, slot.time, true);
+      await this.updateReservedStatus(slot.lift, slot.time, true);
       }
     }
   }
 
   initializeLifts(): void {
     // @ts-ignore
-    this.lifts = Array.from({ length: 4 }, (_, index) => ({
+    this.lifts = Array.from({length: 4}, (_, index) => ({
       lift: index + 1,
       timeslots: this.generateTimeslots()
     }));
@@ -104,15 +120,16 @@ export class CalendarComponent implements OnInit {
 
   generateTimeslots(): Timeslot[] {
     return [
-      { time: '09:00', reserved: false },
-      { time: '10:00', reserved: false },
-      { time: '11:00', reserved: false },
-      { time: '12:00', reserved: false },
-      { time: '13:00', reserved: false },
-      { time: '14:00', reserved: false },
-      { time: '15:00', reserved: false },
-      { time: '16:00', reserved: false },
-      { time: '17:00', reserved: false },
+      {time: '08:00', reserved: false},
+      {time: '09:00', reserved: false},
+      {time: '10:00', reserved: false},
+      {time: '11:00', reserved: false},
+      {time: '12:00', reserved: false},
+      {time: '13:00', reserved: false},
+      {time: '14:00', reserved: false},
+      {time: '15:00', reserved: false},
+      {time: '16:00', reserved: false},
+      {time: '17:00', reserved: false},
     ];
   }
 
@@ -142,7 +159,7 @@ export class CalendarComponent implements OnInit {
 
   closeModal(): void {
     this.showModal = false;
-    this.infoModal=false
+    this.infoModal = false
   }
 
   toggleClientSelection(): void {
@@ -157,5 +174,21 @@ export class CalendarComponent implements OnInit {
         slot.reserved = newReservedStatus;
       }
     }
+  }
+
+  showAgenda(liftNumber: any,slot:any):string | null{
+    if (liftNumber && slot) {
+      for (const test of this.agenda) {
+        for (const lift of test.lift) {
+          if (lift.time === slot && lift.lift === liftNumber) {
+            this.car = lift.car;
+            this.client = lift.client;
+            this.description = lift.service;
+          }
+        }
+      }
+      return this.description
+    }
+    return 'No info was provided'
   }
 }

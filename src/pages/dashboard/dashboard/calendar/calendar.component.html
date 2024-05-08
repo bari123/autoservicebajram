@@ -1,3 +1,4 @@
+  <app-date-slider (dateSelected)="selectedDate($event)"></app-date-slider>
 <div class="agneda-container" >
   <div class="time" >
     <div  *ngFor="let slot of lifts[0].timeslots">
@@ -12,7 +13,7 @@
         <div class="agenda-slot">
           <div class="slot" [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
                (click)="reserveSlot(item.lift - 1, i,slot);openModal(slot.reserved,item.lift,slot.time)">
-            {{ slot.reserved ? 'I Rezervuar' : 'I Lir' }}
+            {{ slot.reserved ? showAgenda(item.lift,slot.time) : 'I Lir' }}
           </div>
         </div>
       </div>
@@ -74,7 +75,7 @@
       </ng-template>
       <div style="width: 50%;">
         <div class="info-section" style="height: 80%">
-          <h3>Cka duhet te punohet</h3>
+          <h3>Cka duhet te punoheat</h3>
           <textarea [(ngModel)]="description" placeholder="Cka duhet bere" style="height: 100%;width: 90%;font-size: 20px"></textarea>
         </div>
       </div>
@@ -113,3 +114,4 @@
   </div>
 </div>
 
+  <app-toaster></app-toaster>

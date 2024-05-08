@@ -1,6 +1,8 @@
 .client-list {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .client-list li {
@@ -23,7 +25,7 @@
 
 .client-details {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -59,7 +61,7 @@
   top: -120px;
   width: 100%;
   overflow: hidden;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
@@ -110,22 +112,42 @@
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
 
-.checkbox{
+.checkbox {
   height: 28px;
   width: 28px;
 }
 
-.delete-button:hover{
+.delete-button:hover {
   color: red;
   font-size: 30px;
 }
 
-.edit-button:hover{
+.edit-button:hover {
   color: blue;
   font-size: 30px;
 }
 
-.add-button:hover{
+.add-button:hover {
   color: green;
   font-size: 30px;
+}
+
+.car-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+
+
+@media screen and (max-width: 768px) {
+  .car-list {
+    border: 1px solid #ccc;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  .client-details {
+    display: block;
+}
 }

@@ -5,9 +5,7 @@
     <span class="material-symbols-outlined">add</span>
   </div>
   <ul class="client-list">
-
-    <li *ngFor="let car of filteredClients">
-
+    <li class="car-list" *ngFor="let car of filteredClients">
       <div (click)="openCarInfo()" [routerLink]="['car/'+car._id]" class="client-details">
         <div class="client-info">
           <span class="client-label">Brendi:</span>
@@ -26,12 +24,13 @@
           <span class="client-email">{{ car.year }}</span>
         </div>
 
-
+      </div>
+      <div>
         <span class="material-symbols-outlined delete-button" (click)="openModal('delete',car)">close</span>
         <span class="material-symbols-outlined edit-button" (click)="openModal('edit',car)">edit</span>
         <span class="material-symbols-outlined add-button" (click)="openModal('service',car)">add</span>
-
       </div>
+
     </li>
   </ul>
 </div>
@@ -99,7 +98,7 @@
         <input [(ngModel)]="newCar.year" type="text">
       </div>
     </div>
-    <button (click)="addCar()" style="margin-top: 20px" class="buttoni" type="submit">Ruaj</button>
+    <button (click)="editCar(newCar)" style="margin-top: 20px" class="buttoni" type="submit">Ruaj</button>
   </div>
 </div>
 
@@ -147,5 +146,4 @@
   </div>
 </div>
 
-
-
+<app-toaster></app-toaster>
