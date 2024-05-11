@@ -9,7 +9,7 @@
     </h2>
   </div>
   <div class="search-bar">
-    <input type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
+    <input class="input-search" type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
   </div>
   <ul class="client-list">
     <li *ngFor="let client of filteredClients">

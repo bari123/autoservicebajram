@@ -1,13 +1,16 @@
 .clients-container {
+  height: 100vh;
+  width: 100%;
   padding: 20px;
+  overflow: hidden;
 }
 
 .search-bar {
-  margin-bottom: 20px;
-  width: 100%;
+  display: flex;
 }
 
-.search-bar input[type="text"] {
+.input-search {
+  display: flex;
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -68,6 +71,7 @@
   left: 0;
   top: -120px;
   width: 100%;
+  height: 120vh;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -147,10 +151,24 @@
   cursor: pointer;
 }
 
-.register-client:hover{
+.register-client:hover {
   padding: 5px;
   border-radius: 20px;
   /*font-size: 20px;*/
   background-color: red;
   color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 100% ;
+    top: 0;
+    left: 0;
+  }
+
+  .modal-content {
+    width: 70%;
+  }
+
+
 }

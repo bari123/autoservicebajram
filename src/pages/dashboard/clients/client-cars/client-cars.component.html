@@ -40,38 +40,41 @@
     <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
     <h2>Servis</h2>
     <div class="info-container-service">
-      <div class="info-section">
-        <h3>Kilometrat</h3>
-        <input type="text" placeholder="km" [(ngModel)]="newService.km" style="height: 34px;font-size: 20px" maxlength="6">
-      </div>
-      <div class="info-section">
-        <h3>Filteri Ajrit</h3>
-        <input class="checkbox" [(ngModel)]="newService.airFilter" type="checkbox">
-      </div>
-      <div class="info-section">
-        <h3>Filteri Uljes</h3>
-        <input type="checkbox" class="checkbox" [(ngModel)]="newService.oilFilter">
+      <div class="info-sections-row">
+        <div class="info-section">
+          <h3>Kilometrat</h3>
+          <input class="text-input" maxlength="6" [(ngModel)]="newService.km" type="text">
+        </div>
+        <div class="info-section">
+          <h3>Filteri Ajrit</h3>
+          <input class="checkbox" [(ngModel)]="newService.airFilter" type="checkbox">
+        </div>
+        <div class="info-section">
+          <h3>Filteri Uljes</h3>
+          <input type="checkbox" class="checkbox" [(ngModel)]="newService.oilFilter">
+        </div>
 
       </div>
-      <div class="info-section">
-        <h3>Filteri Klimes</h3>
-        <input type="checkbox" class="checkbox" [(ngModel)]="newService.airConFilter">
+      <div class="info-sections-row">
+        <div class="info-section">
+          <h3>Filteri Klimes</h3>
+          <input type="checkbox" class="checkbox" [(ngModel)]="newService.airConFilter">
+        </div>
+        <div class="info-section">
+          <h3>Filteri pompes</h3>
+          <input type="checkbox" class="checkbox" [(ngModel)]="newService.pumpFilter">
+        </div>
+        <div class="info-section">
+          <h3>Vaji i motorit</h3>
+          <input type="checkbox" class="checkbox" [(ngModel)]="newService.engineOil">
+        </div>
       </div>
-      <div class="info-section">
-        <h3>Filteri pompes</h3>
-        <input type="checkbox" class="checkbox" [(ngModel)]="newService.pumpFilter">
-      </div>
-      <div class="info-section">
-        <h3>Vaji i motorit</h3>
-        <input type="checkbox" class="checkbox" [(ngModel)]="newService.engineOil">
-      </div>
-
     </div>
     <div class="description">
       <h2>Pershkruaj punen</h2>
       <textarea style="width: 100%;height: 200px;font-size: 30px" [(ngModel)]="newService.description"></textarea>
     </div>
-    <div (click)="addService()" style="margin-top: 20px" class="buttoni" >Shto Servis</div>
+    <div (click)="addService()" style="margin-top: 20px" class="buttoni">Shto Servis</div>
 
   </div>
 </div>
@@ -83,19 +86,19 @@
     <div class="info-container">
       <div class="info-section">
         <h3>Brendi</h3>
-        <input [(ngModel)]="newCar.model" type="text">
+        <input [(ngModel)]="newCar.make" class="text-input" type="text">
       </div>
       <div class="info-section">
         <h3>Modeli</h3>
-        <input [(ngModel)]="newCar.make" type="text">
+        <input [(ngModel)]="newCar.model" type="text" class="text-input">
       </div>
       <div class="info-section">
         <h3>Motori</h3>
-        <input [(ngModel)]="newCar.engine" type="text">
+        <input [(ngModel)]="newCar.engine" type="text" class="text-input">
       </div>
       <div class="info-section">
         <h3>Viti</h3>
-        <input [(ngModel)]="newCar.year" type="text">
+        <input [(ngModel)]="newCar.year" type="text" class="text-input">
       </div>
     </div>
     <button (click)="editCar(newCar)" style="margin-top: 20px" class="buttoni" type="submit">Ruaj</button>
@@ -114,27 +117,15 @@
     <div>
       &nbsp;
     </div>
-    <div>
-      &nbsp;
-    </div>
-    <div>
-      &nbsp;
-    </div>
     <h2>
       A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
     </h2>
     <div>
       &nbsp;
     </div>
-    <div>
-      &nbsp;
-    </div>
-    <div>
-      &nbsp;
-    </div>
-    <div>
-      &nbsp;
-    </div>
+    <span class="material-symbols-outlined close-icon" style="font-size: 60px;color: red">
+      close
+    </span>
     <div>
       &nbsp;
     </div>
@@ -142,7 +133,7 @@
       Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
       vazhdoni ti keni ne arhive
     </h3>
-    <div (click)="deleteCar()" style="margin-top: 20px" class="buttoni" >FSHI</div>
+    <div (click)="deleteCar()" style="margin-top: 20px" class="buttoni">FSHI</div>
   </div>
 </div>
 

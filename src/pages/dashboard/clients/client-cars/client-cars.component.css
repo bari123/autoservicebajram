@@ -1,13 +1,20 @@
 .client-list {
+  width: 100%;
+  height: 100%;
   list-style-type: none;
   padding: 0;
   display: flex;
   flex-direction: column;
 }
 
+.text-input {
+  height: 28px;
+  width: 90%;
+}
+
 .client-list li {
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
   margin-bottom: 15px;
@@ -59,6 +66,7 @@
   z-index: 1;
   left: 0;
   top: -120px;
+  height: 120%;
   width: 100%;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.4);
@@ -135,11 +143,34 @@
 .car-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-between;
+  align-items: center;
 }
 
 
 @media screen and (max-width: 768px) {
+  .close {
+    align-self: end;
+  }
+  .client-list{
+    width: 100%;
+  }
+
+  .info-container-service {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-sections-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .info-section {
+    margin: 0 10px;
+  }
+
   .car-list {
     border: 1px solid #ccc;
     display: flex;
@@ -147,7 +178,30 @@
     flex-direction: column;
   }
 
+  .modal {
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .client-details {
     display: block;
-}
+  }
+
+  .close-icon{
+    align-self: center;
+  }
+
+  .history-block{
+    width: 100%;
+    height: 100%;
+  }
+
+
 }

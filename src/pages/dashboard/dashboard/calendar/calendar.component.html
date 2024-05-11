@@ -1,5 +1,7 @@
-  <app-date-slider (dateSelected)="selectedDate($event)"></app-date-slider>
-<div class="agneda-container" >
+
+<div style="width: 100%;display:flex;flex-direction: column">
+  <app-date-slider style="width: 100%" (dateSelected)="selectedDate($event)"></app-date-slider>
+<div class="agneda-container">
   <div class="time" >
     <div  *ngFor="let slot of lifts[0].timeslots">
       {{ slot.time }}
@@ -7,7 +9,7 @@
   </div>
   <div *ngFor="let item of lifts">
     <h3>Lifti {{item.lift}}</h3>
-    <div>
+    <div class="slots-main">
       <div class="slot-container"  *ngFor="let slot of item.timeslots;index as i">
        <div class="slot-time"> {{slot.time}}</div>
         <div class="agenda-slot">
@@ -24,6 +26,8 @@
 <div class="modal" [class.show-modal]="showModal">
   <div class="modal-content">
     <span class="close material-symbols-outlined"  (click)="closeModal()">close</span>
+    <div style="display: flex;flex-direction: column">
+
     <div class="buttoni is-new-client-button" (click)="toggleClientSelection()">{{ isNewClient ? 'Zgjidh Klientin Ekzistues' : 'Shto Klient te Ri' }}</div>
     <div class="is-new-client-content">
       <div *ngIf="isNewClient; else existingClientForm" class="container">
@@ -73,13 +77,15 @@
         </div>
 
       </ng-template>
-      <div style="width: 50%;">
-        <div class="info-section" style="height: 80%">
+      <div class="description-content" >
+        <div class="info-section" style="height: 100%">
           <h3>Cka duhet te punoheat</h3>
           <textarea [(ngModel)]="description" placeholder="Cka duhet bere" style="height: 100%;width: 90%;font-size: 20px"></textarea>
         </div>
       </div>
     </div>
+    </div>
+
     <div>
       <div  (click)="saveAgenda()" style="margin-top: 20px" class="buttoni" >Rezervo</div>
     </div>
@@ -112,6 +118,8 @@
       <div (click)="closeModal()" class="buttoni">Mbyll</div>
     </div>
   </div>
+</div>
+
 </div>
 
   <app-toaster></app-toaster>
