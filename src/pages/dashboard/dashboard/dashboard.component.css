@@ -3,6 +3,8 @@
   flex-direction: row;
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .left-side {
@@ -36,9 +38,10 @@
 }
 
 .right-side {
+  display: flex;
+  width: 100%;
   background-color: #f8f9fa; /* Light gray background */
   color: #333;
-  width: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -51,6 +54,7 @@
 
   .left-side,
   .right-side {
+    display: flex;
     width: 100%;
   }
 

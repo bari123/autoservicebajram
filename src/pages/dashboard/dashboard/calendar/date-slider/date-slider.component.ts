@@ -27,7 +27,6 @@ export class DateSliderComponent implements OnInit {
 
   generateDates() {
     this.dates = [];
-    this.dates = [];
     let currentDate = moment(this.currentDate).startOf('week').add(1, 'day').locale('sq');
     for (let i = 0; i < 6; i++) {
       this.dates.push(currentDate.clone());

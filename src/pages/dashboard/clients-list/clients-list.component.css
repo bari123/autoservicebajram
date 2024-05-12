@@ -1,8 +1,8 @@
 .clients-container {
-  height: 100vh;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  overflow: hidden;
+  width: 90vw;
 }
 
 .search-bar {
@@ -160,6 +160,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .text-center{
+    text-align: center;
+  }
   .modal {
     width: 100% ;
     top: 0;
@@ -168,6 +171,11 @@
 
   .modal-content {
     width: 70%;
+  }
+
+  .clients-container{
+    width: 100%;
+    height: 100vh;
   }
 
 

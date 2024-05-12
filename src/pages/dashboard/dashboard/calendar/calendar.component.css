@@ -8,6 +8,14 @@
   transition: background-color 0.3s ease;
 }
 
+.calendar-container {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
 
 .slot:hover {
   box-shadow: 0 0 0 5px #ccc;
@@ -203,12 +211,21 @@ input {
 
 @media only screen and (max-width: 600px) {
 
+  .text-center {
+    text-align: center;
+  }
+
+  .calendar-container {
+    overflow-y: scroll !important;
+    width: 100vw;
+  }
+
   .modal {
-    width: 90%;
+    width: 100vw;
   }
 
   .modal-content {
-    width: 90%;
+    width: 80%;
   }
 
   .is-new-client-content {

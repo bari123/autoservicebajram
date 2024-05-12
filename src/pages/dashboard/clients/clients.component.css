@@ -1,6 +1,7 @@
 .dashboard-container {
   height: 100%;
-  width: 100%;
+  width: 90vw;
+  padding: 20px;
 }
 
 .info-block, .history-block {

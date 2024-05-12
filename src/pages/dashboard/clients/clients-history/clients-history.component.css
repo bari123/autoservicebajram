@@ -5,6 +5,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.mobile-order{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .history-block h2 {
   margin-bottom: 15px;
   color: #333;

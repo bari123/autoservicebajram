@@ -98,6 +98,7 @@ export class CalendarComponent implements OnInit {
     this.description=''
     this.toast?.show(false,'Termini u rezervua me sukses')
     this.closeModal()
+    location.reload()
   }
 
   async loadAgenda() {

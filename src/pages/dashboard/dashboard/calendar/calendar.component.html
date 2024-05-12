@@ -1,5 +1,5 @@
 
-<div style="width: 100%;display:flex;flex-direction: column">
+<div class="calendar-container" >
   <app-date-slider style="width: 100%" (dateSelected)="selectedDate($event)"></app-date-slider>
 <div class="agneda-container">
   <div class="time" >
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div *ngFor="let item of lifts">
-    <h3>Lifti {{item.lift}}</h3>
+    <h3 class="text-center">Lifti {{item.lift}}</h3>
     <div class="slots-main">
       <div class="slot-container"  *ngFor="let slot of item.timeslots;index as i">
        <div class="slot-time"> {{slot.time}}</div>
@@ -87,7 +87,7 @@
     </div>
 
     <div>
-      <div  (click)="saveAgenda()" style="margin-top: 20px" class="buttoni" >Rezervo</div>
+      <div  (click)="saveAgenda()" style="margin-top: 20px" class="text-center buttoni" >Rezervo</div>
     </div>
   </div>
 </div>

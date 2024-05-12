@@ -79,6 +79,20 @@
   border: 1px solid #888;
   border-radius: 20px;
   width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-container-service {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.info-sections-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
 }
 
 .close {
@@ -120,6 +134,10 @@
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
 
+.close-icon {
+  align-self: center;
+}
+
 .checkbox {
   height: 28px;
   width: 28px;
@@ -147,12 +165,22 @@
   align-items: center;
 }
 
+.close{
+  align-self: flex-end;
+}
+
 
 @media screen and (max-width: 768px) {
+
+  .text-center {
+    text-align: center;
+  }
+
   .close {
     align-self: end;
   }
-  .client-list{
+
+  .client-list {
     width: 100%;
   }
 
@@ -163,7 +191,6 @@
 
   .info-sections-row {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
   }
 
@@ -181,24 +208,25 @@
   .modal {
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
   }
 
   .modal-content {
-    width: 80%;
+    width: 70%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   .client-details {
     display: block;
   }
 
-  .close-icon{
+  .close-icon {
     align-self: center;
   }
 
-  .history-block{
+  .history-block {
     width: 100%;
     height: 100%;
   }
