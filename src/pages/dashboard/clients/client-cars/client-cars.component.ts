@@ -72,7 +72,6 @@ export class ClientCarsComponent implements OnInit {
 
 
   async addCar() {
-    console.log(this.newCar,'addCarInside')
     return this.service.addCarsToClients(this.newCar, this.route.snapshot.paramMap.get('id')).then(res => {
         this.closeModal()
         this.getCars()

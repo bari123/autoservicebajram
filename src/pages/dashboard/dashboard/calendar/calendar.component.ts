@@ -160,7 +160,6 @@ export class CalendarComponent implements OnInit {
         for (const test of this.agenda) {
           for (const lift of test.lift) {
             if (lift.time.includes(slot) && lift.lift === liftNumber) {
-              console.log(lift.car)
               this.car = lift.car;
               this.client = lift.client;
               this.description = lift.service;

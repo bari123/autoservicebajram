@@ -6,26 +6,18 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./toaster.component.css']
 })
 export class ToasterComponent {
-  @Input() message: string | undefined='Succes';
-  @Input() isError: boolean | undefined=true
+  @Input() message: string | undefined = 'Succes';
+  @Input() isError: boolean | undefined = true
 
   showToaster = false
 
-  constructor() {
-  }
-
-  show(isError:boolean,msg:string) {
-    console.log('inside')
-    this.message=msg
-    this.isError=isError
+  show(isError: boolean, msg: string) {
+    this.message = msg
+    this.isError = isError
     this.showToaster = true
-    setTimeout(()=>{
-      this.showToaster=false
-    },5000)
-  }
-
-  hide(){
-    this.showToaster=false
+    setTimeout(() => {
+      this.showToaster = false
+    }, 5000)
   }
 
 

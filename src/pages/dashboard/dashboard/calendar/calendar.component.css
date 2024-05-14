@@ -286,6 +286,9 @@ input {
     width: 100%;
     margin: 5px 0; /* Adjust margin for slots */
   }
+  .tooltip{
+    display: none;
+  }
 }
 
 
