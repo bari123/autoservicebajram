@@ -1,7 +1,7 @@
 
 <div class="calendar-container" >
   <app-date-slider style="width: 100%" (dateSelected)="selectedDate($event)"></app-date-slider>
-<div class="agneda-container">
+<div class="agneda-container" >
   <div class="time" >
     <div  *ngFor="let slot of lifts[0].timeslots">
       {{ slot.time }}
@@ -22,6 +22,8 @@
     </div>
   </div>
 </div>
+
+
 
 <div class="modal" [class.show-modal]="showModal">
   <div class="modal-content">

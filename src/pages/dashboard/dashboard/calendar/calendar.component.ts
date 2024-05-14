@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {GlobalService} from '../../../../app/global.service';
 import * as moment from "moment";
 import {ToasterComponent} from "../../../compo/toaster/toaster.component";
@@ -46,7 +46,7 @@ interface AgendaSlot {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild(ToasterComponent) toast?:ToasterComponent
+  @ViewChild(ToasterComponent) toast?: ToasterComponent
   agenda: AgendaSlot[] = [];
   clients: Client[] = [];
   cars: Car[] = [];
@@ -64,20 +64,30 @@ export class CalendarComponent implements OnInit {
   car: Car | null = null;
   lifts: Lift[] = [];
 
-  constructor(private service: GlobalService) {
+  constructor(private service: GlobalService, private cdr: ChangeDetectorRef) {
     this.currentDate = moment();
   }
 
   ngOnInit(): void {
-    this.initializeLifts();
+
     this.loadAgenda();
     this.loadClients();
+    this.initializeLifts();
+  }
+
+  isSunday() {
+    return this.currentDate.day()=== 0
+  }
+
+  isWeekDay(date: moment.Moment) {
+    return date.day() !==0
   }
 
   selectedDate(date: moment.Moment) {
     this.initializeLifts()
     this.currentDate = date
     this.loadAgenda()
+    this.isWeekDay(this.currentDate)
   }
 
   async loadClients() {
@@ -92,26 +102,25 @@ export class CalendarComponent implements OnInit {
 
   async saveAgenda() {
     if (this.selectedSlot && this.selectedLift && this.description) {
-      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient,this.currentDate.toDate().toLocaleDateString());
+      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, this.currentDate.toDate().toLocaleDateString());
     }
-    this.loadAgenda()
-    this.description=''
-    this.toast?.show(false,'Termini u rezervua me sukses')
+    this.description = null
+    this.toast?.show(false, 'Termini u rezervua me sukses')
     this.closeModal()
-    location.reload()
+    this.loadAgenda()
   }
 
   async loadAgenda() {
-    this.description=''
     this.agenda = await this.service.getAgenda(this.currentDate.toDate().toLocaleDateString());
     for (const lift of this.agenda) {
       for (const slot of lift.lift) {
-      await this.updateReservedStatus(slot.lift, slot.time, true);
+        await this.updateReservedStatus(slot.lift, slot.time, true);
       }
     }
   }
 
   initializeLifts(): void {
+    this.description = ''
     // @ts-ignore
     this.lifts = Array.from({length: 4}, (_, index) => ({
       lift: index + 1,
@@ -141,6 +150,7 @@ export class CalendarComponent implements OnInit {
 
   openModal(newAgenda: boolean, liftNumber?: number, slot?: string): void {
     if (!newAgenda) {
+      this.description = null
       this.showModal = true;
     } else {
       if (liftNumber && slot) {
@@ -177,19 +187,16 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  showAgenda(liftNumber: any,slot:any):string | null{
-    if (liftNumber && slot) {
-      for (const test of this.agenda) {
-        for (const lift of test.lift) {
-          if (lift.time === slot && lift.lift === liftNumber) {
-            this.car = lift.car;
-            this.client = lift.client;
-            this.description = lift.service;
-          }
+  showAgenda(liftNumber: any, slot: any): string | null {
+    for (const test of this.agenda) {
+      for (const lift of test.lift) {
+        if (lift.time === slot && lift.lift === liftNumber) {
+          this.car = lift.car;
+          this.client = lift.client;
+          return lift.service
         }
       }
-      return this.description
     }
-    return 'No info was provided'
+    return 'Lir'
   }
 }
