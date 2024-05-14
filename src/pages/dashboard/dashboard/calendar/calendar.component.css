@@ -42,8 +42,9 @@
 
 .is-new-client-content {
   display: flex;
-  justify-content: space-evenly;
-  margin: auto
+  justify-content: space-between;
+  margin: auto;
+  gap:50px
 }
 
 .container {
@@ -207,6 +208,13 @@ input {
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+}
+
+.description-content {
+  display: flex;
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  /*width: 100%;*/
 }
 
 @media only screen and (max-width: 600px) {
