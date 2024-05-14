@@ -1,37 +1,5 @@
-/*!* styles.css *!*/
 
-/*.coming-soon-container {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  width: 90vw;*/
-/*  height: 90vh;*/
 
-/*  justify-content: center;*/
-/*}*/
-
-/*.countdown {*/
-/*  margin-top: 50px;*/
-/*}*/
-
-/*.timer {*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*}*/
-
-/*.time-block {*/
-/*  margin: 0 10px;*/
-/*}*/
-
-/*#days,*/
-/*#hours,*/
-/*#minutes,*/
-/*#seconds {*/
-/*  font-size: 24px;*/
-/*  font-weight: bold;*/
-/*}*/
-
-/* styles.css */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -61,4 +29,16 @@ h1 {
   color: orange;
 }
 
+
+@media screen and (max-width: 768px) {
+  .coming-soon-container{
+    width: 70vw;
+    padding: 20px;
+    top: 40%;
+    left: 5%;
+
+  }
+
+
+}
 
