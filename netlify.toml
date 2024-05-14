@@ -3,5 +3,6 @@
 # Redirect from "/old-url" to "/new-url" with a 301 status code
 [[redirects]]
 from = "/*"
-to = "/"
-status = 301
+to = "/index.html"
+status = 200
+force = false
