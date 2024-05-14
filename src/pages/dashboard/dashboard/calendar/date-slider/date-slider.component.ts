@@ -47,14 +47,22 @@ export class DateSliderComponent implements OnInit {
   }
 
   prevDay() {
-    this.currentDate.subtract(1, 'day');
+    if (this.currentDate.day() === 1) {
+      this.currentDate.subtract(2, 'day');
+    } else {
+      this.currentDate.subtract(1, 'day');
+    }
     this.selectedIndex = this.currentDate.day() - 1;
     this.generateDates();
     this.emitDate(this.currentDate)
   }
 
   nextDay() {
-    this.currentDate.add(1, 'day');
+    if (this.currentDate.day() === 6) {
+      this.currentDate.add(2, 'day');
+    } else {
+      this.currentDate.add(1, 'day');
+    }
     this.selectedIndex = this.currentDate.day() - 1;
     this.generateDates();
     this.emitDate(this.currentDate)

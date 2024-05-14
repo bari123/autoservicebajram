@@ -1,16 +1,24 @@
 // auth.guard.ts
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
-  canActivate(): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    // provides the route configuration options.
+    const {routeConfig} = route;
+
+    // provides the path of the route.
+    const {path} = routeConfig as Route;
+
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role')
 
     if (!token) {
       // If token doesn't exist, redirect to login page
@@ -18,7 +26,6 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    // You should have logic here to verify token validity
 
     return true; // Return true if token is valid
   }

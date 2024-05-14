@@ -2,9 +2,9 @@
   <div class="left-side">
     <div class="menu">
       <ul>
-        <li><a [routerLink]="'/dashboard/clients-list'">Klientet</a></li>
+        <li><a *ngIf="localStorage.getItem('role')==='admin'" [routerLink]="'/dashboard/clients-list'">Klientet</a></li>
         <li><a [routerLink]="'/dashboard/calendar'">Terminet</a></li>
-        <li><a [routerLink]="'/dashboard/storage'">Magazina</a></li>
+        <li><a *ngIf="localStorage.getItem('role') ==='admin'" [routerLink]="'/dashboard/storage'">Magazina</a></li>
       </ul>
     </div>
   </div>
