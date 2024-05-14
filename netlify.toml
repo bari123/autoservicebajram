@@ -1,6 +1,3 @@
-[redirects]
-# Add redirects here, for example:
-# Redirect from "/old-url" to "/new-url" with a 301 status code
 [[redirects]]
 from = "/*"
 to = "/index.html"
