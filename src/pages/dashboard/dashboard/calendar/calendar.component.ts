@@ -27,7 +27,7 @@ interface Lift {
   service: string | null;
   client: Client | null;
   car: Car | null;
-  time: string;
+  time: string[];
   lift: number;
   timeslots: Timeslot[];
 }
@@ -53,11 +53,12 @@ export class CalendarComponent implements OnInit {
   newClient: Client = {_id: '', fullname: '', address: '', phone: '', email: ''};
   newCar: Car = {make: '', model: '', year: '', engine: ''};
   selectedClient: Client | null = null;
-  selectedSlot: string | null = null;
+  selectedSlot: string[] | null = null;
   selectedLift: number | null = null;
   description: string | null = null;
   currentDate: moment.Moment
   isNewClient = false;
+  estimation = ''
   showModal = false;
   infoModal = false;
   client: Client | null = null;
@@ -76,11 +77,11 @@ export class CalendarComponent implements OnInit {
   }
 
   isSunday() {
-    return this.currentDate.day()=== 0
+    return this.currentDate.day() === 0
   }
 
   isWeekDay(date: moment.Moment) {
-    return date.day() !==0
+    return date.day() !== 0
   }
 
   selectedDate(date: moment.Moment) {
@@ -100,9 +101,9 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  async saveAgenda() {
+  async saveAgenda(estimation: string) {
     if (this.selectedSlot && this.selectedLift && this.description) {
-      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, this.currentDate.toDate().toLocaleDateString());
+      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, this.currentDate.toDate().toLocaleDateString(), estimation);
     }
     this.description = null
     this.toast?.show(false, 'Termini u rezervua me sukses')
@@ -144,19 +145,22 @@ export class CalendarComponent implements OnInit {
   }
 
   reserveSlot(liftIndex: number, slotIndex: number, slot: Timeslot): void {
-    this.selectedSlot = slot.time;
+    this.selectedSlot = [slot.time];
     this.selectedLift = liftIndex + 1;
   }
 
-  openModal(newAgenda: boolean, liftNumber?: number, slot?: string): void {
+  openModal(newAgenda: boolean, liftNumber?: number, slot?: any): void {
     if (!newAgenda) {
       this.description = null
       this.showModal = true;
+      this.client = null
+      this.car=null
     } else {
       if (liftNumber && slot) {
         for (const test of this.agenda) {
           for (const lift of test.lift) {
-            if (lift.time === slot && lift.lift === liftNumber) {
+            if (lift.time.includes(slot) && lift.lift === liftNumber) {
+              console.log(lift.car)
               this.car = lift.car;
               this.client = lift.client;
               this.description = lift.service;
@@ -177,23 +181,34 @@ export class CalendarComponent implements OnInit {
     this.isNewClient = !this.isNewClient;
   }
 
-  private updateReservedStatus(liftNumber: number, time: string, newReservedStatus: boolean): void {
+  private updateReservedStatus(liftNumber: number, time: string[], newReservedStatus: boolean): void {
     const lift = this.lifts.find(l => l.lift === liftNumber);
     if (lift) {
-      const slot = lift.timeslots.find(s => s.time === time);
-      if (slot) {
-        slot.reserved = newReservedStatus;
-      }
+      time.forEach(slotTime => {
+        const slot = lift.timeslots.find(s => s.time === slotTime);
+        if (slot) {
+          slot.reserved = newReservedStatus;
+        }
+      });
     }
   }
 
-  showAgenda(liftNumber: any, slot: any): string | null {
+  showAgenda(liftNumber: any, slot: any): string  {
     for (const test of this.agenda) {
       for (const lift of test.lift) {
-        if (lift.time === slot && lift.lift === liftNumber) {
-          this.car = lift.car;
-          this.client = lift.client;
-          return lift.service
+        if (lift.time.includes(slot) && lift.lift === liftNumber) {
+          return lift.service + '--' + lift.client?.fullname
+        }
+      }
+    }
+    return 'Lir'
+  }
+
+  showAgendaClient(liftNumber: any, slot: any): string | undefined {
+    for (const test of this.agenda) {
+      for (const lift of test.lift) {
+        if (lift.time.includes(slot) && lift.lift === liftNumber) {
+          return lift.client?.fullname
         }
       }
     }

@@ -13,9 +13,9 @@
       <div class="slot-container"  *ngFor="let slot of item.timeslots;index as i">
        <div class="slot-time"> {{slot.time}}</div>
         <div class="agenda-slot">
-          <div class="slot" [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
+          <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot" [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
                (click)="reserveSlot(item.lift - 1, i,slot);openModal(slot.reserved,item.lift,slot.time)">
-            {{ slot.reserved ? showAgenda(item.lift,slot.time) : 'I Lir' }}
+            {{ (slot.reserved ? showAgenda(item.lift,slot.time) : 'I Lir')  | truncate:20}}
           </div>
         </div>
       </div>
@@ -57,6 +57,10 @@
           <h3>Numri Telefonit</h3>
           <input [(ngModel)]="newClient.phone" placeholder="0701234567" type="text">
         </div>
+        <div class="info-section">
+          <h3>Numri Oreve te nevojshem per servis</h3>
+          <input [(ngModel)]="estimation" placeholder="p.sh 2/3/5" type="text">
+        </div>
       </div>
 
       <ng-template #existingClientForm>
@@ -75,6 +79,10 @@
                 <option *ngFor="let car of cars">{{car.model}}</option>
               </select>
             </div>
+            <div class="select-wrapper">
+              <h3>Numri Oreve te nevojshem per servis</h3>
+              <input [(ngModel)]="estimation" placeholder="p.sh 2/3/5" type="text">
+            </div>
           </div>
         </div>
 
@@ -89,7 +97,7 @@
     </div>
 
     <div>
-      <div  (click)="saveAgenda()" style="margin-top: 20px" class="text-center buttoni" >Rezervo</div>
+      <div  (click)="saveAgenda(estimation)" style="margin-top: 20px" class="text-center buttoni" >Rezervo</div>
     </div>
   </div>
 </div>
@@ -102,21 +110,19 @@
       <div>
         <p><strong>Emri dhe Mbiemri:</strong> {{client?.fullname}}</p>
         <p><strong>Numri Telefonit:</strong> {{client?.phone}}</p>
-        <p><strong>Adresa:</strong> {{client?.address}}</p>
-        <p><strong>Email:</strong> {{client?.email}}</p>
       </div>
     </div>
       <h2> Informacionet e Makines</h2>
     <div class="car-info">
       <div>
-        <p><strong>Brendi:</strong> {{car?.model}}</p>
-        <p><strong>Modeli:</strong> {{car?.make}}</p>
+        <p><strong>Brendi:</strong> {{car?.make}}</p>
+        <p><strong>Modeli:</strong> {{car?.model}}</p>
         <p><strong>Motori:</strong> {{car?.engine}}</p>
         <p><strong>Viti:</strong> {{car?.year}}</p>
       </div>
     </div>
     <div class="action">
-      <textarea [(ngModel)]="description" placeholder="What needs to be done" style="height: 100%; width: 90%; font-size: 20px"></textarea>
+      <textarea [(ngModel)]="description" disabled [style.resize]="'none'" placeholder="What needs to be done" style="height: 100%; width: 100%; font-size: 20px"></textarea>
       <div (click)="closeModal()" class="buttoni">Mbyll</div>
     </div>
   </div>

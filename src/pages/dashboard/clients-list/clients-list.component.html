@@ -14,7 +14,8 @@
   <ul class="client-list">
     <li *ngFor="let client of filteredClients">
 
-      <div [routerLink]="client._id" class="client-details">
+      <div  class="client-details">
+        <div [routerLink]="client._id" class="client-details" style="display: flex;justify-content: space-between;width: 50%">
         <div class="client-info">
           <span class="client-label">Name:</span>
           <span class="client-name">{{ client.fullname }}</span>
@@ -22,6 +23,11 @@
         <div class="client-info">
           <span class="client-label">Email:</span>
           <span class="client-email">{{ client.email }}</span>
+        </div>
+        </div>
+        <div (click)="selectedId=client._id;deleteModal=true" class="client-info fshi" style="display: flex;align-items: center">
+          <span class="client-label">Fshi</span>
+          <span class="material-symbols-outlined client-name close-icon" >close</span>
         </div>
       </div>
     </li>
@@ -53,3 +59,37 @@
     </form>
   </div>
 </div>
+
+<div class="modal" [class.show-modal]="deleteModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined" (click)="deleteModal=false">close</span>
+    <div>
+      &nbsp;
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <h2>
+      A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
+    </h2>
+    <div>
+      &nbsp;
+    </div>
+    <span class="material-symbols-outlined close-icon" style="font-size: 60px;color: red">
+      close
+    </span>
+    <div>
+      &nbsp;
+    </div>
+    <h3>
+      Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
+      vazhdoni ti keni ne arhive
+    </h3>
+    <div (click)="deleteClient(selectedId);deleteModal=false" style="margin-top: 20px" class="text-center buttoni">FSHI</div>
+  </div>
+</div>
+
+<app-toaster></app-toaster>

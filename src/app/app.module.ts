@@ -19,6 +19,8 @@ import {CookieInterceptor} from "../interceptor";
 import {DateSliderComponent} from "../pages/dashboard/dashboard/calendar/date-slider/date-slider.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ToasterComponent} from "../pages/compo/toaster/toaster.component";
+import {TruncatePipe} from "../utils/truncate.pipe";
+import {TooltipDirective} from "../utils/tooltip.directive";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {ToasterComponent} from "../pages/compo/toaster/toaster.component";
     StorageComponent,
     ClientCarInfoComponent,
     DateSliderComponent,
-    ToasterComponent
+    ToasterComponent,
+    TruncatePipe,
+    TooltipDirective
   ],
   imports: [
     BrowserModule,

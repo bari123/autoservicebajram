@@ -43,13 +43,23 @@
 
 .client-details {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 
-.client-details div {
-  flex: 1;
-  padding-right: 10px;
+.fshi:hover {
+  background-color: red;
+  border-radius: 20px;
+  padding: 10px;
+  color: black;
+}
+
+.fshi .client-name:hover{
+  color: black;
+}
+
+.close-icon{
+  color: red;
 }
 
 .client-details div:last-child {

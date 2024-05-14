@@ -287,3 +287,17 @@ input {
     margin: 5px 0; /* Adjust margin for slots */
   }
 }
+
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-wrap: normal;
+  top:20%;
+  left:100%;
+  z-index: 9999;
+}
