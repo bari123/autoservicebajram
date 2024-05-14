@@ -1,0 +1,64 @@
+/*!* styles.css *!*/
+
+/*.coming-soon-container {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  width: 90vw;*/
+/*  height: 90vh;*/
+
+/*  justify-content: center;*/
+/*}*/
+
+/*.countdown {*/
+/*  margin-top: 50px;*/
+/*}*/
+
+/*.timer {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*.time-block {*/
+/*  margin: 0 10px;*/
+/*}*/
+
+/*#days,*/
+/*#hours,*/
+/*#minutes,*/
+/*#seconds {*/
+/*  font-size: 24px;*/
+/*  font-weight: bold;*/
+/*}*/
+
+/* styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.coming-soon-container {
+  position: absolute;
+  top: 20%;
+  left: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 100px;
+  color: #fff; /* Text color */
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: orange;
+}
+
+
