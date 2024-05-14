@@ -59,6 +59,7 @@
 }
 
 .close-icon{
+  align-self: center;
   color: red;
 }
 
@@ -170,6 +171,12 @@
 }
 
 @media screen and (max-width: 768px) {
+  .client-details{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80vw ;
+  }
   .text-center{
     text-align: center;
   }

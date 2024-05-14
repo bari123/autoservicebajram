@@ -1,4 +1,8 @@
-<div class="main-container">
+<div style="width: 100vw" class="main-container" *ngIf="serviceHistory.length===0">
+ <h1 style="text-align: center;justify-content: center;align-items: center">Ska Rezultate</h1>
+</div>
+
+<div style="width: 100vw" class="main-container" *ngIf="serviceHistory.length>0">
   <div class="service-history">
     <div *ngFor="let history of serviceHistory">
       <div (click)="setService(history)">
