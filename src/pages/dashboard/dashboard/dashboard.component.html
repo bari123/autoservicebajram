@@ -2,7 +2,7 @@
   <div class="left-side">
     <div class="menu">
       <ul>
-        <li><div (click)="logOut()" class="logout-icon"><span class="material-symbols-outlined">logout</span>Dil</div></li>
+        <li><a (click)="logOut()" class="logout-icon"><span class="material-symbols-outlined">logout</span>Dil</a></li>
         <li><a *ngIf="localStorage.getItem('role')==='admin'" [routerLink]="'/dashboard/clients-list'">Klientet</a></li>
         <li><a [routerLink]="'/dashboard/calendar'">Terminet</a></li>
         <li><a *ngIf="localStorage.getItem('role') ==='admin'" [routerLink]="'/dashboard/storage'">Magazina</a></li>

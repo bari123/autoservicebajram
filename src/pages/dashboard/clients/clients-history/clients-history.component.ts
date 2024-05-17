@@ -30,9 +30,9 @@ export class ClientsHistoryComponent implements OnInit {
     this.showModal = false
   }
 
-  openModal(test: any) {
+  openModal(service: any) {
     this.showModal = true
-    this.info = test
+    this.info = service
   }
 
   async getService() {

@@ -28,9 +28,13 @@ export class ClientCarInfoComponent implements OnInit {
     return await this.service.getServicesByCar(this.route.snapshot.paramMap.get('id'), this.route.snapshot.paramMap.get('carId'))
   }
 
+  async getCar(){
+    return await this.service.getClientCarByCarId(this.route.snapshot.paramMap.get('id'),this.route.snapshot.paramMap.get('carId'))
+  }
+
   async ngOnInit() {
+    this.car=await this.getCar()
     this.serviceHistory = await this.getServiceByCar().then(res=>{
-      this.car=res.car
       this.newService=res.service[0]
       return res.service
     })

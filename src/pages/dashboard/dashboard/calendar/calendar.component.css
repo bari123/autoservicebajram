@@ -116,13 +116,18 @@
 }
 
 .reserved {
-  background-color: #ffcccc;
-  color: #ff0000;
+  background-color: red;
+  color: white;
 }
 
 .available {
-  background-color: #ccffcc;
-  color: #008000;
+  background-color: #0000FF;
+  color: white;
+}
+
+.done {
+  background-color: #00FF00;
+  color: white;
 }
 
 /* Client and Car Select Styles */
@@ -180,6 +185,27 @@ input {
   padding: 12px 20px;
   cursor: pointer;
   font-size: 16px;
+}
+
+.finish-work-button{
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.finish-work-button:hover{
+  background-color: #007bff;
+  transform: translateY(-2px);
+}
+
+.finish-work-buttons{
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .buttoni:hover {

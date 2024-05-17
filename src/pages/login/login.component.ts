@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {GlobalService} from "../../app/global.service";
 import {Router} from "@angular/router";
 import * as jwt_decode from "jwt-decode";
+import {ToasterComponent} from "../compo/toaster/toaster.component";
 
 
 @Component({
@@ -11,6 +12,7 @@ import * as jwt_decode from "jwt-decode";
 })
 export class LoginComponent {
 
+  @ViewChild(ToasterComponent) toast?: ToasterComponent;
   constructor(private service:GlobalService,private router:Router) {
   }
 
@@ -31,7 +33,7 @@ export class LoginComponent {
     let role
     let token = await this.service.login(this.user).catch(err=>{
       if(err.response.status===401){
-        alert('USER APO PASSWORDI GABIM')
+       this.toast?.show(true,'USERNAME APO PASSWORDI GABIM')
       }
     })
     role=this.getDecodedAccessToken(token)
@@ -44,6 +46,7 @@ export class LoginComponent {
       }else{
       await this.router.navigate(['/dashboard'])
       }
+      this.toast?.show(false,'Useri u logua me sukses')
     }
   }
 }

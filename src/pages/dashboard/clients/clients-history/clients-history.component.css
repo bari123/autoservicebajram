@@ -22,11 +22,11 @@
   list-style-type: none;
   padding: 0;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .history-list:hover {
-  font-size: 22px;
+  font-size: 17px;
   color: red;
 }
 

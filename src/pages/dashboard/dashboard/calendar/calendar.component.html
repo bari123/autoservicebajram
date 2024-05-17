@@ -1,133 +1,171 @@
-
-<div class="calendar-container" >
+<div class="calendar-container">
   <app-date-slider style="width: 100%" (dateSelected)="selectedDate($event)"></app-date-slider>
-<div class="agneda-container" >
-  <div class="time" >
-    <div  *ngFor="let slot of lifts[0].timeslots">
-      {{ slot.time }}
+  <div class="agneda-container">
+    <div class="time">
+      <div *ngFor="let slot of lifts[0].timeslots">
+        {{ slot.time }}
+      </div>
     </div>
-  </div>
-  <div *ngFor="let item of lifts">
-    <h3 class="text-center">Lifti {{item.lift}}</h3>
-    <div class="slots-main">
-      <div class="slot-container"  *ngFor="let slot of item.timeslots;index as i">
-       <div class="slot-time"> {{slot.time}}</div>
-        <div class="agenda-slot">
-          <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot" [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved}"
-               (click)="reserveSlot(item.lift - 1, i,slot);openModal(slot.reserved,item.lift,slot.time)">
-            {{ (slot.reserved ? showAgenda(item.lift,slot.time) : 'I Lir')  | truncate:20}}
+    <div *ngFor="let item of lifts">
+      <h3 class="text-center">Lifti {{item.lift}}</h3>
+      <div class="slots-main">
+        <div class="slot-container" *ngFor="let slot of item.timeslots;index as i">
+          <div class="slot-time"> {{slot.time}}</div>
+          <div class="agenda-slot">
+            <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot"
+                 [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved,'done':isDoneAgenda(item.lift,slot.time)}"
+                 (click)="reserveSlot(item.lift - 1, i,slot);openModal({newAgenda : slot.reserved, liftNumber : item.lift, slot : slot.time, doneModal : isDoneAgenda(item.lift,slot.time)})">
+              {{ (slot.reserved ? showAgenda(item.lift, slot.time) : 'I Lir')  | truncate:20}}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
-
-<div class="modal" [class.show-modal]="showModal">
-  <div class="modal-content">
-    <span class="close material-symbols-outlined"  (click)="closeModal()">close</span>
-    <div style="display: flex;flex-direction: column">
-
-    <div class="buttoni is-new-client-button" (click)="toggleClientSelection()">{{ isNewClient ? 'Zgjidh Klientin Ekzistues' : 'Shto Klient te Ri' }}</div>
-    <div class="is-new-client-content">
-      <div *ngIf="isNewClient; else existingClientForm" class="container">
-        <div class="info-section">
-          <h3>Emri dhe Mbiemri</h3>
-          <input [(ngModel)]="newClient.fullname" placeholder="Emri dhe Mbiemri" type="text">
-        </div>
-        <div class="info-section">
-          <h3>Brendi Makines</h3>
-          <input [(ngModel)]="newCar.make" placeholder="p.sh Mercedes/BMW" type="text">
-        </div>
-        <div class="info-section">
-          <h3>Modeli Makines</h3>
-          <input [(ngModel)]="newCar.model" placeholder="p.sh C-Class/E-Class" type="text">
-        </div>
-        <div class="info-section">
-          <h3>Viti Makines</h3>
-          <input [(ngModel)]="newCar.year" placeholder="Viti makines" type="text">
-        </div>
-        <div class="info-section">
-          <h3>Motori</h3>
-          <input [(ngModel)]="newCar.engine" placeholder="p.sh 2.0/3.0/5.0" type="text">
-        </div>
-        <div class="info-section">
-          <h3>Numri Telefonit</h3>
-          <input [(ngModel)]="newClient.phone" placeholder="0701234567" type="text">
-        </div>
-        <div class="info-section">
-          <h3>Numri Oreve te nevojshem per servis</h3>
-          <input [(ngModel)]="estimation" placeholder="p.sh 2/3/5" type="text">
-        </div>
-      </div>
-
-      <ng-template #existingClientForm>
-        <div class="container">
-          <div class="client-section">
-            <div class="select-wrapper">
-              <h3>Klienti</h3>
-              <select class="select-client" [(ngModel)]="selectedClient" (change)="loadCars()">
-                <option [ngValue]="client" *ngFor="let client of clients">{{client.fullname}}</option>
-              </select>
+  <div class="modal" [class.show-modal]="showModal">
+    <div class="modal-content">
+      <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+      <div style="display: flex;flex-direction: column">
+        <div class="buttoni is-new-client-button" style="width: 30%"
+             (click)="toggleClientSelection()">{{ isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri' }}</div>
+        <div class="is-new-client-content">
+          <div *ngIf="isNewClient; else existingClientForm" class="container">
+            <div class="info-section">
+              <h3>Emri dhe Mbiemri</h3>
+              <input [(ngModel)]="newClient.fullname" placeholder="Emri dhe Mbiemri" type="text">
             </div>
-
-            <div class="select-wrapper">
-              <h3>Makina e klientit</h3>
-              <select class="select-car" [disabled]="cars.length === 0">
-                <option *ngFor="let car of cars">{{car.model}}</option>
-              </select>
+            <div class="info-section">
+              <h3>Brendi Makines</h3>
+              <input [(ngModel)]="newCar.make" placeholder="p.sh Mercedes/BMW" type="text">
             </div>
-            <div class="select-wrapper">
+            <div class="info-section">
+              <h3>Modeli Makines</h3>
+              <input [(ngModel)]="newCar.model" placeholder="p.sh C-Class/E-Class" type="text">
+            </div>
+            <div class="info-section">
+              <h3>Viti Makines</h3>
+              <input [(ngModel)]="newCar.year" placeholder="Viti makines" type="text">
+            </div>
+            <div class="info-section">
+              <h3>Motori</h3>
+              <input [(ngModel)]="newCar.engine" placeholder="p.sh 2.0/3.0/5.0" type="text">
+            </div>
+            <div class="info-section">
+              <h3>Numri Telefonit</h3>
+              <input [(ngModel)]="newClient.phone" placeholder="0701234567" type="text">
+            </div>
+            <div class="info-section">
               <h3>Numri Oreve te nevojshem per servis</h3>
               <input [(ngModel)]="estimation" placeholder="p.sh 2/3/5" type="text">
             </div>
           </div>
-        </div>
 
-      </ng-template>
-      <div class="description-content" >
-        <div class="info-section" style="height: 100%">
-          <h3>Cka duhet te punoheat</h3>
-          <textarea [(ngModel)]="description" [style.resize]="'none'" placeholder="Cka duhet bere" style="height: 60%;width: 100%;font-size: 20px"></textarea>
+          <ng-template #existingClientForm>
+            <div class="container">
+              <div class="client-section">
+                <div class="select-wrapper">
+                  <h3>Klienti</h3>
+                  <select class="select-client" [(ngModel)]="selectedClient" (change)="loadCars()">
+                    <option [ngValue]="client" *ngFor="let client of clients">{{client.fullname}}</option>
+                  </select>
+                </div>
+
+                <div class="select-wrapper">
+                  <h3>Makina e klientit</h3>
+                  <select class="select-car" [(ngModel)]="selectedCar" [disabled]="cars.length === 0">
+                    <option [ngValue]="car" *ngFor="let car of cars">{{car.model}}</option>
+                  </select>
+                </div>
+                <div class="select-wrapper">
+                  <h3>Numri Oreve te nevojshem per servis</h3>
+                  <input [(ngModel)]="estimation" placeholder="p.sh 2/3/5" type="text">
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <div class="description-content">
+            <div class="info-section" style="height: 100%">
+              <h3>Cka duhet te punohet</h3>
+              <textarea [(ngModel)]="description" [style.resize]="'none'" placeholder="Cka duhet bere"
+                        style="height: 60%;width: 100%;font-size: 20px"></textarea>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
 
-    <div>
-      <div  (click)="saveAgenda(estimation)" style="margin-top: 20px" class="text-center buttoni" >Rezervo</div>
+      <div class="finish-work-buttons">
+        <div (click)="saveAgenda(estimation)" style="width: 100%" class="text-center buttoni">{{selectedLiftId!==null?'Edito':'Rezervo'}}</div>
+        <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true" class="finish-work-button" style="width: 100%">Perfundo Punen</div>
+        <div *ngIf="selectedLiftId!==null" (click)="deleteAgenda()"  class="text-center buttoni" style="width: 100%">Fshi</div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="modal" [class.show-modal]="infoModal">
-  <div class="modal-content">
-    <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+  <div class="modal" [class.show-modal]="infoModal">
+    <div class="modal-content">
+      <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
       <h2>Informacionet e Klientit</h2>
-    <div class="client-info">
-      <div>
-        <p><strong>Emri dhe Mbiemri:</strong> {{client?.fullname}}</p>
-        <p><strong>Numri Telefonit:</strong> {{client?.phone}}</p>
+      <div class="client-info">
+        <div>
+          <p><strong>Emri dhe Mbiemri:</strong> {{client.fullname}}</p>
+          <p><strong>Numri Telefonit:</strong> {{client.phone}}</p>
+        </div>
       </div>
-    </div>
       <h2> Informacionet e Makines</h2>
-    <div class="car-info">
+      <div class="car-info">
+        <div>
+          <p><strong>Brendi:</strong> {{car?.make}}</p>
+          <p><strong>Modeli:</strong> {{car?.model}}</p>
+          <p><strong>Motori:</strong> {{car?.engine}}</p>
+          <p><strong>Viti:</strong> {{car?.year}}</p>
+        </div>
+      </div>
       <div>
-        <p><strong>Brendi:</strong> {{car?.make}}</p>
-        <p><strong>Modeli:</strong> {{car?.model}}</p>
-        <p><strong>Motori:</strong> {{car?.engine}}</p>
-        <p><strong>Viti:</strong> {{car?.year}}</p>
+        <textarea [(ngModel)]="description" disabled [style.resize]="'none'" placeholder="What needs to be done"
+                  style="height: 80px; width: 100%; font-size: 20px"></textarea>
+      <div class="finish-work-buttons">
+        <div (click)="closeModal()" style="width: 100%" class="buttoni">Mbyll</div>
+        <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true" style="width: 100%" class="finish-work-button">Perfundo Punen</div>
+      </div>
       </div>
     </div>
-    <div class="action">
-      <textarea [(ngModel)]="description" disabled [style.resize]="'none'" placeholder="What needs to be done" style="height: 80px; width: 100%; font-size: 20px"></textarea>
-      <div (click)="closeModal()" class="buttoni">Mbyll</div>
+  </div>
+
+  <div class="modal" [class.show-modal]="finishWorkModal">
+    <div class="modal-content">
+      <span class="close material-symbols-outlined" (click)="finishWorkModal=false">close</span>
+      <div style="display: flex;flex-direction: column">
+      <h2>A jeni te sigurt se doni te perfundoni punen ?</h2>
+      <span class="material-symbols-outlined" style="font-size: 70px;color: green;align-self: center">check</span>
+      <h4 style="text-align: center">Kujdes !!! Ky aksion nuk mund te zhbehet</h4>
+      </div>
+
+      <div class="finish-work-buttons">
+        <div (click)="closeModal()" class="buttoni" style="width: 100%">Mbyll</div>
+        <div (click)="finishWork()" class="finish-work-button" style="width: 100%">Perfundo Punen</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" [class.show-modal]="doneModals">
+    <div class="modal-content">
+      <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
+      <div style="display: flex;flex-direction: column">
+        <h2>Puna esht perfunduar me sukses</h2>
+        <h3>Koha e harxhuar per  pune : {{estimation}}</h3>
+        <h3>Klienti :  {{client.fullname}}</h3>
+        <h3>Makina : {{newCar.make + ' ' + newCar.model}}</h3>
+        <h3>Pune e kryer : {{description}}</h3>
+      </div>
+
+      <div class="finish-work-buttons">
+        <div (click)="this.closeModal()" class="buttoni" style="width: 100%">Mbyll</div>
+      </div>
     </div>
   </div>
 </div>
 
-</div>
-
-  <app-toaster></app-toaster>
+<app-toaster></app-toaster>

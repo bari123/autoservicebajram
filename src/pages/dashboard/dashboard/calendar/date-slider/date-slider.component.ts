@@ -38,12 +38,15 @@ export class DateSliderComponent implements OnInit {
     this.currentDate.subtract(1, 'week');
     this.selectedIndex = this.currentDate.day() - 1;
     this.generateDates();
+    this.emitDate(this.currentDate)
+
   }
 
   nextWeek() {
     this.currentDate.add(1, 'week');
     this.selectedIndex = this.currentDate.day() - 1;
     this.generateDates();
+    this.emitDate(this.currentDate)
   }
 
   prevDay() {

@@ -30,13 +30,17 @@ interface Lift {
   time: string[];
   lift: number;
   timeslots: Timeslot[];
+  status: string;
 }
 
 interface AgendaSlot {
+  _id: string;
   lift: Lift[];
   client: Client;
   car: Car;
   service: string;
+  status: string
+  estimation: string
 }
 
 
@@ -53,15 +57,19 @@ export class CalendarComponent implements OnInit {
   newClient: Client = {_id: '', fullname: '', address: '', phone: '', email: ''};
   newCar: Car = {make: '', model: '', year: '', engine: ''};
   selectedClient: Client | null = null;
+  selectedCar: Car | null = null;
   selectedSlot: string[] | null = null;
   selectedLift: number | null = null;
+  selectedLiftId: string | null = null
   description: string | null = null;
   currentDate: moment.Moment
   isNewClient = false;
   estimation = ''
   showModal = false;
+  finishWorkModal = false;
+  doneModals=false
   infoModal = false;
-  client: Client | null = null;
+  client: Client = {_id: '', fullname: '', address: '', phone: '', email: ''};
   car: Car | null = null;
   lifts: Lift[] = [];
 
@@ -69,8 +77,7 @@ export class CalendarComponent implements OnInit {
     this.currentDate = moment();
   }
 
-  ngOnInit(): void {
-
+  ngOnInit() {
     this.loadAgenda();
     this.loadClients();
     this.initializeLifts();
@@ -103,6 +110,9 @@ export class CalendarComponent implements OnInit {
 
   async saveAgenda(estimation: string) {
     if (this.selectedSlot && this.selectedLift && this.description) {
+      if (this.selectedCar !== null) {
+        this.newCar = this.selectedCar
+      }
       await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, this.currentDate.toDate().toLocaleDateString(), estimation);
     }
     this.description = null
@@ -110,6 +120,15 @@ export class CalendarComponent implements OnInit {
     this.closeModal()
     this.loadAgenda()
   }
+
+  async deleteAgenda(){
+    await this.service.deleteAgenda(this.selectedLiftId).then(res=>{
+      this.closeModal()
+      this.loadAgenda()
+      this.toast?.show(false,'Termini u fshi me sukses')
+    })
+  }
+
 
   async loadAgenda() {
     this.agenda = await this.service.getAgenda(this.currentDate.toDate().toLocaleDateString());
@@ -149,31 +168,90 @@ export class CalendarComponent implements OnInit {
     this.selectedLift = liftIndex + 1;
   }
 
-  openModal(newAgenda: boolean, liftNumber?: number, slot?: any): void {
-    if (!newAgenda) {
-      this.description = null
-      this.showModal = true;
-      this.client = null
-      this.car=null
-    } else {
+  openModal({newAgenda, liftNumber, slot, doneModal}: {
+    newAgenda: boolean,
+    liftNumber?: number,
+    slot?: any,
+    doneModal: any
+  }) {
+
+    if (!newAgenda && localStorage.getItem('role') === 'user') {
+      this.toast?.show(true, 'Roli juaj nuk mund te rezervoj termin')
+      return
+    }
+    if (localStorage.getItem('role') === 'admin') {
+      if(doneModal){
+        this.doneModals=true
+      }else{
+      this.isNewClient = true
+        this.showModal = true;
+
+      }
       if (liftNumber && slot) {
         for (const test of this.agenda) {
           for (const lift of test.lift) {
             if (lift.time.includes(slot) && lift.lift === liftNumber) {
+              this.selectedLiftId = test._id
               this.car = lift.car;
+              // @ts-ignore
+              this.newCar = lift.car
+              // @ts-ignore
               this.client = lift.client;
+              // @ts-ignore
+              this.newClient = lift.client
+              this.description = lift.service;
+              this.estimation = test.estimation
+            }
+          }
+        }
+      }
+    } else {
+
+      if (liftNumber && slot) {
+        for (const test of this.agenda) {
+          for (const lift of test.lift) {
+            if (lift.time.includes(slot) && lift.lift === liftNumber) {
+              this.selectedLiftId = test._id
+              this.car = lift.car;
+              // @ts-ignore
+              this.newCar = lift.car
+              // @ts-ignore
+              this.client = lift.client;
+              // @ts-ignore
+              this.newClient = lift.client
               this.description = lift.service;
             }
           }
         }
       }
-      this.infoModal = true;
+      if(doneModal){
+        this.doneModals=true
+      }else{
+        this.infoModal = true;
+      }
     }
   }
 
   closeModal(): void {
     this.showModal = false;
     this.infoModal = false
+    this.finishWorkModal = false;
+    this.doneModals=false;
+    this.newClient = {_id: '', fullname: '', address: '', phone: '', email: ''};
+    this.newCar = {make: '', model: '', year: '', engine: ''};
+    this.description = ''
+    this.estimation = ''
+    this.selectedLiftId=null
+  }
+
+  async finishWork() {
+    await this.service.editAgendaService(this.selectedLiftId).then(res => {
+      if (res.status === 201) {
+        this.toast?.show(false, 'Puna perfundoj me sukses')
+        this.loadAgenda()
+        this.closeModal()
+      }
+    })
   }
 
   toggleClientSelection(): void {
@@ -192,7 +270,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  showAgenda(liftNumber: any, slot: any): string  {
+  showAgenda(liftNumber: any, slot: any): string {
     for (const test of this.agenda) {
       for (const lift of test.lift) {
         if (lift.time.includes(slot) && lift.lift === liftNumber) {
@@ -203,14 +281,14 @@ export class CalendarComponent implements OnInit {
     return 'Lir'
   }
 
-  showAgendaClient(liftNumber: any, slot: any): string | undefined {
-    for (const test of this.agenda) {
-      for (const lift of test.lift) {
-        if (lift.time.includes(slot) && lift.lift === liftNumber) {
-          return lift.client?.fullname
+  isDoneAgenda(liftNumber: any, slot: any): boolean {
+    for (const agenda of this.agenda) {
+      for (const lift of agenda.lift) {
+        if (lift.time.includes(slot) && lift.lift === liftNumber && lift.status === 'Done') {
+          return true
         }
       }
     }
-    return 'Lir'
+    return false
   }
 }

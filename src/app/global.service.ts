@@ -50,6 +50,12 @@ export class GlobalService {
     })
   }
 
+  async getClientCarByCarId(id:string | null,carId:string |null){
+    return await this.axiosInstance.get(`/clients/${id}/getCar/${carId}`).then(res => {
+      return res.data.cars[0]
+    })
+  }
+
   async editCarById( clientId: string | null,carId:string,car:any){
     return await this.axiosInstance.patch(`/clients/${clientId}/car/${carId}`,car).then(res=>{
 
@@ -81,6 +87,14 @@ export class GlobalService {
 
       return {service: res.data.service, car: res.data.cars}
     })
+  }
+
+  async editAgendaService(serviceId:string|null){
+    return await this.axiosInstance.post(`/agenda/${serviceId}/finish`)
+  }
+
+  async deleteAgenda(serviceId:string|null){
+    return await this.axiosInstance.delete(`/agenda/${serviceId}`)
   }
 
   async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any,date:string,estimation:string) {
