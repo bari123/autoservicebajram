@@ -1,15 +1,54 @@
-<div class="container">
-  <div class="left-side">
-    <div class="menu">
-      <ul>
-        <li><a (click)="logOut()" class="logout-icon"><span class="material-symbols-outlined">logout</span>Dil</a></li>
-        <li><a *ngIf="localStorage.getItem('role')==='admin'" [routerLink]="'/dashboard/clients-list'">Klientet</a></li>
-        <li><a [routerLink]="'/dashboard/calendar'">Terminet</a></li>
-        <li><a *ngIf="localStorage.getItem('role') ==='admin'" [routerLink]="'/dashboard/storage'">Magazina</a></li>
-      </ul>
+<div class="container flex flex-direction-row fullHeight fullWidth">
+
+  <div class="left-side flex flex-direction-column justify-content-space-between  ">
+
+    <div class="underline-nav fullWidth mt-20 cursor-pointer">
+      <li><a class="flex  align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/clients-list')"
+             *ngIf="localStorage.getItem('role')==='admin'"
+             [routerLink]="'/dashboard/clients-list'"><span class="material-symbols-outlined">people</span>Klientet
+      </a></li>
+      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/calendar')" [routerLink]="'/dashboard/calendar'"><span
+        class="material-symbols-outlined">calendar_month</span>Terminet
+      </a></li>
+      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')" *ngIf="localStorage.getItem('role') ==='admin'"
+             [routerLink]="'/dashboard/storage'"><span class="material-symbols-outlined">warehouse</span>Magazina
+      </a></li>
+    </div>
+    <div (click)="logOut()" class="logout-icon flex align-items-center menuItem  cursor-pointer "><span
+      class="material-symbols-outlined">logout</span>Dil
     </div>
   </div>
-  <div class="right-side">
-    <router-outlet style="height: 100%"></router-outlet>
+  <div class="right-side fullWidth flex flex-direction-column ">
+    <div style="background-color: red" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
+      <span class="material-symbols-outlined">menu</span>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+<div class="modals flex fullWidth flex-direction-column" [class.show-modal]="mobileMenuToggle">
+  <div (click)="mobileMenuToggle=!mobileMenuToggle" class="fullWidth p-20 align-items-center flex menuStackContent">
+    <span class="material-symbols-outlined">menu</span>Close menu
+  </div>
+  <div
+    class="p-20 menuStackContent flex  flex-direction-column fullWidth fullHeight align-items-center justify-content-space-evenly ">
+
+    <div (click)="mobileMenuToggle=false" style="flex-wrap: wrap"
+         class="fullWidth menuSize flex flex-direction-column mt-20  justify-content-center align-content-center">
+      <div class="mt-20 gap-10 flex align-items-center"
+           *ngIf="localStorage.getItem('role')==='admin'"
+           [routerLink]="'/dashboard/clients-list'"><span class="menuSize material-symbols-outlined">people</span>Klientet
+      </div>
+      <div class="mt-20 gap-10 flex align-items-center" [routerLink]="'/dashboard/calendar'"><span
+        class="menuSize material-symbols-outlined">calendar_month</span>Terminet
+      </div>
+      <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
+           [routerLink]="'/dashboard/storage'"><span class="menuSize material-symbols-outlined">warehouse</span>Magazina
+      </div>
+    </div>
+    <div (click)="logOut()" class="logout-icon menuSize flex align-items-center   cursor-pointer "><span
+      class="menuSize material-symbols-outlined">logout</span>Dil
+    </div>
   </div>
 </div>

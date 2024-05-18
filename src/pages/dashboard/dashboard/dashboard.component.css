@@ -1,78 +1,114 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .left-side {
-  background-color: #dc3545; /* Red background */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 20px;
-}
-
-
-.menu ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menu ul li {
-  margin-bottom: 10px;
-}
-
-.menu ul li a {
-  text-decoration: none;
-  color: black; /* Menu item color */
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.menu ul li a:hover {
-  color: #f8f9fa; /* Light gray color on hover */
+  overflow: hidden;
+  background-color: #dc3545; /* Red background */
+  /*padding: 50px;*/
 }
 
 .right-side {
-  display: flex;
-  width: 100%;
   background-color: #f8f9fa; /* Light gray background */
-  color: #333;
+}
+
+.selected{
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+}
+
+.underline-nav a {
+  border-radius: 20px;
+  color: #000;
+  text-decoration: none;
+  padding: 10px;
+  position: relative;
+}
+
+.underline-nav a:hover {
+  color: white;
+}
+
+.underline-nav a {
+  color: #000;
+  text-decoration: none;
+  padding: 10px 32px;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.underline-nav li {
+  display: flex;
+  margin: 0 5px;
+}
+
+.underline-nav a:hover {
+  background-color: white;
+  color: black;
+}
+
+.underline-nav a:hover::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  left: 0;
+  bottom: -5px;
+  transition: all 0.3s ease-in-out;
+}
+.menuItem {
+  margin: 10px 30px 0 30px;
+  justify-content: space-between;
+  color: black;
+  font-size: 20px;
+}
+
+.menuItem :hover {
+  color: black;
+}
+
+
+.mobileMenu {
+  display: none;
+}
+
+
+.menuStack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+.menuSize {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.menuStackContent {
+  background-color: red;
 }
 
 @media screen and (max-width: 768px) {
   .container {
-    display: flex;
-    width: 100%;
+    overflow-y: auto;
     flex-direction: column;
   }
 
-
-  .left-side,
-  .right-side {
-    display: flex;
-    width: 100%;
+  .left-side {
+    display: none;
   }
 
-  .menu ul li {
-    margin-bottom: 5px;
+  .menuItem {
+    flex-direction: row;
+  }
+
+  .mobileMenu {
     display: flex;
   }
 
-  .menu ul {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-  }
-}
-
-.logout-icon {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 }
 

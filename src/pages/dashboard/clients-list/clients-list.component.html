@@ -1,53 +1,50 @@
-<div class="clients-container">
-  <div style="display: flex;justify-content: space-between;align-items: center">
+<div class="clients-container flex flex-direction-column">
+  <div class="flex justify-content-space-between align-items-center">
     <h2>Klientet</h2>
     <h2 (click)="switchModal()">
-      <div class="register-client" style="display: flex;justify-content: center;align-items: center;cursor: pointer;">
+      <div class="register-client flex justify-content-center align-items-center cursor-pointer">
         <span class="material-symbols-outlined">add</span>
         Regjistro Klient
       </div>
     </h2>
   </div>
-  <div class="search-bar">
-    <input class="input-search" type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
+  <div>
+    <input class="input-search flex fullWidth" type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
   </div>
   <ul class="client-list">
-    <li *ngFor="let client of filteredClients">
-
+    <li class="cursor-pointer" *ngFor="let client of filteredClients">
       <div class="client-details">
-        <div [routerLink]="client._id" class="client-details"
-             style="display: flex;justify-content: space-between;width: 50%">
+        <div [routerLink]="client._id"
+             class="client-details flex justify-content-space-evenly halfWidth align-items-center">
           <div class="client-info">
             <span class="client-label">Name:</span>
             <span class="client-name">{{ client.fullname }}</span>
           </div>
           <div class="client-info">
             <span class="client-label">Email:</span>
-            <span class="client-email">{{ client.email }}</span>
+            <span class="text-email">{{ client.email }}</span>
           </div>
         </div>
-        <div (click)="selectedId=client._id;deleteModal=true" class="client-info fshi "
-             style="display: flex;align-items: center">
+        <div (click)="selectedId=client._id;deleteModal=true" class="client-info flex align-items-center fshi ">
           <span class="client-label">Fshi</span>
-          <span class="material-symbols-outlined client-name close-icon">close</span>
+          <span class="material-symbols-outlined close-icon">close</span>
         </div>
       </div>
     </li>
   </ul>
 </div>
 
-<div class="modal" [class.show-modal]="showModal">
+<div class="modals" [class.show-modal]="showModal">
   <div class="modal-content">
     <span class="close" (click)="switchModal()">&times;</span>
     <h2>Shto Klient</h2>
-    <form>
-      <div class="form-group">
+      <div class="form-group mt-20 fullWidth">
         <label for="name">Emri dhe Mbiemri:</label>
-        <input type="text" id="name" name="name" [(ngModel)]="newClient.fullname" required>
+        <input  type="text" id="name" name="name" [(ngModel)]="newClient.fullname" required>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" [(ngModel)]="newClient.email" required>
+        <input class="text-email" type="email" id="email" name="email" [(ngModel)]="newClient.email" required>
       </div>
       <div class="form-group">
         <label for="phone">Telefoni:</label>
@@ -57,29 +54,27 @@
         <label for="address">Adresa:</label>
         <input type="text" id="address" name="address" [(ngModel)]="newClient.address">
       </div>
-      <div class="buttoni text-center" (click)="saveClient()">Shto</div>
-    </form>
+      <div class="button textCenter mt-20 flex align-items-center justify-content-center" (click)="saveClient()"><span class="material-symbols-outlined">add</span>Shto</div>
   </div>
 </div>
 
-<div class="modal" [class.show-modal]="deleteModal">
+<div class="modals" [class.show-modal]="deleteModal">
   <div class="modal-content">
-    <span class="close material-symbols-outlined" style="display: flex" (click)="deleteModal=false">close</span>
-    <div style="display: flex;justify-content: center;flex-direction: column;gap: 40px">
-    <h2 style="text-align: center">
-      A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
-    </h2>
-    <span class="material-symbols-outlined close-icon"
-          style="font-size: 60px;color: red;display: flex;text-align: center">
+    <span class="close material-symbols-outlined" (click)="deleteModal=false">close</span>
+    <div class="flex justify-content-center flex-direction-column gap-40">
+      <h2 class="textCenter" >
+        A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
+      </h2>
+      <span class="material-symbols-outlined close-icon align-self-center"
+            style="font-size: 60px;color: red">
       close
     </span>
-    <h3>
-      Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
-      vazhdoni ti keni ne arhive
-    </h3>
+      <h3 class="textCenter">
+        Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
+        vazhdoni ti keni ne arhive
+      </h3>
     </div>
-    <div (click)="deleteClient(selectedId);deleteModal=false" style="margin-top: 20px"
-         class="text-center buttoni">FSHi
+    <div (click)="deleteClient(selectedId);deleteModal=false" class="textCenter button mt-20 align-items-center flex justify-content-center"><span class="material-symbols-outlined">close</span>FSHi
     </div>
   </div>
 </div>

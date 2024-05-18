@@ -1,34 +1,9 @@
 .dashboard-container {
-  height: 100%;
-  width: 90vw;
   padding: 20px;
 }
 
 .info-block, .history-block {
-  background-color: #f8f9fa;
-  width: 100%;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.cars-block{
-  padding: 20px;
-}
-
-
-@media screen and (max-width: 768px) {
-  .dashboard-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  .info-block, .history-block {
-    grid-column: 1;
-  }
-}

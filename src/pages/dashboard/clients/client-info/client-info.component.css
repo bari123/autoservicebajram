@@ -1,24 +1,4 @@
-.info-content {
-  color: #555;
-}
-
-.info-content p {
-  margin-bottom: 10px;
-}
-
 .info-content strong {
   margin-right: 5px;
-  font-weight: bold;
 }
 
-.info-block {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.info-block h2 {
-  margin-bottom: 15px;
-  color: #333;
-}

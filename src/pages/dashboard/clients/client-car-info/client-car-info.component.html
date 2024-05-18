@@ -1,9 +1,9 @@
-<div style="width: 100vw" class="main-container" *ngIf="serviceHistory.length===0">
- <h1 style="text-align: center;justify-content: center;align-items: center">Ska Rezultate</h1>
+<div  class="main-container" *ngIf="serviceHistory.length===0">
+ <h1 class="textCenter justify-content-center align-items-center" >Ska Rezultate</h1>
 </div>
 
-<div style="width: 100vw" class="main-container" *ngIf="serviceHistory.length>0">
-  <div class="service-history">
+<div  class="main-container flex flex-direction-column" *ngIf="serviceHistory.length>0">
+  <div class="service-history fullWidth">
     <div *ngFor="let history of serviceHistory">
       <div (click)="setService(history)">
         {{ history?.createdAt }}
@@ -14,7 +14,7 @@
   <div class="service-description">
     <div class="car-info">
       <h1>Informacionet e makines</h1>
-      <div class="car-details">
+      <div class="flex flex-direction-row gap-40">
         <div>
           <h2>Brendi</h2>
           {{ car.model }}
@@ -75,7 +75,7 @@
       </div>
       <div>
         <h3>Description</h3>
-        <textarea class="textarea" [(ngModel)]="newService.description"></textarea>
+        <textarea class="textarea fullWidth" [(ngModel)]="newService.description"></textarea>
       </div>
     </div>
   </div>

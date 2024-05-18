@@ -1,17 +1,17 @@
-<div class="calendar-container">
-  <app-date-slider style="width: 100%" (dateSelected)="selectedDate($event)"></app-date-slider>
-  <div class="agneda-container">
-    <div class="time">
-      <div *ngFor="let slot of lifts[0].timeslots">
+<div class="calendar-container flex flex-direction-column justify-content-center align-items-center">
+  <app-date-slider class="fullWidth" (dateSelected)="selectedDate($event)"></app-date-slider>
+  <div class="agenda-container fullWidth flex justify-content-space-evenly">
+    <div class="time flex flex-direction-column justify-content-inherit">
+      <div class="time" *ngFor="let slot of lifts[0].timeslots">
         {{ slot.time }}
       </div>
     </div>
     <div *ngFor="let item of lifts">
-      <h3 class="text-center">Lifti {{item.lift}}</h3>
+      <h3 class="textCenter">Lifti {{item.lift}}</h3>
       <div class="slots-main">
-        <div class="slot-container" *ngFor="let slot of item.timeslots;index as i">
+        <div class="slot-container flex" *ngFor="let slot of item.timeslots;index as i">
           <div class="slot-time"> {{slot.time}}</div>
-          <div class="agenda-slot">
+          <div class="agenda-slot fullWidth flex align-items-center">
             <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot"
                  [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved,'done':isDoneAgenda(item.lift,slot.time)}"
                  (click)="reserveSlot(item.lift - 1, i,slot);openModal({newAgenda : slot.reserved, liftNumber : item.lift, slot : slot.time, doneModal : isDoneAgenda(item.lift,slot.time)})">
@@ -24,13 +24,13 @@
   </div>
 
 
-  <div class="modal" [class.show-modal]="showModal">
+  <div class="modals" [class.show-modal]="showModal">
     <div class="modal-content">
       <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
-      <div style="display: flex;flex-direction: column">
-        <div class="buttoni is-new-client-button" style="width: 30%"
-             (click)="toggleClientSelection()">{{ isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri' }}</div>
-        <div class="is-new-client-content">
+      <div class="flex flex-direction-column">
+        <div class="button flex align-items-center justify-content-center" style="width: 30%"
+             (click)="toggleClientSelection()"><span class="material-symbols-outlined">{{isNewClient ?'edit':'add'}}</span>{{ isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri' }}</div>
+        <div class="is-new-client-content flex justify-content-space-between">
           <div *ngIf="isNewClient; else existingClientForm" class="container">
             <div class="info-section">
               <h3>Emri dhe Mbiemri</h3>
@@ -63,7 +63,7 @@
           </div>
 
           <ng-template #existingClientForm>
-            <div class="container">
+            <div class="container fullWidth">
               <div class="client-section">
                 <div class="select-wrapper">
                   <h3>Klienti</h3>
@@ -86,25 +86,28 @@
             </div>
 
           </ng-template>
-          <div class="description-content">
-            <div class="info-section" style="height: 100%">
+          <div>
+            <div class="info-section fullHeight" >
               <h3>Cka duhet te punohet</h3>
-              <textarea [(ngModel)]="description" [style.resize]="'none'" placeholder="Cka duhet bere"
-                        style="height: 60%;width: 100%;font-size: 20px"></textarea>
+              <textarea class="fullWidth" [(ngModel)]="description" [style.resize]="'none'" placeholder="Cka duhet bere"
+                        style="height: 60%;font-size: 20px"></textarea>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="finish-work-buttons">
-        <div (click)="saveAgenda(estimation)" style="width: 100%" class="text-center buttoni">{{selectedLiftId!==null?'Edito':'Rezervo'}}</div>
-        <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true" class="finish-work-button" style="width: 100%">Perfundo Punen</div>
-        <div *ngIf="selectedLiftId!==null" (click)="deleteAgenda()"  class="text-center buttoni" style="width: 100%">Fshi</div>
+      <div class="flex justify-content-space-between gap-20">
+        <div (click)="saveAgenda(estimation)"
+             class="text-center button flex align-items-center justify-content-center"><span class="material-symbols-outlined">{{selectedLiftId !== null ? 'edit' :'post_add'}}</span>{{selectedLiftId !== null ? 'Edito' : 'Rezervo'}}</div>
+        <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true" class="finish-work-button button flex align-items-center justify-content-center"><span class="material-symbols-outlined">task_alt</span>Perfundo
+          Punen
+        </div>
+        <div *ngIf="selectedLiftId!==null" (click)="deleteAgenda()" class="text-center button flex align-items-center justify-content-center"><span class="material-symbols-outlined">close</span>Fshi</div>
       </div>
     </div>
   </div>
 
-  <div class="modal" [class.show-modal]="infoModal">
+  <div class="modals" [class.show-modal]="infoModal">
     <div class="modal-content">
       <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
       <h2>Informacionet e Klientit</h2>
@@ -125,44 +128,45 @@
       </div>
       <div>
         <textarea [(ngModel)]="description" disabled [style.resize]="'none'" placeholder="What needs to be done"
-                  style="height: 80px; width: 100%; font-size: 20px"></textarea>
-      <div class="finish-work-buttons">
-        <div (click)="closeModal()" style="width: 100%" class="buttoni">Mbyll</div>
-        <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true" style="width: 100%" class="finish-work-button">Perfundo Punen</div>
-      </div>
+                 class="fullWidth" style="height: 80px;  font-size: 20px"></textarea>
+        <div class="flex justify-content-space-between gap-20">
+          <div (click)="closeModal()" class="button fullWidth">Mbyll</div>
+          <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true"
+               class="finish-work-button button fullWidth">Perfundo Punen
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="modal" [class.show-modal]="finishWorkModal">
+  <div class="modals" [class.show-modal]="finishWorkModal">
     <div class="modal-content">
       <span class="close material-symbols-outlined" (click)="finishWorkModal=false">close</span>
-      <div style="display: flex;flex-direction: column">
-      <h2>A jeni te sigurt se doni te perfundoni punen ?</h2>
-      <span class="material-symbols-outlined" style="font-size: 70px;color: green;align-self: center">check</span>
-      <h4 style="text-align: center">Kujdes !!! Ky aksion nuk mund te zhbehet</h4>
+      <div  class="flex flex-direction-column">
+        <h2>A jeni te sigurt se doni te perfundoni punen ?</h2>
+        <span class="material-symbols-outlined" style="font-size: 70px;color: green;align-self: center">check</span>
+        <h4 class="textCenter">Kujdes !!! Ky aksion nuk mund te zhbehet</h4>
       </div>
 
-      <div class="finish-work-buttons">
-        <div (click)="closeModal()" class="buttoni" style="width: 100%">Mbyll</div>
-        <div (click)="finishWork()" class="finish-work-button" style="width: 100%">Perfundo Punen</div>
+      <div class="gap-20 flex justify-content-space-between">
+        <div (click)="closeModal()" class="button fullWidth" >Mbyll</div>
+        <div (click)="finishWork()" class="button finish-work-button fullWidth" >Perfundo Punen</div>
       </div>
     </div>
   </div>
 
-  <div class="modal" [class.show-modal]="doneModals">
+  <div class="modals" [class.show-modal]="doneModals">
     <div class="modal-content">
       <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
-      <div style="display: flex;flex-direction: column">
+      <div>
         <h2>Puna esht perfunduar me sukses</h2>
-        <h3>Koha e harxhuar per  pune : {{estimation}}</h3>
+        <h3>Koha e harxhuar per pune : {{estimation}}</h3>
         <h3>Klienti :  {{client.fullname}}</h3>
         <h3>Makina : {{newCar.make + ' ' + newCar.model}}</h3>
         <h3>Pune e kryer : {{description}}</h3>
       </div>
-
       <div class="finish-work-buttons">
-        <div (click)="this.closeModal()" class="buttoni" style="width: 100%">Mbyll</div>
+        <div (click)="this.closeModal()" class="button fullWidth flex align-items-center justify-content-center"><span class="material-symbols-outlined">close</span>Mbyll</div>
       </div>
     </div>
   </div>

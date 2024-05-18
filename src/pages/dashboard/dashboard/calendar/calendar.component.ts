@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {GlobalService} from '../../../../app/global.service';
 import * as moment from "moment";
 import {ToasterComponent} from "../../../compo/toaster/toaster.component";
@@ -47,7 +47,7 @@ interface AgendaSlot {
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css','../../../../styles.css']
 })
 export class CalendarComponent implements OnInit {
   @ViewChild(ToasterComponent) toast?: ToasterComponent
