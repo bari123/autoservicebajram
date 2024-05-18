@@ -14,12 +14,12 @@
              [routerLink]="'/dashboard/storage'"><span class="material-symbols-outlined">warehouse</span>Magazina
       </a></li>
     </div>
-    <div (click)="logOut()" class="logout-icon flex align-items-center menuItem  cursor-pointer "><span
+    <div (click)="logOut()" class="logout-icon flex align-items-center   cursor-pointer "><span
       class="material-symbols-outlined">logout</span>Dil
     </div>
   </div>
   <div class="right-side fullWidth flex flex-direction-column ">
-    <div style="background-color: red" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
+    <div style="background-color: #dc3545" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
       <span class="material-symbols-outlined">menu</span>
     </div>
     <router-outlet></router-outlet>

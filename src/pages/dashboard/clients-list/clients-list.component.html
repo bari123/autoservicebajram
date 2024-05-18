@@ -9,20 +9,16 @@
     </h2>
   </div>
   <div>
-    <input class="input-search flex fullWidth" type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
+    <input  type="text" placeholder="Search clients" [(ngModel)]="searchTerm">
   </div>
   <ul class="client-list">
-    <li class="cursor-pointer" *ngFor="let client of filteredClients">
-      <div class="client-details">
+    <li class="cursor-pointer" style="border-radius: 20px" *ngFor="let client of filteredClients">
+      <div class="client-details" >
         <div [routerLink]="client._id"
-             class="client-details flex justify-content-space-evenly halfWidth align-items-center">
-          <div class="client-info">
+             class="client-details flex justify-content-space-evenly halfWidth align-items-center" >
+          <div class="client-info flex gap-10" >
             <span class="client-label">Name:</span>
             <span class="client-name">{{ client.fullname }}</span>
-          </div>
-          <div class="client-info">
-            <span class="client-label">Email:</span>
-            <span class="text-email">{{ client.email }}</span>
           </div>
         </div>
         <div (click)="selectedId=client._id;deleteModal=true" class="client-info flex align-items-center fshi ">
@@ -37,44 +33,55 @@
 <div class="modals" [class.show-modal]="showModal">
   <div class="modal-content">
     <span class="close" (click)="switchModal()">&times;</span>
-    <h2>Shto Klient</h2>
-      <div class="form-group mt-20 fullWidth">
-        <label for="name">Emri dhe Mbiemri:</label>
-        <input  type="text" id="name" name="name" [(ngModel)]="newClient.fullname" required>
+    <div>
+      <h2>Shto Klient</h2>
+      <div class="flex flex-direction-column align-items-center fullWidth ">
+        <div class=" fullWidth">
+          <h3>Emri dhe Mbiemri:</h3>
+          <input type="text" id="name" name="name" [(ngModel)]="newClient.fullname" required>
+        </div>
+        <div class="fullWidth">
+          <h3>Email:</h3>
+          <input type="email" id="email" name="email" [(ngModel)]="newClient.email" required>
+        </div>
+        <div class="fullWidth">
+          <h3>Telefoni:</h3>
+          <input type="tel" id="phone" name="phone" [(ngModel)]="newClient.phone">
+        </div>
+        <div class="fullWidth">
+          <h3>Adresa:</h3>
+          <input type="text" id="address" name="address" [(ngModel)]="newClient.address">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input class="text-email" type="email" id="email" name="email" [(ngModel)]="newClient.email" required>
+      <div class="button textCenter mt-20 flex align-items-center justify-content-center" (click)="saveClient()"><span
+        class="material-symbols-outlined">add</span>Shto
       </div>
-      <div class="form-group">
-        <label for="phone">Telefoni:</label>
-        <input type="tel" id="phone" name="phone" [(ngModel)]="newClient.phone">
-      </div>
-      <div class="form-group">
-        <label for="address">Adresa:</label>
-        <input type="text" id="address" name="address" [(ngModel)]="newClient.address">
-      </div>
-      <div class="button textCenter mt-20 flex align-items-center justify-content-center" (click)="saveClient()"><span class="material-symbols-outlined">add</span>Shto</div>
+    </div>
   </div>
+
 </div>
 
 <div class="modals" [class.show-modal]="deleteModal">
   <div class="modal-content">
-    <span class="close material-symbols-outlined" (click)="deleteModal=false">close</span>
-    <div class="flex justify-content-center flex-direction-column gap-40">
-      <h2 class="textCenter" >
-        A JENI TE SIGURT SE DONI TE FSHINI KETE KLIENT?
-      </h2>
-      <span class="material-symbols-outlined close-icon align-self-center"
-            style="font-size: 60px;color: red">
+    <div>
+      <span class="close material-symbols-outlined" (click)="deleteModal=false">close</span>
+      <div class="flex justify-content-center flex-direction-column gap-40">
+        <h2>
+          A jeni te sigurt se doni te fshini klientin ?
+        </h2>
+        <span class="material-symbols-outlined close-icon align-self-center"
+              style="font-size: 60px;color: #dc3545">
       close
     </span>
-      <h3 class="textCenter">
-        Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
-        vazhdoni ti keni ne arhive
-      </h3>
-    </div>
-    <div (click)="deleteClient(selectedId);deleteModal=false" class="textCenter button mt-20 align-items-center flex justify-content-center"><span class="material-symbols-outlined">close</span>FSHi
+        <h3 class="textCenter">
+          Ne qofte se procedoni me fshierjen e klientit , historia e serviseve te makinave qe i takojn ketij klienti do
+          te jete ne arhive
+        </h3>
+      </div>
+      <div (click)="deleteClient(selectedId);deleteModal=false"
+           class="textCenter fullWidth button mt-20 align-items-center flex justify-content-center"><span
+        class="material-symbols-outlined">close</span>FSHi
+      </div>
     </div>
   </div>
 </div>

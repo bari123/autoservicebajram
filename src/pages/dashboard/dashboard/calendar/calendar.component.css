@@ -1,19 +1,16 @@
 .slot {
-  width: 200px;
-  height: 30px;
+  width: 320px;
+  height: 35px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.calendar-container {
-  /*width: 90vw;*/
-}
 
 .slot:hover {
-  box-shadow: 0 0 0 5px #ccc;
+  box-shadow: 0 0 0 10px #ccc;
 }
 
 .slot-time {
@@ -21,7 +18,7 @@
 }
 
 .agenda-slot {
-  margin: 10px 10px 20px;
+  margin: 8px;
 }
 
 
@@ -34,23 +31,20 @@
   margin: 0 auto;
 }
 
-
-
-
 .time {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .reserved {
-  background-color: red;
+  background-color: #dc3545;
 }
 
 .available {
-  background-color: #0000FF;
+  background-color: #08088a;
 }
 
 .done {
-  background-color: #00FF00;
+  background-color: #0a8a0a;
 }
 
 .reserved, .available, .done {
@@ -63,16 +57,6 @@
 
 
 
-select,
-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #333;
-}
 
 .info-section {
   margin-bottom: 10px;
@@ -144,7 +128,8 @@ input {
   }
 
   .slot-time {
-    display: block;
+    display: flex;
+    font-size: 20px;
   }
 
   .agenda-slot {

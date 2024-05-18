@@ -3,10 +3,9 @@
 }
 
 .input-search {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  /*border: 1px solid #ccc;*/
+  /*border-radius: 5px;*/
+  /*font-size: 16px;*/
 }
 
 .client-list {
@@ -33,10 +32,7 @@
 }
 
 .fshi:hover, .close-icon:hover {
-  background-color: red;
-  border-radius: 20px;
-  padding: 5px;
-  color: black;
+  color: #dc3545
 }
 
 .client-name:hover {
@@ -44,7 +40,7 @@
 }
 
 .close-icon {
-  color: red;
+  color: #dc3545;
 }
 
 .client-name {
@@ -57,19 +53,10 @@
   margin-bottom: 5px;
 }
 
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="tel"],
-.form-group select {
-  /*width: 100%;*/
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
 
 
 .register-client:hover {
-  color: red;
+  color: #dc3545;
 }
 
 @media screen and (max-width: 768px) {

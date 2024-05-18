@@ -1,27 +1,37 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%
+}
+
 .date {
   font-size: 16px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 170px;
+  width: 180px
 }
 
 .date.selected {
   font-size: 18px;
   font-weight: bold;
-  background-color: red;
+  background-color: #dc3545;
   color: #fff;
 }
 
 .date:hover:not(.selected) {
-  background-color: red;
+  background-color: #dc3545;
 }
 
 .icons:hover{
-  font-size: 50px;
+  font-size: 45px;
 }
 
 @media screen and (max-width: 768px) {
+  .container{
+    width: 100%;
+  }
   .date {
     display: none;
   }
