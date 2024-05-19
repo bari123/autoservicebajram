@@ -1,81 +1,87 @@
-<div  class="main-container" *ngIf="serviceHistory.length===0">
- <h1 class="textCenter justify-content-center align-items-center" >Ska Rezultate</h1>
+<div class="main-container" *ngIf="serviceHistory.length===0">
+  <h1 class="textCenter justify-content-center align-items-center">Ska Rezultate</h1>
 </div>
 
-<div  class="main-container flex flex-direction-column" *ngIf="serviceHistory.length>0">
-  <div class="service-history fullWidth">
+<div class="main-container flex flex-direction-column" *ngIf="serviceHistory.length>0">
+  <div class="service-history fullWidth ">
+    <h3 class="textCenter">
+      Historia e Serviseve
+    </h3>
     <div *ngFor="let history of serviceHistory">
-      <div (click)="setService(history)">
-        {{ history?.createdAt }}
+      <div class="flex justify-content-space-between" (click)="setService(history)">
+        <p>
+          Data e servisit:
+        </p>
+        <h3>
+          {{ history?.createdAt }}
+        </h3>
       </div>
     </div>
   </div>
 
-  <div class="service-description">
-    <div class="car-info">
+  <div class="service-description fullWidth">
+    <div class="flex flex-direction-column align-content-center justify-content-center textCenter">
       <h1>Informacionet e makines</h1>
       <div class="flex flex-direction-row gap-40">
         <div>
           <h2>Brendi</h2>
-          {{ car.model }}
+          <h3>{{ car.model }}</h3>
         </div>
         <div>
           <h2>Modeli</h2>
-          {{ car.make }}
+          <h3>{{ car.make }}</h3>
         </div>
         <div>
           <h2>Viti</h2>
-          {{ car.year }}
+          <h3>{{ car.year }}</h3>
         </div>
         <div>
           <h2>Motori</h2>
-          {{ car.engine }}
+          <h3>{{ car.engine }}</h3>
         </div>
       </div>
     </div>
 
-    <div class="service-info">
+    <div class="flex flex-direction-column justify-content-center align-content-center textCenter">
       <h1>Informacionet e Servisit</h1>
-
-      <div class="info-container-service">
+      <div class="info-container-service flex flex-direction-row gap-20">
         <div class="info-section">
           <h3>Kilometrat</h3>
           <h2>{{ newService.km }}km</h2>
         </div>
         <div class="info-section">
           <h3>Filteri Ajrit</h3>
-          <span class="material-symbols-outlined" [style.color]="newService.airFilter ? 'green' : 'red'">{{
-            newService.airFilter ? 'done' : 'close'
-            }}</span>
+          <app-icon class="align-self-center" [iconName]="newService.airFilter ? 'done' : 'close'"
+                    [style.color]="newService.airFilter ? 'green' : 'red'"></app-icon>
         </div>
         <div class="info-section">
           <h3>Filteri Uljes</h3>
-          <span class="material-symbols-outlined" [style.color]="newService.oilFilter ? 'green' : 'red'">{{
-            newService.oilFilter ? 'done' : 'close'
-            }}</span>
+          <app-icon class="align-self-center" [iconName]="newService.oilFilter ? 'done' : 'close'"
+                    [style.color]="newService.oilFilter ? 'green' : 'red'"></app-icon>
         </div>
         <div class="info-section">
           <h3>Filteri Klimes</h3>
-          <span class="material-symbols-outlined" [style.color]="newService.airConFilter ? 'green' : 'red'">{{
-            newService.airConFilter ? 'done' : 'close'
-            }}</span>
+          <app-icon class="align-self-center" [iconName]="newService.airConFilter ? 'done' : 'close'"
+                    [style.color]="newService.airConFilter ? 'green' : 'red'"></app-icon>
         </div>
         <div class="info-section">
           <h3>Filteri pompes</h3>
-          <span class="material-symbols-outlined" [style.color]="newService.pumpFilter ? 'green' : 'red'">{{
-            newService.pumpFilter ? 'done' : 'close'
-            }}</span>
+          <app-icon class="align-self-center" [iconName]="newService.pumpFilter ? 'done' : 'close'"
+                    [style.color]="newService.pumpFilter ? 'green' : 'red'"></app-icon>
+
         </div>
         <div class="info-section">
           <h3>Vaji i motorit</h3>
-          <span class="material-symbols-outlined" [style.color]="newService.engineOil ? 'green' : 'red'">{{
-            newService.engineOil ? 'done' : 'close'
-            }}</span>
+          <app-icon class="align-self-center" [iconName]="newService.engineOil ? 'done' : 'close'"
+                    [style.color]="newService.engineOil ? 'green' : 'red'"></app-icon>
+
         </div>
       </div>
       <div>
-        <h3>Description</h3>
-        <textarea class="textarea fullWidth" [(ngModel)]="newService.description"></textarea>
+        <h3>Pershkrimi</h3>
+        <h2>
+          {{newService.description}}
+        </h2>
       </div>
     </div>
   </div>
