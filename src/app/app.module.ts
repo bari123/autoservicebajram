@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ToasterComponent} from "../pages/compo/toaster/toaster.component";
 import {TruncatePipe} from "../utils/truncate.pipe";
 import {TooltipDirective} from "../utils/tooltip.directive";
+import {ButtonComponent} from "../components/button/button.component";
+import {IconComponent} from "../components/icon/icon.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import {TooltipDirective} from "../utils/tooltip.directive";
     DateSliderComponent,
     ToasterComponent,
     TruncatePipe,
-    TooltipDirective
+    TooltipDirective,
+    ButtonComponent,
+    IconComponent
   ],
   imports: [
     BrowserModule,

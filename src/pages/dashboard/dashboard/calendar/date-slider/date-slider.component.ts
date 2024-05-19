@@ -23,6 +23,13 @@ export class DateSliderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.currentDate.day() === 0) {
+      this.currentDate.add(1, 'day');
+      this.selectedDate = this.currentDate
+      this.selectedIndex = this.currentDate.day() - 1
+      this.emitDate(this.currentDate)
+
+    }
   }
 
   generateDates() {

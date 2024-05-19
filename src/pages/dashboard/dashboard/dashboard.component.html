@@ -1,26 +1,35 @@
-<div class="container flex flex-direction-row fullHeight fullWidth">
-
+<div class="container flex  fullHeight ">
   <div class="left-side flex flex-direction-column justify-content-space-between  ">
-
-    <div class="underline-nav fullWidth mt-20 cursor-pointer">
+    <div class="underline-nav fullWidth ">
       <li><a class="flex  align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/clients-list')"
              *ngIf="localStorage.getItem('role')==='admin'"
-             [routerLink]="'/dashboard/clients-list'"><span class="material-symbols-outlined">people</span>Klientet
+             [routerLink]="'/dashboard/clients-list'">
+        <app-icon iconName="people"></app-icon>
+        Klientet
       </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/calendar')" [routerLink]="'/dashboard/calendar'"><span
-        class="material-symbols-outlined">calendar_month</span>Terminet
+      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/calendar')"
+             [routerLink]="'/dashboard/calendar'">
+        <app-icon iconName="calendar_month"></app-icon>
+        Terminet
       </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')" *ngIf="localStorage.getItem('role') ==='admin'"
-             [routerLink]="'/dashboard/storage'"><span class="material-symbols-outlined">warehouse</span>Magazina
+      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')"
+             *ngIf="localStorage.getItem('role') ==='admin'"
+             [routerLink]="'/dashboard/storage'">
+        <app-icon iconName="warehouse"></app-icon>
+        Magazina
       </a></li>
     </div>
-    <div (click)="logOut()" class="logout-icon flex align-items-center   cursor-pointer "><span
-      class="material-symbols-outlined">logout</span>Dil
+    <div class=" underline-nav logout-icon flex align-items-center   cursor-pointer ">
+      <li>
+        <a class="flex align-items-center menuItem" (click)="logOut()">
+          <app-icon iconName="logout"></app-icon>
+          Dil</a>
+      </li>
     </div>
   </div>
-  <div class="right-side fullWidth flex flex-direction-column ">
+  <div class="right-side fullWidth ">
     <div style="background-color: #dc3545" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
-      <span class="material-symbols-outlined">menu</span>
+      <app-icon iconName="menu"></app-icon>
     </div>
     <router-outlet></router-outlet>
   </div>
@@ -29,7 +38,8 @@
 
 <div class="modals flex fullWidth flex-direction-column" [class.show-modal]="mobileMenuToggle">
   <div (click)="mobileMenuToggle=!mobileMenuToggle" class="fullWidth p-20 align-items-center flex menuStackContent">
-    <span class="material-symbols-outlined">menu</span>Close menu
+    <app-icon iconName="menu"></app-icon>
+    Close menu
   </div>
   <div
     class="p-20 menuStackContent flex  flex-direction-column fullWidth fullHeight align-items-center justify-content-space-evenly ">

@@ -12,7 +12,7 @@
         <div class="slot-container flex" *ngFor="let slot of item.timeslots;index as i">
           <div class="slot-time"> {{slot.time}}</div>
           <div class="agenda-slot mt-10 fullWidth flex align-items-center">
-            <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot"
+            <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot textCenter"
                  [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved,'done':isDoneAgenda(item.lift,slot.time)}"
                  (click)="reserveSlot(item.lift - 1, i,slot);openModal({newAgenda : slot.reserved, liftNumber : item.lift, slot : slot.time, doneModal : isDoneAgenda(item.lift,slot.time)})">
               {{ (slot.reserved ? showAgenda(item.lift, slot.time) : 'I Lir')  | truncate:30}}
@@ -28,10 +28,9 @@
     <div class="modal-content">
       <span class="close material-symbols-outlined" (click)="closeModal()">close</span>
       <div class="flex flex-direction-column">
-        <div class="button flex align-items-center justify-content-center" style="width: 40%"
-             (click)="toggleClientSelection()"><span
-          class="material-symbols-outlined">{{isNewClient ? 'edit' : 'add'}}</span>{{ isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri' }}
-        </div>
+        <app-button style="width: 50%" [text]="isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri'"
+                    [iconName]="isNewClient ? 'edit' : 'add'"
+                    (click)="toggleClientSelection()"></app-button>
         <div class="is-new-client-content flex justify-content-space-between">
           <div *ngIf="isNewClient; else existingClientForm" class="container">
             <div class="info-section">
@@ -99,19 +98,17 @@
       </div>
 
       <div class="flex justify-content-space-between gap-20">
-        <div (click)="saveAgenda(estimation)"
-             class="text-center button flex align-items-center justify-content-center"><span
-          class="material-symbols-outlined">{{selectedLiftId !== null ? 'edit' : 'post_add'}}</span>{{selectedLiftId !== null ? 'Edito' : 'Rezervo'}}
-        </div>
-        <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true"
-             class="finish-work-button button flex align-items-center justify-content-center"><span
-          class="material-symbols-outlined">task_alt</span>Perfundo
-          Punen
-        </div>
-        <div *ngIf="selectedLiftId!==null" (click)="deleteAgenda()"
-             class="text-center button flex align-items-center justify-content-center"><span
-          class="material-symbols-outlined">close</span>Fshi
-        </div>
+        <app-button class="fullWidth" (click)="saveAgenda(estimation)"
+                    [text]="selectedLiftId !== null ? 'Edito' : 'Rezervo'"
+                    [iconName]="selectedLiftId !== null ? 'edit' : 'post_add'"
+        ></app-button>
+
+        <app-button class="fullWidth" *ngIf="selectedLiftId!==null" btnStyle="secondary" text="Perfundo Punen"
+                    iconName="task_alt"
+                    (click)="this.finishWorkModal=true"></app-button>
+
+        <app-button class="fullWidth" *ngIf="selectedLiftId!==null" text="Fshi" iconName="close"
+                    (click)="deleteAgenda()"></app-button>
       </div>
     </div>
   </div>
@@ -138,11 +135,11 @@
       <div>
         <textarea [(ngModel)]="description" disabled [style.resize]="'none'" placeholder="What needs to be done"
                   class="fullWidth" style="height: 80px;  font-size: 20px"></textarea>
-        <div class="flex justify-content-space-between gap-20">
-          <div (click)="closeModal()" class="button fullWidth">Mbyll</div>
-          <div *ngIf="selectedLiftId!==null" (click)="finishWorkModal=true"
-               class="finish-work-button button fullWidth">Perfundo Punen
-          </div>
+        <div class="flex-direction-row flex gap-20">
+          <app-button class="fullWidth" [text]="'Mbyll'" iconName="close" (click)="this.closeModal()"></app-button>
+          <app-button class="fullWidth" *ngIf="selectedLiftId!==null" btnStyle="secondary" [text]="'Perfundo Punen'"
+                      iconName="task_alt"
+                      (click)="this.finishWork()"></app-button>
         </div>
       </div>
     </div>
@@ -157,9 +154,10 @@
         <h4 class="textCenter">Kujdes !!! Ky aksion nuk mund te zhbehet</h4>
       </div>
 
-      <div class="gap-20 flex justify-content-space-between">
-        <div (click)="closeModal()" class="button fullWidth">Mbyll</div>
-        <div (click)="finishWork()" class="button finish-work-button fullWidth">Perfundo Punen</div>
+
+      <div>
+        <app-button [text]="'Mbyll'" iconName="close" (click)="this.closeModal()"></app-button>
+        <app-button [text]="'Perfundo Punen'" btnStyle="secondary" (click)="finishWork()" iconName="task_alt"></app-button>
       </div>
     </div>
   </div>
@@ -174,11 +172,7 @@
         <h3>Makina : {{newCar.make + ' ' + newCar.model}}</h3>
         <h3>Pune e kryer : {{description}}</h3>
       </div>
-      <div class="finish-work-buttons">
-        <div (click)="this.closeModal()" class="button fullWidth flex align-items-center justify-content-center"><span
-          class="material-symbols-outlined">close</span>Mbyll
-        </div>
-      </div>
+      <app-button [text]="'Mbyll'" iconName="close" (click)="this.closeModal()"></app-button>
     </div>
   </div>
 </div>

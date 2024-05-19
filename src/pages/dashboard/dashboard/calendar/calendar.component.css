@@ -37,14 +37,18 @@
 
 .reserved {
   background-color: #dc3545;
+  opacity: 0.9;
 }
 
 .available {
-  background-color: #08088a;
+  background-color: blue;
+  opacity: 0.7;
 }
 
 .done {
   background-color: #0a8a0a;
+  opacity: 0.7;
+
 }
 
 .reserved, .available, .done {

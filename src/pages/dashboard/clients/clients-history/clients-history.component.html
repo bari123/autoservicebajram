@@ -9,41 +9,35 @@
 
   <div class="modals" [class.show-modal]="showModal">
     <div class="modal-content">
-      <span class="close material-symbols-outlined close-button" (click)="closeModal()">close</span>
+      <app-icon iconName="close" class="close-button close" (click)="closeModal()"></app-icon>
       <h2>Informacionet e fundit</h2>
       <div class="info-container flex flex-direction-row" >
         <div class=" fullWidth flex align-items-center justify-content-center">
-
           <div class="info-section">
             <h3>Kilometrat</h3>
             <div> {{info.km}}</div>
           </div>
           <div class="info-section">
             <h3>Filteri Ajrit</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="info.airFilter?'green':'red'">{{info.airFilter ? 'done' : 'close'}}</span>
+            <app-icon [style.color]="info.airFilter?'green':'red'" [iconName]="info.airFilter ? 'done' : 'close'"></app-icon>
           </div>
           <div class="info-section">
             <h3>Filteri Uljes</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="info.oilFilter?'green':'red'">{{info.oilFilter ? 'done' : 'close'}}</span>
+            <app-icon [style.color]="info.oilFilter?'green':'red'" [iconName]="info.oilFilter ? 'done' : 'close'"></app-icon>
           </div>
         </div>
         <div class=" fullWidth flex align-items-center justify-content-center ">
           <div class="info-section">
             <h3>Filteri Klimes</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="info.airConFilter?'green':'red'">{{info.airConFilter ? 'done' : 'close'}}</span>
+            <app-icon [style.color]="info.airConFilter?'green':'red'" [iconName]="info.airConFilter ? 'done' : 'close'"></app-icon>
           </div>
           <div class="info-section">
             <h3>Filteri pompes</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="info.pumpFilter?'green':'red'">{{info.pumpFilter ? 'done' : 'close'}}</span>
+            <app-icon [style.color]="info.pumpFilter?'green':'red'" [iconName]="info.pumpFilter ? 'done' : 'close'"></app-icon>
           </div>
           <div class="info-section">
             <h3>Vaji i motorit</h3>
-            <span class="material-symbols-outlined"
-                  [style.color]="info.engineOil?'green':'red'">{{info.engineOil ? 'done' : 'close'}}</span>
+            <app-icon [style.color]="info.engineOil?'green':'red'" [iconName]="info.engineOil ? 'done' : 'close'"></app-icon>
           </div>
         </div>
       </div>

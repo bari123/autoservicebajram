@@ -1,10 +1,11 @@
+<div class="p-30 flex flex-direction-column  justify-content-center fullWidth">
 <h2>Makinat e Klientit</h2>
-<div class="flex justify-content-center align-items-center cursor-pointer" (click)="openModal('edit','')">
+<div class="flex justify-content-center align-items-center cursor-pointer plus" (click)="openModal('edit','')">
   Shto Makina
   <span class="material-symbols-outlined">add</span>
 </div>
-<ul class="client-list">
-  <li class="car-list flex flex-direction-row justify-content-space-between align-items-center cursor-pointer"
+<div class="client-list p-20">
+  <div class="client-list-child car-list flex flex-direction-row justify-content-space-between align-items-center cursor-pointer"
       *ngFor="let car of filteredClients">
     <div (click)="openCarInfo()" [routerLink]="['car/'+car._id]"
          class="client-details flex justify-content-space-evenly align-items-center">
@@ -32,8 +33,10 @@
       <span class="material-symbols-outlined add-button" (click)="openModal('service',car)">add</span>
     </div>
 
-  </li>
-</ul>
+  </div>
+</div>
+</div>
+
 
 <div class="modals" [class.show-modal]="serviceModal">
   <div class="modal-content">
@@ -74,10 +77,7 @@
       <h2>Pershkruaj punen</h2>
       <textarea class="fullWidth" style="height: 200px;font-size: 30px" [(ngModel)]="newService.description"></textarea>
     </div>
-    <div (click)="addService()" class="textCenter button mt-20 flex align-items-center justify-content-center"><span
-      class="material-symbols-outlined">close</span>Shto Servis
-    </div>
-
+    <app-button iconName="close" text="Shto Service" (click)="addService()" class="mt-20 flex"></app-button>
   </div>
 </div>
 
@@ -103,9 +103,7 @@
         <input [(ngModel)]="newCar.year" type="text" >
       </div>
     </div>
-    <button (click)="editCar(newCar)" class="button mt-20 flex align-items-center justify-content-center" type="submit">
-      <span class="material-symbols-outlined">save</span>Ruaj
-    </button>
+    <app-button class="flex mt-30" (click)="editCar(newCar)" text="Ruaj" iconName="save"></app-button>
   </div>
 </div>
 
@@ -124,9 +122,7 @@
         humbin !!!
       </h3>
     </div>
-    <div (click)="deleteCar()" class="textCenter align-items-center button mt-20 flex justify-content-center"><span
-      class="material-symbols-outlined">close</span>FSHI
-    </div>
+    <app-button (click)="deleteCar()"  text="Fshi" iconName="close"></app-button>
   </div>
 </div>
 

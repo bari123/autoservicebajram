@@ -1,10 +1,15 @@
-.client-list li {
+.client-list .client-list-child {
   background-color: #fff;
   border-radius: 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
   margin-bottom: 15px;
   transition: background-color 0.3s ease;
+}
+
+.plus:hover{
+  color: red;
+
 }
 
 .client-list li:hover {
@@ -63,6 +68,7 @@
   }
 
   .client-details {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 }

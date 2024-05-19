@@ -53,12 +53,9 @@
           <input type="text" id="address" name="address" [(ngModel)]="newClient.address">
         </div>
       </div>
-      <div class="button textCenter mt-20 flex align-items-center justify-content-center" (click)="saveClient()"><span
-        class="material-symbols-outlined">add</span>Shto
-      </div>
+      <app-button text="Shto" iconName="add" (click)="saveClient()"></app-button>
     </div>
   </div>
-
 </div>
 
 <div class="modals" [class.show-modal]="deleteModal">
@@ -78,10 +75,7 @@
           te jete ne arhive
         </h3>
       </div>
-      <div (click)="deleteClient(selectedId);deleteModal=false"
-           class="textCenter fullWidth button mt-20 align-items-center flex justify-content-center"><span
-        class="material-symbols-outlined">close</span>FSHi
-      </div>
+      <app-button (clicked)="deleteClient(selectedId);deleteModal=false" text="Fshi" iconName="close"></app-button>
     </div>
   </div>
 </div>
