@@ -1,44 +1,89 @@
+.clients-container {
+  padding: 20px;
+}
 
+.input-search {
+  /*border: 1px solid #ccc;*/
+  /*border-radius: 5px;*/
+  /*font-size: 16px;*/
+}
 
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
+.client-list {
+  list-style-type: none;
   padding: 0;
 }
 
-.coming-soon-container {
-  position: absolute;
-  top: 20%;
-  left: 70%;
+.client-list li {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.client-list li:hover {
+  background-color: #f2f2f2;
+}
+
+.client-details {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  text-align: center;
-  margin-top: 100px;
-  color: #fff; /* Text color */
 }
 
-h1 {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: orange;
+.fshi:hover, .close-icon:hover {
+  color: #dc3545
 }
 
+.client-name:hover {
+  color: black;
+}
+
+.close-icon {
+  color: #dc3545;
+}
+
+.client-name {
+  font-weight: bold;
+}
+
+.form-group label {
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+
+
+.register-client:hover {
+  color: #dc3545;
+}
 
 @media screen and (max-width: 768px) {
-  .coming-soon-container{
-    width: 70vw;
-    padding: 20px;
-    top: 40%;
-    left: 5%;
-
+  .client-details {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80vw;
   }
-
 
 }
 
+
+.icon-round{
+  border-radius: 60px;
+  box-shadow: 0 0 2px #888;
+  padding: 0.5em 0.6em
+}
+
+.icon-round:hover{
+  box-shadow: 0 0 7px #888;
+}
+
+.icon-minus:hover{
+  border: 1px solid red;
+}
+
+.icon-plus:hover{
+  border: 1px solid green;
+}

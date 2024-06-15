@@ -16,8 +16,8 @@ export class GlobalService {
   constructor() {
   }
 
-  async login(user:{username:string,password:string}){
-   return await this.axiosInstance.post('/auth/login',user).then(res=>{
+  async login(user: { username: string, password: string }) {
+    return await this.axiosInstance.post('/auth/login', user).then(res => {
       return res.data.token
     })
   }
@@ -28,7 +28,8 @@ export class GlobalService {
   }
 
   async getClients(): Promise<any[]> {
-    return await this.axiosInstance.get('/clients/getAll').then(res => res.data);
+    const {data}= await this.axiosInstance.get('/clients/getAll')
+    return data
   }
 
   async getClientById(id: string | null) {
@@ -50,23 +51,24 @@ export class GlobalService {
     })
   }
 
-  async getClientCarByCarId(id:string | null,carId:string |null){
+  async getClientCarByCarId(id: string | null, carId: string | null) {
     return await this.axiosInstance.get(`/clients/${id}/getCar/${carId}`).then(res => {
       return res.data.cars[0]
     })
   }
 
-  async editCarById( clientId: string | null,carId:string,car:any){
-    return await this.axiosInstance.patch(`/clients/${clientId}/car/${carId}`,car).then(res=>{
+  async editCarById(clientId: string | null, carId: string, car: any) {
+    return await this.axiosInstance.patch(`/clients/${clientId}/car/${carId}`, car).then(res => {
 
     })
   }
+
   async deleteCar(carId: string, clientId: string | null) {
     return await this.axiosInstance.delete(`/clients/${clientId}/car/${carId}`).then(res => {
     })
   }
 
-  async deleteClient(clientId:string) {
+  async deleteClient(clientId: string) {
     return await this.axiosInstance.delete(`/clients/${clientId}`)
   }
 
@@ -89,15 +91,15 @@ export class GlobalService {
     })
   }
 
-  async editAgendaService(serviceId:string|null){
+  async editAgendaService(serviceId: string | null) {
     return await this.axiosInstance.post(`/agenda/${serviceId}/finish`)
   }
 
-  async deleteAgenda(serviceId:string|null){
+  async deleteAgenda(serviceId: string | null) {
     return await this.axiosInstance.delete(`/agenda/${serviceId}`)
   }
 
-  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any,date:string,estimation:string) {
+  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any, date: string, estimation: string) {
     let body = {
       lift: {
         time: slot,
@@ -107,17 +109,31 @@ export class GlobalService {
         service: service,
       },
       date: date,
-      estimation:estimation
+      estimation: estimation
     }
     return await this.axiosInstance.post(`/agenda`, body).then(res => {
       return 'Success'
     })
   }
 
-  async getAgenda(currentDate:string|null) {
-    return await this.axiosInstance.post(`/agenda/getAll`,{currentDate:currentDate}).then(res => {
+  async getAgenda(currentDate: string | null) {
+    return await this.axiosInstance.post(`/agenda/getAll`, {currentDate: currentDate}).then(res => {
       return res.data
     })
+  }
+
+  async getItems() {
+    const {data} = await this.axiosInstance.get('/items')
+    return data
+  }
+
+  async saveItem(item:any){
+    return await this.axiosInstance.post('items',item)
+  }
+
+  async getItemBySerialCode(code:string){
+    const {data}= await this.axiosInstance.get('items/serialCode/'+code)
+    return data
   }
 
 

@@ -1,8 +1,82 @@
-<!-- app.component.html -->
+<div class="clients-container flex flex-direction-column" style="padding: 20px">
+  <div class="flex justify-content-space-between align-items-center">
+    <h2>Magazina</h2>
+    <h2>
+      <div (click)="showModal=true" class="register-client flex justify-content-center align-items-center cursor-pointer">
+        <span class="material-symbols-outlined">add</span>
+        Regjistro Artikull
+      </div>
+    </h2>
+  </div>
+  <div>
+    <input type="text" placeholder="Kerko artikull me numer serik" [(ngModel)]="searchTerm">
+  </div>
+  <div  style="height:80vh;overflow-y: auto;">
 
-<img width="110%" height="100%"
-     src="https://img.freepik.com/free-vector/realistic-car-headlights-ad-composition-headlights-with-green-purple-illumination_1284-56577.jpg?t=st=1715692803~exp=1715696403~hmac=bd07f14f86aca91e5c12549a6ee6f897529f1d864ca6145d711e9ff27f78cd41&w=1380">
-<div class="coming-soon-container">
-  <h1>Welcome to Our Car Site</h1>
-  <h1>Coming SOON!!!</h1>
+  <ul class="client-list" >
+    <li class="cursor-pointer" style="border-radius: 20px" *ngFor="let item of filteredItems">
+      <div class="client-details">
+        <div class="client-details flex justify-content-space-evenly halfWidth align-items-center">
+          <div class="client-info flex gap-10">
+            <span class="client-label">Kodi:</span>
+            <span class="client-name">{{ item.serialCode }}</span>
+          </div>
+          <div class="client-info flex gap-10">
+            <span class="client-label">Emri:</span>
+            <span class="client-name">{{ item.name }}</span>
+          </div>
+          <div class="client-info flex gap-10">
+            <span class="client-label">Cmimi:</span>
+            <span class="client-name">{{ item.price}} den / {{Math.round( item.price / 61.5)}} euro</span>
+          </div>
+        </div>
+        <div class="client-info flex gap-10 flex align-items-center">
+          <span class="client-label">Sasia:</span>
+          <div class="icon-round"  [class.icon-plus]="mouseenter" (mouseover)="mouseenter=true" (click)="itemQuantity(item,'add')">
+            <app-icon iconName="add"></app-icon>
+          </div>
+          <span class="client-name">{{ item.qnt }}</span>
+          <div class="icon-round" [class.icon-minus]="mouseenter" (mouseover)="mouseenter=true" (click)="itemQuantity(item,'remove')">
+          <app-icon iconName="remove" ></app-icon>
+        </div>
+      </div>
+        <app-button *ngIf="different" text="Ruaj Ndryshimet" iconName="save" ></app-button>
+      </div>
+</li>
+</ul>
+  </div>
+
 </div>
+
+<div class="modals" [class.show-modal]="showModal">
+  <div class="modal-content">
+    <span class="close" (click)="showModal=!showModal">&times;</span>
+    <div>
+      <h2>Shto Artikull</h2>
+      <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
+        <div class="fullWidth">
+          <h3>Kodi:</h3>
+          <input (input)="changes($event)"  [(ngModel)]="code" type="text" id="serialCode" name="serialCode" >
+        </div>
+        <div class="fullWidth" *ngIf="code.length>=6 && newItem!==null">
+        <div class=" fullWidth" >
+          <h3>Emri Artikullit:</h3>
+          <input type="text" id="name" name="name" [(ngModel)]="newItem.name"  required>
+        </div>
+        <div class="fullWidth">
+          <h3>Cmimi:</h3>
+          <input type="text" id="price" name="price" [(ngModel)]="newItem.price"  required>
+        </div>
+        <div class="fullWidth">
+          <h3>Pershkrimi:</h3>
+          <input type="text" id="qnt" name="qnt" [(ngModel)]="newItem.qnt">
+        </div>
+        </div>
+      </div>
+      <app-button text="Shto" iconName="add" (click)="saveItem()"></app-button>
+    </div>
+  </div>
+</div>
+
+<app-toaster></app-toaster>
+
