@@ -2,7 +2,8 @@
   <div class="flex justify-content-space-between align-items-center">
     <h2>Magazina</h2>
     <h2>
-      <div (click)="showModal=true" class="register-client flex justify-content-center align-items-center cursor-pointer">
+      <div (click)="showModal=true"
+           class="register-client flex justify-content-center align-items-center cursor-pointer">
         <span class="material-symbols-outlined">add</span>
         Regjistro Artikull
       </div>
@@ -11,43 +12,55 @@
   <div>
     <input type="text" placeholder="Kerko artikull me numer serik" [(ngModel)]="searchTerm">
   </div>
-  <div  style="height:80vh;overflow-y: auto;">
-
-  <ul class="client-list" >
-    <li class="cursor-pointer" style="border-radius: 20px" *ngFor="let item of filteredItems">
-      <div class="client-details">
-        <div class="client-details flex justify-content-space-evenly halfWidth align-items-center">
-          <div class="client-info flex gap-10">
-            <span class="client-label">Kodi:</span>
-            <span class="client-name">{{ item.serialCode }}</span>
-          </div>
-          <div class="client-info flex gap-10">
-            <span class="client-label">Emri:</span>
-            <span class="client-name">{{ item.name }}</span>
-          </div>
-          <div class="client-info flex gap-10">
-            <span class="client-label">Cmimi:</span>
-            <span class="client-name">{{ item.price}} den / {{Math.round( item.price / 61.5)}} euro</span>
-          </div>
-        </div>
-        <div class="client-info flex gap-10 flex align-items-center">
-          <span class="client-label">Sasia:</span>
-          <div class="icon-round"  [class.icon-plus]="mouseenter" (mouseover)="mouseenter=true" (click)="itemQuantity(item,'add')">
-            <app-icon iconName="add"></app-icon>
-          </div>
-          <span class="client-name">{{ item.qnt }}</span>
-          <div class="icon-round" [class.icon-minus]="mouseenter" (mouseover)="mouseenter=true" (click)="itemQuantity(item,'remove')">
-          <app-icon iconName="remove" ></app-icon>
-        </div>
+  <div style="height:80vh;overflow-y: auto;">
+    <div class="mt-20 mb-10 flex gap-20" >
+      <div *ngIf="reminders('warning')" class="flex align-items-center justify-content-space-between">
+        Artikujt me sasi shume te vogel
+      <app-icon  [appTooltip]="reminders('warning')" class="cursor-pointer" style="color:orange" iconName="warning"  ></app-icon>
       </div>
+      <div *ngIf="reminders('danger')" class="flex align-items-center justify-content-space-between">
+      Artikujt ne perfundim e siper
+      <app-icon  [appTooltip]="reminders('danger')" class="cursor-pointer" style="color:red" iconName="error"></app-icon>
+      </div>
+    </div>
+    <ul class="client-list">
+      <li class="cursor-pointer" style="border-radius: 20px" *ngFor="let item of filteredItems">
+        <div class="client-details">
+          <div class="client-details flex justify-content-space-evenly halfWidth align-items-center">
+            <div class="client-info flex gap-10">
+              <span class="client-label">Kodi:</span>
+              <span class="client-name">{{ item.serialCode }}</span>
+            </div>
+            <div class="client-info flex gap-10">
+              <span class="client-label">Emri:</span>
+              <span class="client-name">{{ item.name }}</span>
+            </div>
+            <div class="client-info flex gap-10">
+              <span class="client-label">Cmimi:</span>
+              <span class="client-name">{{ item.price}} den / {{Math.round(item.price / 61.5)}} euro</span>
+            </div>
+          </div>
+          <div class="client-info flex gap-10 flex align-items-center">
+            <span class="client-label">Sasia:</span>
+            <div class="icon-round" [class.icon-plus]="mouseenter" (mouseover)="mouseenter=true"
+                 (click)="itemQuantity(item,'add')">
+              <app-icon iconName="add"></app-icon>
+            </div>
+            <span class="client-name">{{ item.qnt }}</span>
+            <div class="icon-round" [class.icon-minus]="mouseenter" (mouseover)="mouseenter=true"
+                 (click)="itemQuantity(item,'remove')">
+              <app-icon iconName="remove"></app-icon>
+            </div>
+          </div>
           <div (click)="selectedId=item._id;deleteModal=true" class="client-info flex align-items-center fshi ">
             <span class="client-label">Fshi</span>
             <span class="material-symbols-outlined close-icon">close</span>
           </div>
-        <app-button *ngIf="different" text="Ruaj Ndryshimet" iconName="save" (click)="updateItem(item)" ></app-button>
-      </div>
-</li>
-</ul>
+          <app-button *ngIf="hasChanged(item)" text="Ruaj Ndryshimet" iconName="save"
+                      (click)="updateItem(item)"></app-button>
+        </div>
+      </li>
+    </ul>
   </div>
 
 </div>
@@ -60,21 +73,21 @@
       <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
         <div class="fullWidth">
           <h3>Kodi:</h3>
-          <input (input)="changes($event)"  [(ngModel)]="code" type="text" id="serialCode" name="serialCode" >
+          <input (input)="changes($event)" [(ngModel)]="code" type="text" id="serialCode" name="serialCode">
         </div>
         <div class="fullWidth" *ngIf="code.length>=6 && newItem!==null">
-        <div class=" fullWidth" >
-          <h3>Emri Artikullit:</h3>
-          <input type="text" id="name" name="name" [(ngModel)]="newItem.name"  required>
-        </div>
-        <div class="fullWidth">
-          <h3>Cmimi:</h3>
-          <input type="text" id="price" name="price" [(ngModel)]="newItem.price"  required>
-        </div>
-        <div class="fullWidth">
-          <h3>Pershkrimi:</h3>
-          <input type="text" id="qnt" name="qnt" [(ngModel)]="newItem.qnt">
-        </div>
+          <div class=" fullWidth">
+            <h3>Emri Artikullit:</h3>
+            <input type="text" id="name" name="name" [(ngModel)]="newItem.name" required>
+          </div>
+          <div class="fullWidth">
+            <h3>Cmimi:</h3>
+            <input type="text" id="price" name="price" [(ngModel)]="newItem.price" required>
+          </div>
+          <div class="fullWidth">
+            <h3>Sasia:</h3>
+            <input type="text" id="qnt" name="qnt" [(ngModel)]="newItem.qnt">
+          </div>
         </div>
       </div>
       <app-button text="Shto" iconName="add" (click)="saveItem()"></app-button>

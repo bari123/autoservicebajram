@@ -27,10 +27,10 @@ export class StorageComponent implements OnInit {
   code = ""
   mouseenter: boolean = false
   searchTerm: string = ""
-  different: boolean = false
   showModal = false
   deleteModal = false
   selectedId = ''
+  originalQuantities: { [serialCode: string]: number } = {};
 
   constructor(private globalService: GlobalService) {
   }
@@ -46,13 +46,11 @@ export class StorageComponent implements OnInit {
   }
 
   itemQuantity(item: any, method: string) {
-    if (method === "add") {
-      item.qnt++
-    } else {
-      item.qnt--
-    }
+    method==='add'?item.qnt++:item.qnt--
+  }
 
-    this.different = item.qnt !== item.originalQnt;
+  hasChanged(item: any) {
+    return item.qnt !== this.originalQuantities[item.serialCode];
   }
 
   async saveItem() {
@@ -71,13 +69,11 @@ export class StorageComponent implements OnInit {
 
   async loadItems() {
     this.items = await this.globalService.getItems()
-    if (this.items) {
-      // @ts-ignore
-      this.items = this.items.map(item => ({
-        ...item,
-        originalQnt: item.qnt
-      }));
-    }
+    // @ts-ignore
+    this.originalQuantities = this.items.reduce((acc: { [x: string]: any; }, item: { serialCode: string | number; qnt: any; }) => {
+      acc[item.serialCode] = item.qnt;
+      return acc;
+    }, {});
   }
 
   changes(event: any) {
@@ -108,6 +104,21 @@ export class StorageComponent implements OnInit {
       this.toast?.show(true, 'Artikulli nuk u azhurua , kontaktoni supportin')
     }
   }
+
+  reminders(state: string) {
+    if (this.items) {
+      let items;
+      if (state === 'warning') {
+        items = this.items.filter(item => item.qnt < 5 && item.qnt >= 3 ).map(item => item.name);
+      } else {
+        items = this.items.filter(item => item.qnt < 3).map(item => item.name);
+      }
+      return items.toString();
+    } else {
+      return null;
+    }
+  }
+
 
   protected readonly Math = Math;
 }

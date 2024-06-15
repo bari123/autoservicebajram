@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/
 })
 export class TooltipDirective {
   // @ts-ignore
-  @Input('appTooltip') tooltipText: string;
+  @Input('appTooltip') tooltipText: string | null;
 
   // @ts-ignore
   private tooltipElement: HTMLElement;
