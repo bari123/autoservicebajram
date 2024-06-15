@@ -10,18 +10,27 @@ import {ToasterComponent} from "../../../compo/toaster/toaster.component";
 export class StorageComponent implements OnInit {
   @ViewChild(ToasterComponent) toast?: ToasterComponent;
 
-  items: [{ name: string, price: number, serialCode: string, qnt: number, originalQty:number }] |null=null
+  items: [{
+    _id: string,
+    name: string,
+    price: number,
+    serialCode: string,
+    qnt: number,
+    originalQty: number
+  }] | null = null
   newItem = {
     name: '',
-    serialCode:'',
-    price:0,
-    qnt:0
+    serialCode: '',
+    price: 0,
+    qnt: 0
   }
   code = ""
   mouseenter: boolean = false
   searchTerm: string = ""
   different: boolean = false
   showModal = false
+  deleteModal = false
+  selectedId = ''
 
   constructor(private globalService: GlobalService) {
   }
@@ -47,30 +56,56 @@ export class StorageComponent implements OnInit {
   }
 
   async saveItem() {
-    if(this.newItem){
-    this.newItem.serialCode=this.code
+    if (this.newItem) {
+      this.newItem.serialCode = this.code
     }
-    return await this.globalService.saveItem(this.newItem).then(res=>{if(res.status===201){
+    try {
+      await this.globalService.saveItem(this.newItem)
       this.toast?.show(false, 'Klienti u ruajt me sukses')
-    }})
+      await this.loadItems()
+    } catch (e) {
+      this.toast?.show(true, 'Klienti nuk u ruajt ')
+    }
+    this.showModal=false
   }
 
   async loadItems() {
     this.items = await this.globalService.getItems()
-    if(this.items){
-    // @ts-ignore
+    if (this.items) {
+      // @ts-ignore
       this.items = this.items.map(item => ({
-      ...item,
-      originalQnt: item.qnt
-    }));
+        ...item,
+        originalQnt: item.qnt
+      }));
     }
   }
 
   changes(event: any) {
     if (event.target.value.length >= 6) {
       setTimeout(async () => {
-        this.newItem ={... await this.globalService.getItemBySerialCode(event.target.value)}
+        this.newItem = {...await this.globalService.getItemBySerialCode(event.target.value)}
       }, 2000)
+    }
+  }
+
+  async deleteItem(id: string) {
+    try {
+      await this.globalService.deleteItem(id)
+      this.toast?.show(true, 'Artikulli u fshi me sukses')
+      this.loadItems()
+    } catch (e) {
+      this.toast?.show(true, 'Artikulli nuk u fshi me sukses , kontaktoni supportin')
+
+    }
+  }
+
+  async updateItem(item: any) {
+    try {
+      await this.globalService.updateItem(item, item._id)
+      this.toast?.show(false, 'Artikulli u azhurua me sukses')
+      await this.loadItems()
+    } catch (e) {
+      this.toast?.show(true, 'Artikulli nuk u azhurua , kontaktoni supportin')
     }
   }
 

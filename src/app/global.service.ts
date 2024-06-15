@@ -131,6 +131,14 @@ export class GlobalService {
     return await this.axiosInstance.post('items',item)
   }
 
+  async updateItem(item:any,id:string){
+    return await this.axiosInstance.patch(`items/${id}`,item)
+  }
+
+  async deleteItem(id:string){
+    return await this.axiosInstance.delete(`items/${id}`)
+  }
+
   async getItemBySerialCode(code:string){
     const {data}= await this.axiosInstance.get('items/serialCode/'+code)
     return data
