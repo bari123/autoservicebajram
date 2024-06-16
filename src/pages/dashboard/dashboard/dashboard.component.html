@@ -18,6 +18,12 @@
         <app-icon iconName="warehouse"></app-icon>
         Magazina
       </a></li>
+      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/invoice')"
+             *ngIf="localStorage.getItem('role') ==='admin'"
+             [routerLink]="'/dashboard/invoice'">
+        <app-icon iconName="receipt_long"></app-icon>
+        Fakturat
+      </a></li>
     </div>
     <div class=" underline-nav logout-icon flex align-items-center   cursor-pointer ">
       <li>
@@ -55,6 +61,9 @@
       </div>
       <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
            [routerLink]="'/dashboard/storage'"><span class="menuSize material-symbols-outlined">warehouse</span>Magazina
+      </div>
+      <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
+           [routerLink]="'/dashboard/invoice'"><span class="menuSize material-symbols-outlined">receipt_long</span>Fakturat
       </div>
     </div>
     <div (click)="logOut()" class="logout-icon menuSize flex align-items-center   cursor-pointer "><span

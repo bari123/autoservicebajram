@@ -8,6 +8,7 @@ import {CalendarComponent} from "../pages/dashboard/dashboard/calendar/calendar.
 import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.component";
 import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info/client-car-info.component";
 import {AuthGuard} from "../pages/login/auth.guard";
+import {InvoiceComponent} from "../pages/dashboard/dashboard/invoice/invoice.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
       {path: 'clients-list/:id/car/:carId', component: ClientCarInfoComponent},
       {path:'calendar',component:CalendarComponent},
       {path:'storage',component:StorageComponent},
+      {path:'invoice',component:InvoiceComponent},
       {path: '', redirectTo: 'clients-list', pathMatch: 'full'},
     ]
   },

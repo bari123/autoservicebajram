@@ -5,6 +5,13 @@
   --flex-direction: row;
   }
 
+  @media print {
+    body{
+      visibility: hidden;
+
+    }
+  }
+
   html, body { height: 100%;}
   body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

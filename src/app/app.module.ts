@@ -23,6 +23,8 @@ import {TruncatePipe} from "../utils/truncate.pipe";
 import {TooltipDirective} from "../utils/tooltip.directive";
 import {ButtonComponent} from "../components/button/button.component";
 import {IconComponent} from "../components/icon/icon.component";
+import {InvoiceComponent} from "../pages/dashboard/dashboard/invoice/invoice.component";
+import {PrintLayoutComponent} from "../pages/dashboard/dashboard/print-layout/print-layout.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import {IconComponent} from "../components/icon/icon.component";
     TruncatePipe,
     TooltipDirective,
     ButtonComponent,
-    IconComponent
+    IconComponent,
+    InvoiceComponent,
+    PrintLayoutComponent
   ],
   imports: [
     BrowserModule,

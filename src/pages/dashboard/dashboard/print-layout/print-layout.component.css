@@ -1,0 +1,74 @@
+
+.printable {
+  visibility: hidden;
+}
+
+@media print {
+
+  .printable {
+    visibility: visible;
+  }
+}
+.invoice-container {
+  left: 0;
+  position: absolute;
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .company-info, .header .invoice-info {
+  width: 45%;
+}
+.header .company-info {
+  text-align: left;
+}
+.header .invoice-info {
+  text-align: right;
+}
+.section {
+  margin-top: 20px;
+}
+.section .title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.details-table, .items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details-table th, .details-table td, .items-table th, .items-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+.items-table th, .details-table th {
+  background-color: #f2f2f2;
+}
+.totals {
+  text-align: right;
+  margin-top: 20px;
+}
+.totals .total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.totals .total-row span {
+  width: 50%;
+}
+.payments {
+  margin-top: 20px;
+}
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #666;
+}

@@ -144,5 +144,26 @@ export class GlobalService {
     return data
   }
 
+  async getInvoices() {
+    const {data} = await this.axiosInstance.get('/invoice')
+    return data
+  }
+
+  async saveInvoice(invoice:any){
+    return await this.axiosInstance.post('invoice',invoice)
+  }
+
+  async updateInvoice(invoice:any,id:string){
+    return await this.axiosInstance.patch(`invoice/${id}`,invoice)
+  }
+
+  async deleteInvoice(id:string){
+    return await this.axiosInstance.delete(`invoice/${id}`)
+  }
+
+  async getInvoice(id:string){
+    const {data}=await this.axiosInstance.get(`invoice/${id}`)
+    return data
+  }
 
 }

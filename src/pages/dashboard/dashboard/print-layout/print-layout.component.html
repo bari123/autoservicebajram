@@ -1,0 +1,94 @@
+<div class="printable">
+  <div class="invoice-container">
+    <div class="header">
+      <div class="company-info">
+        <p><strong>Auto Service Bajram</strong><br>
+          Bajram Iseni<br>
+          Recice e Madhe bb 101<br>
+          Tel. 070 532 371</p>
+      </div>
+      <div class="logo">
+        <img src="/assets/AA.png" height="180" width="240" alt="Company Logo">
+      </div>
+      <div class="invoice-info">
+        <p><strong>Numri Fatures: {{data?.invoiceId}}</strong><br>
+          Vendi Leshimit : Tetove<br>
+          Data e Leshimit:<span>{{Date() | date: 'dd/MM/yyyy'}}</span> <br>
+      </div>
+    </div>
+
+    <div class="section">
+      <p>
+        Emri Klientit:
+      <span class="title"> {{data?.clientName}}</span>
+      </p>
+      <p>
+        Telefoni i Klientit:
+      <span class="title"> {{data?.phone}}</span>
+      </p>
+    </div>
+
+    <div class="section">
+      <table class="items-table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Artikulli</th>
+          <th>Sasia</th>
+          <th>Cmimi</th>
+        </tr>
+        </thead>
+        <tbody  *ngFor="let art of data?.items;index as i">
+        <tr>
+          <td>{{i}}</td>
+          <td>{{art.art}}</td>
+          <td>{{art.qty}}</td>
+          <td>{{art.price}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section mb-30">
+      <div class="title">Kontrolli</div>
+      <p>
+        Totali pa zbritje: {{data?.totalPrice}}<br>
+        <span *ngIf="data?.discount">
+        Zbritje: {{data?.discount}} %
+        </span>
+      </p>
+      <div class="totals">
+        <div class="total-row">
+          <span>Per pages MKD:</span>
+          <span *ngIf="!data?.discount">{{data?.totalPrice}} MKD</span>
+          <span *ngIf="data?.discount">{{data?.totalPrice - ((data?.discount/100)*data?.totalPrice)}} MKD</span>
+        </div>
+        <div class="total-row">
+          <span>Per pages ne euro:</span>
+          <span *ngIf="!data?.discount">{{(data?.totalPrice / 61.4).toFixed(2)}} EURO</span>
+          <span *ngIf="data?.discount">{{((data.totalPrice -((data?.discount/100)*data?.totalPrice))/61.4).toFixed(2)}} EURO</span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="mt-30 flex justify-content-space-between">
+    <div>
+      <p>Dorezoi</p>
+      <p>_______________________________</p>
+    </div>
+      <div>
+        <p>Pranoi</p>
+        <p>_______________________________</p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Vlera e perdorur per te konvertuar Denarin ne euro eshte 61.4</p>
+      <p>Me ne gjithmone te sigurte</p>
+      <p>Ju falemnderit</p>
+    </div>
+  </div>
+</div>
+
+
