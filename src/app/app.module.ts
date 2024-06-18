@@ -25,6 +25,7 @@ import {ButtonComponent} from "../components/button/button.component";
 import {IconComponent} from "../components/icon/icon.component";
 import {InvoiceComponent} from "../pages/dashboard/dashboard/invoice/invoice.component";
 import {PrintLayoutComponent} from "../pages/dashboard/dashboard/print-layout/print-layout.component";
+import {CdkTableModule} from "@angular/cdk/table";
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {PrintLayoutComponent} from "../pages/dashboard/dashboard/print-layout/pr
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    CdkTableModule,
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

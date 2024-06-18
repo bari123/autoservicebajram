@@ -10,57 +10,103 @@
     </h2>
   </div>
   <div>
-    <input type="text" placeholder="Kerko artikull me numer serik" [(ngModel)]="searchTerm">
+    <input type="text" placeholder="   Kerko artikull me numer serik" [(ngModel)]="searchTerm">
   </div>
   <div style="height:80vh;overflow-y: auto;">
-    <div class="mt-20 mb-10 flex gap-20" >
+    <div class="mt-20 mb-10 flex gap-20">
       <div *ngIf="reminders('warning')" class="flex align-items-center justify-content-space-between">
         Artikujt me sasi shume te vogel
-      <app-icon  [appTooltip]="reminders('warning')" class="cursor-pointer" style="color:orange" iconName="warning"  ></app-icon>
+        <app-icon [appTooltip]="reminders('warning')" class="cursor-pointer" style="color:orange"
+                  iconName="warning"></app-icon>
       </div>
       <div *ngIf="reminders('danger')" class="flex align-items-center justify-content-space-between">
-      Artikujt ne perfundim e siper
-      <app-icon  [appTooltip]="reminders('danger')" class="cursor-pointer" style="color:red" iconName="error"></app-icon>
+        Artikujt ne perfundim e siper
+        <app-icon [appTooltip]="reminders('danger')" class="cursor-pointer" style="color:red"
+                  iconName="error"></app-icon>
+      </div>
+      <div *ngIf="reminders('dangerous')" class="flex align-items-center justify-content-space-between">
+        Artikujt qe kane perfunduar
+        <app-icon [appTooltip]="reminders('danger')" class="cursor-pointer" style="color:red"
+                  iconName="dangerous"></app-icon>
       </div>
     </div>
-    <ul class="client-list">
-      <li class="cursor-pointer" style="border-radius: 20px" *ngFor="let item of filteredItems">
-        <div class="client-details">
-          <div class="client-details flex justify-content-space-evenly halfWidth align-items-center">
-            <div class="client-info flex gap-10">
-              <span class="client-label">Kodi:</span>
-              <span class="client-name">{{ item.serialCode }}</span>
-            </div>
-            <div class="client-info flex gap-10">
-              <span class="client-label">Emri:</span>
-              <span class="client-name">{{ item.name }}</span>
-            </div>
-            <div class="client-info flex gap-10">
-              <span class="client-label">Cmimi:</span>
-              <span class="client-name">{{ item.price}} den / {{Math.round(item.price / 61.5)}} euro</span>
-            </div>
-          </div>
-          <div class="client-info flex gap-10 flex align-items-center">
-            <span class="client-label">Sasia:</span>
-            <div class="icon-round" [class.icon-plus]="mouseenter" (mouseover)="mouseenter=true"
-                 (click)="itemQuantity(item,'add')">
-              <app-icon iconName="add"></app-icon>
-            </div>
-            <span class="client-name">{{ item.qnt }}</span>
-            <div class="icon-round" [class.icon-minus]="mouseenter" (mouseover)="mouseenter=true"
-                 (click)="itemQuantity(item,'remove')">
-              <app-icon iconName="remove"></app-icon>
-            </div>
-          </div>
-          <div (click)="selectedId=item._id;deleteModal=true" class="client-info flex align-items-center fshi ">
-            <span class="client-label">Fshi</span>
-            <span class="material-symbols-outlined close-icon">close</span>
-          </div>
-          <app-button *ngIf="hasChanged(item)" text="Ruaj Ndryshimet" iconName="save"
-                      (click)="updateItem(item)"></app-button>
-        </div>
-      </li>
-    </ul>
+    <div>
+
+      <ng-container cdkColumnDef="username">
+        <cdk-table #table [dataSource]="filteredItems" class="example-table flex-direction-column">
+          <ng-container cdkColumnDef="count">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3 style="border-right:1px solid black">#</h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"><h4 >{{1}}</h4></cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="serialCode">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3> Numri Serik</h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.serialCode}} </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="name">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Emri</h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.name | truncate:10}} </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="shelfNumber" >
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile "><h3> Renditja ne raft </h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.shelfNumber}} </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="price">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">{{ row.price + 'den / ' +
+               Math.round(row.price / 61.5 ) + 'euro' | truncate:10}}
+            </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="carAndYear" >
+            <cdk-header-cell *cdkHeaderCellDef class="is-mobile example-header-cell textCenter"><h3>Vetura / Viti</h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.carAndYear}} </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="engineType" >
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3> Tipi Motorit </h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.engineType}} </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="qnt">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3> Sasia </h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell flex  justify-content-center ">
+              <div class=" flex gap-10 flex align-items-center ">
+                <div class="icon-round cursor-pointer" [class.icon-plus]="mouseenter" (mouseover)="mouseenter=true"
+                     (click)="itemQuantity(row,'add')">
+                  <app-icon iconName="add"></app-icon>
+                </div>
+                <span class="client-name">{{ row.qnt }}</span>
+                <div class="icon-round cursor-pointer" [class.icon-minus]="mouseenter" (mouseover)="mouseenter=true"
+                     (click)="itemQuantity(row,'remove')">
+                  <app-icon iconName="remove"></app-icon>
+                </div>
+              </div>
+            </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="description">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3>Pershkrimi</h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.description}} </cdk-cell>
+          </ng-container>
+
+          <ng-container cdkColumnDef="saveButton">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">Modifikimet</cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter flex  justify-content-center">
+              <app-button *ngIf="hasChanged(row)" text="Ruaj Ndryshimet" iconName="save"
+                          (click)="updateItem(row)"></app-button>
+              <div *ngIf="!hasChanged(row)" (click)="selectedId=row._id;deleteModal=true"
+                   class="client-info flex align-items-center fshi ">
+                <span class="client-label">Fshi</span>
+                <span class="material-symbols-outlined close-icon">close</span>
+              </div>
+            </cdk-cell>
+          </ng-container>
+          <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
+          <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
+        </cdk-table>
+      </ng-container>
+    </div>
   </div>
 
 </div>
@@ -87,6 +133,22 @@
           <div class="fullWidth">
             <h3>Sasia:</h3>
             <input type="text" id="qnt" name="qnt" [(ngModel)]="newItem.qnt">
+          </div>
+          <div class="fullWidth">
+            <h3>Renditja raft:</h3>
+            <input type="text" id="shelf" name="qnt" [(ngModel)]="newItem.shelfNumber">
+          </div>
+          <div class="fullWidth">
+            <h3>Vetura / Viti:</h3>
+            <input type="text" id="carYear" name="qnt" [(ngModel)]="newItem.carAndYear">
+          </div>
+          <div class="fullWidth">
+            <h3>Tipi motorit:</h3>
+            <input type="text" id="engineType" name="qnt" [(ngModel)]="newItem.engineType">
+          </div>
+          <div class="fullWidth">
+            <h3>Pershkrimi:</h3>
+            <input type="text" id="desc" name="qnt" [(ngModel)]="newItem.description">
           </div>
         </div>
       </div>

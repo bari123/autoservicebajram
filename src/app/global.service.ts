@@ -74,8 +74,11 @@ export class GlobalService {
 
   async addService(newService: any, clientId: string | null) {
     return await this.axiosInstance.post(`/clients/${clientId}/service`, newService).then(res => {
-
     })
+  }
+
+  async addServiceFromInvoice(invoiceId:string,clientId:string|null){
+    return await this.axiosInstance.post(`/clients/${clientId}/service/invoice/${invoiceId}`)
   }
 
   async getServices(clientId: string | null) {

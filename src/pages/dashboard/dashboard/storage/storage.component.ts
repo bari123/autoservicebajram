@@ -9,20 +9,30 @@ import {ToasterComponent} from "../../../compo/toaster/toaster.component";
 })
 export class StorageComponent implements OnInit {
   @ViewChild(ToasterComponent) toast?: ToasterComponent;
+  displayedColumns = ['count','serialCode','name', 'shelfNumber','price', 'qnt','engineType','carAndYear','description','saveButton'];
 
+  // @ts-ignore
   items: [{
     _id: string,
     name: string,
     price: number,
     serialCode: string,
     qnt: number,
+    shelfNumber:string,
+    description:string,
+    engineType:string,
+    carAndYear:string,
     originalQty: number
-  }] | null = null
+  }]  = []
   newItem = {
     name: '',
     serialCode: '',
     price: 0,
-    qnt: 0
+    qnt: 0,
+    shelfNumber:'',
+    description:'',
+    engineType:'',
+    carAndYear:''
   }
   code = ""
   mouseenter: boolean = false
@@ -41,7 +51,9 @@ export class StorageComponent implements OnInit {
 
   get filteredItems() {
     return this.items?.filter(item =>
-      item.serialCode?.toLowerCase().includes(this.searchTerm?.toLowerCase())
+      item.serialCode?.toLowerCase().includes(this.searchTerm?.toLowerCase()) ||
+      item.carAndYear?.toLowerCase().includes(this.searchTerm?.toLowerCase()) ||
+      item.name?.toLowerCase().includes(this.searchTerm?.toLowerCase())
     );
   }
 
@@ -109,9 +121,12 @@ export class StorageComponent implements OnInit {
     if (this.items) {
       let items;
       if (state === 'warning') {
-        items = this.items.filter(item => item.qnt < 5 && item.qnt >= 3 ).map(item => item.name);
-      } else {
-        items = this.items.filter(item => item.qnt < 3).map(item => item.name);
+        items = this.items.filter(item => item.qnt < 5 && item.qnt >= 3 ).map(item => item.serialCode);
+      } else if (state==='dangerous'){
+        items = this.items.filter(item => item.qnt===0 ).map(item => item.serialCode);
+      }
+      else {
+        items = this.items.filter(item => item.qnt < 3).map(item => item.serialCode);
       }
       return items.toString();
     } else {

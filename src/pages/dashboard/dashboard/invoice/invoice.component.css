@@ -93,3 +93,117 @@
 .icon-plus:hover{
   border: 1px solid green;
 }
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-table {
+  flex: 1 1 auto;
+  overflow: auto;
+  max-height: 500px;
+}
+
+.example-header-row, .example-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+  height: 52px;
+  padding: 0 8px;
+}
+
+.example-cell, .example-header-cell {
+  flex: 1;
+}
+
+.example-header-cell {
+  font-size: 12px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.example-cell {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.invoice-container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  height: 95%;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .company-info, .header .invoice-info {
+  width: 45%;
+}
+.header .company-info {
+  text-align: left;
+}
+.header .invoice-info {
+  text-align: right;
+}
+.section {
+  margin-top: 20px;
+}
+.section .title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.details-table, .items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.details-table th, .details-table td, .items-table th, .items-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+.items-table th, .details-table th {
+  background-color: #f2f2f2;
+}
+.totals {
+  text-align: right;
+  margin-top: 20px;
+}
+.totals .total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.totals .total-row span {
+  width: 50%;
+}
+.payments {
+  margin-top: 20px;
+}
+.footer {
+  bottom: 0;
+  left: 25%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #666;
+}
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;  /* adjust the font size to ensure the content fits */
+}
+
+.items-table th, .items-table td {
+  border: 1px solid #ccc;
+  padding: 4px;  /* reduce padding to fit more content */
+}
+
+.items-table th {
+  background-color: #f2f2f2;
+}

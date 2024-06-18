@@ -10,6 +10,7 @@ export class ButtonComponent implements OnInit {
   @Input() text: string | undefined
   @Input() btnStyle: string | undefined
   @Input() iconName: string | undefined
+  @Input() disabled:boolean|undefined
 
   @Output() clicked = new EventEmitter<boolean>();
 

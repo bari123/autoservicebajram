@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {GlobalService} from '../../../../app/global.service';
 import * as moment from "moment";
 import {ToasterComponent} from "../../../compo/toaster/toaster.component";
@@ -47,7 +47,7 @@ interface AgendaSlot {
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css','../../../../styles.css']
+  styleUrls: ['./calendar.component.css', '../../../../styles.css']
 })
 export class CalendarComponent implements OnInit {
   @ViewChild(ToasterComponent) toast?: ToasterComponent
@@ -67,7 +67,7 @@ export class CalendarComponent implements OnInit {
   estimation = ''
   showModal = false;
   finishWorkModal = false;
-  doneModals=false
+  doneModals = false
   infoModal = false;
   client: Client = {_id: '', fullname: '', address: '', phone: '', email: ''};
   car: Car | null = null;
@@ -77,9 +77,9 @@ export class CalendarComponent implements OnInit {
     this.currentDate = moment();
   }
 
-  ngOnInit() {
-    this.loadAgenda();
-    this.loadClients();
+  async ngOnInit() {
+    await this.loadAgenda();
+    await this.loadClients();
     this.initializeLifts();
   }
 
@@ -91,10 +91,10 @@ export class CalendarComponent implements OnInit {
     return date.day() !== 0
   }
 
-  selectedDate(date: moment.Moment) {
+ async selectedDate(date: moment.Moment) {
     this.initializeLifts()
     this.currentDate = date
-    this.loadAgenda()
+    await this.loadAgenda()
     this.isWeekDay(this.currentDate)
   }
 
@@ -121,11 +121,11 @@ export class CalendarComponent implements OnInit {
     this.loadAgenda()
   }
 
-  async deleteAgenda(){
-    await this.service.deleteAgenda(this.selectedLiftId).then(res=>{
+  async deleteAgenda() {
+    await this.service.deleteAgenda(this.selectedLiftId).then(res => {
       this.closeModal()
       this.loadAgenda()
-      this.toast?.show(false,'Termini u fshi me sukses')
+      this.toast?.show(false, 'Termini u fshi me sukses')
     })
   }
 
@@ -180,10 +180,10 @@ export class CalendarComponent implements OnInit {
       return
     }
     if (localStorage.getItem('role') === 'admin') {
-      if(doneModal){
-        this.doneModals=true
-      }else{
-      this.isNewClient = true
+      if (doneModal) {
+        this.doneModals = true
+      } else {
+        this.isNewClient = true
         this.showModal = true;
 
       }
@@ -224,9 +224,9 @@ export class CalendarComponent implements OnInit {
           }
         }
       }
-      if(doneModal){
-        this.doneModals=true
-      }else{
+      if (doneModal) {
+        this.doneModals = true
+      } else {
         this.infoModal = true;
       }
     }
@@ -236,12 +236,12 @@ export class CalendarComponent implements OnInit {
     this.showModal = false;
     this.infoModal = false
     this.finishWorkModal = false;
-    this.doneModals=false;
+    this.doneModals = false;
     this.newClient = {_id: '', fullname: '', address: '', phone: '', email: ''};
     this.newCar = {make: '', model: '', year: '', engine: ''};
     this.description = ''
     this.estimation = ''
-    this.selectedLiftId=null
+    this.selectedLiftId = null
   }
 
   async finishWork() {

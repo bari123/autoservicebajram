@@ -3,6 +3,12 @@
   visibility: hidden;
 }
 
+@page {
+  size: auto;  /* auto is the initial value */
+  margin: 0;   /* this affects the margin in the printer settings */
+}
+
+
 @media print {
 
   .printable {
@@ -12,10 +18,11 @@
 .invoice-container {
   left: 0;
   position: absolute;
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
+  height: 95%;
 }
 .header {
   display: flex;
@@ -67,8 +74,25 @@
   margin-top: 20px;
 }
 .footer {
+  bottom: 0;
+  position: absolute;
+  left: 25%;
   text-align: center;
   margin-top: 20px;
   font-size: 0.9em;
   color: #666;
+}
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;  /* adjust the font size to ensure the content fits */
+}
+
+.items-table th, .items-table td {
+  border: 1px solid #ccc;
+  padding: 4px;  /* reduce padding to fit more content */
+}
+
+.items-table th {
+  background-color: #f2f2f2;
 }

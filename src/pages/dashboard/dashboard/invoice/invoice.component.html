@@ -10,41 +10,59 @@
     </h2>
   </div>
   <div>
-    <input type="text" placeholder="Kerko fakturat" [(ngModel)]="searchTerm">
+    <input type="text" placeholder="   Kerko fakturat" [(ngModel)]="searchTerm">
   </div>
   <div style="height:80vh;overflow-y: auto;">
-    <ul class="client-list">
-      <li class="cursor-pointer" style="border-radius: 20px" *ngFor="let item of filteredInvoices">
-
-        <div class="client-details">
-          <div class="client-details flex justify-content-space-evenly halfWidth align-items-center">
-            <div class="client-info flex gap-10">
-              <span class="client-label">Numri Faktures:</span>
-              <span class="client-name">{{ item.invoiceId}} </span>
-            </div>
-            <div class="client-info flex gap-10">
-              <span class="client-label">Emri Clientit:</span>
-              <span class="client-name">{{ item.clientName }}</span>
-            </div>
-            <div class="client-info flex gap-10">
-              <span class="client-label">Shuma totale:</span>
-              <span class="client-name">{{ item.totalPrice }}</span>
-            </div>
-            <div class="client-info flex gap-10">
-              <div (click)="print(item)" class="client-info flex align-items-center fshi ">
+    <ng-container cdkColumnDef="username">
+      <cdk-table #table [dataSource]="filteredInvoices" class="example-table flex-direction-column">
+        <ng-container cdkColumnDef="invoiceId">
+          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3
+            style="border-right:1px solid black">#</h3></cdk-header-cell>
+          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"><h4>{{row.invoiceId}}</h4></cdk-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="Name">
+          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Emri Klientit</h3>
+          </cdk-header-cell>
+          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.clientName}} </cdk-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="Price">
+          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi Total</h3>
+          </cdk-header-cell>
+          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.totalPrice}} </cdk-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="Actions">
+          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">Modifikimet
+          </cdk-header-cell>
+          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
+            <div class="flex justify-content-space-evenly cursor-pointer">
+              <div (click)="print(row)" class="client-info flex align-items-center fshi ">
                 <span class="client-label">Printo</span>
                 <span class="material-symbols-outlined close-icon">print</span>
               </div>
+              <div (click)="selectedId=row._id;deleteModal=true" class="client-info flex align-items-center fshi ">
+                <span class="client-label">Fshi</span>
+                <span class="material-symbols-outlined close-icon">close</span>
+              </div>
+              <div (click)="openPreview(row)" class="client-info flex align-items-center fshi ">
+                <span class="client-label">Shiko</span>
+                <span class="material-symbols-outlined close-icon">visibility</span>
+              </div>
             </div>
-            <div (click)="selectedId=item._id;deleteModal=true" class="client-info flex align-items-center fshi ">
+          </cdk-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="price">
+          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
+          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
+            <div (click)="selectedId=row._id;deleteModal=true" class="client-info flex align-items-center fshi ">
               <span class="client-label">Fshi</span>
               <span class="material-symbols-outlined close-icon">close</span>
             </div>
-
-          </div>
-        </div>
-      </li>
-    </ul>
+          </cdk-cell>
+        </ng-container>
+        <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
+        <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
+      </cdk-table>
+    </ng-container>
   </div>
 
 </div>
@@ -55,24 +73,38 @@
     <div>
       <h2>Shto Fakture</h2>
       <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
+        <app-button style="width: 50%" [text]="isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri'"
+                    [iconName]="isNewClient ? 'edit' : 'add'"
+                    (click)="isNewClient=!isNewClient"></app-button>
         <div class="flex justify-content-space-between gap-20 fullWidth">
-          <div class=" fullWidth">
-            <h3>Emri dhe Mbiemri:</h3>
-            <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
-          </div>
-          <div class="fullWidth">
-            <h3>Telefoni:</h3>
-            <input type="tel" id="phone" name="phone" [(ngModel)]="newInvoice.phone">
+
+          <div class="flex flex-direction-row justify-content-space-between fullWidth gap-40"
+               *ngIf="isNewClient; else existingClientForm">
+            <div class=" fullWidth ">
+              <h3>Emri dhe Mbiemri:</h3>
+              <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
+            </div>
+            <div class="fullWidth">
+              <h3>Telefoni:</h3>
+              <input type="tel" id="phone" name="phone" [(ngModel)]="newInvoice.phone">
+            </div>
           </div>
         </div>
-        <div class="flex justify-content-space-between gap-10 fullWidth" *ngFor="let art of newInvoice.items" >
+        <div class="flex justify-content-space-between gap-10 fullWidth"
+             *ngFor="let art of newInvoice.items,index as i">
           <div class="fullWidth">
             <h3>Artikulli:</h3>
-            <input type="text" id="address" name="address" [(ngModel)]="art.art">
+            <input type="text" id="address" name="address" (input)="changes($event,i)" [(ngModel)]="art.art">
           </div>
           <div>
-            <h3>Sasia:</h3>
-            <input type="text" id="sasia" name="address" [(ngModel)]="art.qty">
+            <div class="flex align-items-center justify-content-center gap-10">
+              <h3>Sasia:</h3>
+              <app-icon *ngIf="cantSubmit(art)" [appTooltip]="'Nuk ka njesi te mjaftueshme '"
+                        class="cursor-pointer" style="color:red" iconName="error"></app-icon>
+            </div>
+            <input type="number" id="sasia" name="address" [max]="newItem?newItem.qnt:''" (input)="updatePrice(i)"
+                   [(ngModel)]="art.qty">
+
           </div>
           <div class="fullWidth">
             <h3>Cmimi:</h3>
@@ -80,6 +112,7 @@
           </div>
 
         </div>
+
         <div class="flex align-items-center cursor-pointer" (click)="addItem()">
           <h2>Shto Artikull</h2>
           <app-icon iconName="add"></app-icon>
@@ -91,7 +124,8 @@
 
       </div>
       <div class="flex fullWidth gap-10">
-        <app-button class="fullWidth" text="Shto Fakture" iconName="add" (click)="addInvoice()"></app-button>
+        <app-button class="fullWidth" [disabled]="canSubmit" text="Shto Fakture" iconName="add"
+                    (click)="addInvoice()"></app-button>
       </div>
     </div>
   </div>
@@ -132,12 +166,13 @@
       live_help
     </span>
         <h3 class="textCenter">
-         Ne qofte se vazhdoni pa printuar tani , mund te printoni nga lista me vone !
+          Ne qofte se vazhdoni pa printuar tani , mund te printoni nga lista me vone !
         </h3>
       </div>
       <div class="flex fullWidth gap-40">
-      <app-button class="fullWidth" (click)="printAfter()" text="Printo" iconName="print"></app-button>
-      <app-button class="fullWidth" (click)="afterSaveModal=false;invoiceToPrint=null" text="Mos Printo" iconName="close"></app-button>
+        <app-button class="fullWidth" (click)="printAfter()" text="Printo" iconName="print"></app-button>
+        <app-button class="fullWidth" (click)="afterSaveModal=false;invoiceToPrint=null" text="Mos Printo"
+                    iconName="close"></app-button>
       </div>
     </div>
   </div>
@@ -146,5 +181,124 @@
 <app-print-layout class="printable" [data]="invoiceToPrint"></app-print-layout>
 
 <app-toaster></app-toaster>
+
+<ng-template #existingClientForm>
+  <div class="container fullWidth">
+    <div class="client-section">
+      <div class="select-wrapper">
+        <h3>Klienti</h3>
+        <select class="select-client" [(ngModel)]="selectedClient" (change)="loadCars()">
+          <option [ngValue]="client" *ngFor="let client of clients">{{client.fullname}}</option>
+        </select>
+      </div>
+
+      <div class="select-wrapper">
+        <h3>Makina e klientit</h3>
+        <select class="select-car" [(ngModel)]="selectedCar" (change)="carSelected()" [disabled]="cars?.length === 0">
+          <option [ngValue]="car" *ngFor="let car of cars">{{car.model}}</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+</ng-template>
+
+  <div class="modals" [class.show-modal]="previewModal">
+    <div class="modal-content">
+      <span class="close material-symbols-outlined" (click)="previewModal=false;invoiceToPrint=null">close</span>
+
+      <div>
+        <div class="invoice-container">
+          <div class="header">
+            <div class="company-info">
+              <p><strong>Auto Service Bajram</strong><br>
+                Bajram Iseni<br>
+                Recice e Madhe bb 101<br>
+                Tel. 070 532 371</p>
+            </div>
+            <div class="logo">
+              <img src="/assets/AA.png" height="180" width="240" alt="Company Logo">
+            </div>
+            <div class="invoice-info">
+              <p><strong>Numri Fatures: {{invoiceToPrint?.invoiceId}}</strong><br>
+                Vendi Leshimit : Tetove<br>
+                invoiceToPrint e Leshimit:<span>{{Date() | date: 'dd/MM/yyyy'}}</span> <br>
+            </div>
+          </div>
+
+          <div class="section">
+            <p>
+              Emri Klientit:
+              <span class="title"> {{invoiceToPrint?.clientName}}</span>
+            </p>
+            <p>
+              Telefoni i Klientit:
+              <span class="title"> {{invoiceToPrint?.phone}}</span>
+            </p>
+          </div>
+
+          <div class="section">
+            <table class="items-table">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Artikulli</th>
+                <th>Sasia</th>
+                <th>Cmimi</th>
+              </tr>
+              </thead>
+              <tbody  *ngFor="let art of invoiceToPrint?.items;index as i">
+              <tr>
+                <td>{{i}}</td>
+                <td>{{art.art}}</td>
+                <td>{{art.qty}}</td>
+                <td>{{art.price}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section mb-30">
+            <div class="title">Kontrolli</div>
+            <p>
+              Totali pa zbritje: {{invoiceToPrint?.totalPrice}}<br>
+              <span *ngIf="invoiceToPrint?.discount">
+        Zbritje: {{invoiceToPrint?.discount}} %
+        </span>
+            </p>
+            <div class="totals">
+              <div class="total-row">
+                <span>Per pages MKD:</span>
+                <span *ngIf="!invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice}} MKD</span>
+                <span *ngIf="invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice - ((invoiceToPrint?.discount/100)*invoiceToPrint?.totalPrice)}} MKD</span>
+              </div>
+              <div class="total-row">
+                <span>Per pages ne euro:</span>
+                <span *ngIf="!invoiceToPrint?.discount">{{(invoiceToPrint?.totalPrice / 61.4).toFixed(2)}} EURO</span>
+                <span *ngIf="invoiceToPrint?.discount">{{((invoiceToPrint.totalPrice -((invoiceToPrint?.discount/100)*invoiceToPrint?.totalPrice))/61.4).toFixed(2)}} EURO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-30 flex justify-content-space-between">
+            <div>
+              <p>Dorezoi</p>
+              <p>_______________________________</p>
+            </div>
+            <div>
+              <p>Pranoi</p>
+              <p>_______________________________</p>
+            </div>
+          </div>
+          <div class="footer">
+            <p>Vlera e perdorur per te konvertuar Denarin ne euro eshte 61.4</p>
+            <p>Me ne gjithmone te sigurte</p>
+            <p>Ju falemnderit</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
