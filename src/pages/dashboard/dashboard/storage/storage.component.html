@@ -10,7 +10,7 @@
     </h2>
   </div>
   <div>
-    <input type="text" placeholder="   Kerko artikull me numer serik" [(ngModel)]="searchTerm">
+    <input class="input-search" type="text" placeholder="   Kerko artikull me numer serik" [(ngModel)]="searchTerm">
   </div>
   <div style="height:80vh;overflow-y: auto;">
     <div class="mt-20 mb-10 flex gap-20">
@@ -36,7 +36,7 @@
         <cdk-table #table [dataSource]="filteredItems" class="example-table flex-direction-column">
           <ng-container cdkColumnDef="count">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3 style="border-right:1px solid black">#</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"><h4 >{{1}}</h4></cdk-cell>
+            <cdk-cell *cdkCellDef="let row,index as i" class="example-cell textCenter is-mobile"><h4 >{{i+1}}</h4></cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="serialCode">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3> Numri Serik</h3>
