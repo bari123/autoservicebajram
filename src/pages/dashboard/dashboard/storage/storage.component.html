@@ -44,17 +44,18 @@
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.serialCode}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="name">
-            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Emri</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.name | truncate:10}} </cdk-cell>
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter "><h3>Emri</h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer" [appTooltip]="row.name"> {{row.name | truncate:10}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="shelfNumber" >
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile "><h3> Renditja ne raft </h3>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.shelfNumber}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile" [appTooltip]="row.shelfNumber"> {{row.shelfNumber | truncate:10}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="price">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">{{ row.price + 'den / ' +
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter" [appTooltip]="row.price + 'den / ' +
+               Math.round(row.price / 61.5 ) + 'euro'">{{ row.price + 'den / ' +
                Math.round(row.price / 61.5 ) + 'euro' | truncate:10}}
             </cdk-cell>
           </ng-container>
@@ -87,7 +88,7 @@
           <ng-container cdkColumnDef="description">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3>Pershkrimi</h3>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.description}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile" [appTooltip]="row.description!==null ? row.description : ' '"> {{row.description? row.description:'' | truncate:12}} </cdk-cell>
           </ng-container>
 
           <ng-container cdkColumnDef="saveButton">
@@ -98,7 +99,7 @@
               <div *ngIf="!hasChanged(row)" (click)="selectedId=row._id;deleteModal=true"
                    class="client-info flex align-items-center fshi ">
                 <span class="client-label">Fshi</span>
-                <span class="material-symbols-outlined close-icon">close</span>
+                <span class="material-symbols-outlined close-icon cursor-pointer  ">close</span>
               </div>
             </cdk-cell>
           </ng-container>

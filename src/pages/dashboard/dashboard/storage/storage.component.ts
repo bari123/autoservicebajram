@@ -9,7 +9,7 @@ import {ToasterComponent} from "../../../compo/toaster/toaster.component";
 })
 export class StorageComponent implements OnInit {
   @ViewChild(ToasterComponent) toast?: ToasterComponent;
-  displayedColumns = ['count','serialCode','name', 'shelfNumber','price', 'qnt','engineType','carAndYear','description','saveButton'];
+  displayedColumns = ['count','serialCode','name', 'shelfNumber','price', 'qnt','carAndYear','engineType','description','saveButton'];
 
   // @ts-ignore
   items: [{
