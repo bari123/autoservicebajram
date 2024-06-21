@@ -223,7 +223,7 @@
             <div class="invoice-info">
               <p><strong>Numri Fatures: {{invoiceToPrint?.invoiceId}}</strong><br>
                 Vendi Leshimit : Tetove<br>
-                invoiceToPrint e Leshimit:<span>{{Date() | date: 'dd/MM/yyyy'}}</span> <br>
+                Data e Leshimit:<span>{{Date() | date: 'dd/MM/yyyy'}}</span> <br>
             </div>
           </div>
 
@@ -232,7 +232,7 @@
               Emri Klientit:
               <span class="title"> {{invoiceToPrint?.clientName}}</span>
             </p>
-            <p>
+            <p *ngIf="invoiceToPrint.phone">
               Telefoni i Klientit:
               <span class="title"> {{invoiceToPrint?.phone}}</span>
             </p>
@@ -261,7 +261,7 @@
 
           <div class="section mb-30">
             <div class="title">Kontrolli</div>
-            <p>
+            <p *ngIf="invoiceToPrint?.discount">
               Totali pa zbritje: {{invoiceToPrint?.totalPrice}}<br>
               <span *ngIf="invoiceToPrint?.discount">
         Zbritje: {{invoiceToPrint?.discount}} %
