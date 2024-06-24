@@ -1,0 +1,43 @@
+.slot {
+  width: 320px;
+  height: 35px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.slot:hover {
+  box-shadow: 0 0 0 10px #ccc;
+}
+
+.slot-container {
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.agenda-slot {
+  margin: 8px;
+}
+
+.reserved {
+  background-color: #dc3545;
+  opacity: 0.9;
+}
+
+.available {
+  background-color: blue;
+  opacity: 0.7;
+}
+
+.done {
+  background-color: #0a8a0a;
+  opacity: 0.7;
+
+}
+
+.reserved, .available, .done {
+  color: white;
+}

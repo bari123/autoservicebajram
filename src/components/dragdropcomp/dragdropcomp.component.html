@@ -1,0 +1,14 @@
+<div cdkDropList class="slot-container flex" (cdkDropListDropped)="drop($event)">
+  <div class="agenda-slot mt-10 fullWidth   align-items-center">
+  <div *ngFor="let item of timeslots;index as i ; trackBy: trackByItem" cdkDragLockAxis="y"
+       class="slot mt-10 textCenter" cdkDrag
+       [ngClass]="{'reserved': item.reserved, 'available': !item.reserved,'done':isDoneAgenda(item.time)}"
+       [appTooltip]="showAgenda(item.time)"
+       (click)="reserveSlot(item)"
+  >
+    {{ showAgenda(item.time)| truncate:30 }}
+  </div>
+  </div>
+</div>
+
+

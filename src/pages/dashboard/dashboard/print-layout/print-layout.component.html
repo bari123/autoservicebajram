@@ -23,10 +23,15 @@
         Emri Klientit:
         <span class="title"> {{data?.clientName}}</span>
       </p>
-      <p>
+      <p *ngIf="data.phone">
         Telefoni i Klientit:
         <span class="title"> {{data?.phone}}</span>
       </p>
+      <p *ngIf="data.car">
+        Makina e Klientit:
+        <span class="title"> {{data.car}}</span>
+      </p>
+
     </div>
 
     <div class="section">

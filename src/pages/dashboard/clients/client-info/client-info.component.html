@@ -1,7 +1,32 @@
-  <h2>Informacionet e klientit</h2>
-  <div class="info-content">
-    <p><strong>Emri dhe Mbiemri:</strong> {{client?.fullname}}</p>
-    <p><strong>Email:</strong> {{client?.email}}</p>
-    <p><strong>Telefoni:</strong>{{client?.phone}}</p>
-    <p><strong>Adresa:</strong> {{client?.address}}</p>
-  </div>
+<h2 class="flex align-items-center"><span>
+  <app-icon *ngIf="!editing" (click)="editing=true" class="cursor-pointer" iconName="edit"></app-icon>
+  <app-icon *ngIf="editing" (click)="saveClientInfo()" class="cursor-pointer" iconName="save"></app-icon>
+</span>Informacionet e klientit
+</h2>
+<div class="info-content" *ngIf="!editing">
+  <p><strong>Emri dhe Mbiemri:</strong> {{client?.fullname}}</p>
+  <p><strong>Email:</strong> {{client?.email}}</p>
+  <p><strong>Telefoni:</strong>{{client?.phone}}</p>
+  <p><strong>Adresa:</strong> {{client?.address}}</p>
+</div>
+
+<div class="info-content" *ngIf="editing">
+  <p class="flex align-items-center gap-20">
+    <strong>Emri:</strong>
+    <input type="text" [(ngModel)]="client.fullname"/>
+  </p>
+  <p class="flex align-items-center gap-20">
+    <strong>Email:</strong>
+    <input type="text" [(ngModel)]="client.email"/>
+  </p>
+  <p class="flex align-items-center gap-20">
+    <strong>Telefoni:</strong>
+    <input type="text" [(ngModel)]="client.phone"/>
+  </p>
+  <p class="flex align-items-center gap-20">
+    <strong>Adresa:</strong>
+    <input type="text" [(ngModel)]="client.address"/>
+  </p>
+
+</div>
+

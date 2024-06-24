@@ -9,7 +9,13 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ClientInfoComponent implements OnInit {
 
-  client: any
+  client: any = {
+    fullname: '',
+    address: '',
+    phone: '',
+    email: ''
+  }
+  editing=false
 
   constructor(private service: GlobalService, private route: ActivatedRoute) {
   }
@@ -17,6 +23,11 @@ export class ClientInfoComponent implements OnInit {
 
   async ngOnInit() {
     this.client = await this.service.getClientById(this.route.snapshot.paramMap.get('id'))
+  }
+
+  async saveClientInfo() {
+    await this.service.editClient(this.client,this.route.snapshot.paramMap.get('id'))
+    this.editing=false
   }
 
 }

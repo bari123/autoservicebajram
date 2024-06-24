@@ -12,65 +12,78 @@
   <div>
     <input type="text" placeholder="   Kerko fakturat" [(ngModel)]="searchTerm">
   </div>
-  <div style="height:80vh;overflow-y: auto;">
-    <ng-container cdkColumnDef="username">
-      <cdk-table #table [dataSource]="filteredInvoices" class="example-table flex-direction-column">
-        <ng-container cdkColumnDef="invoiceId">
-          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3
-            style="border-right:1px solid black">#</h3></cdk-header-cell>
-          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"><h4>{{row.invoiceId}}</h4></cdk-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="Name">
-          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Emri Klientit</h3>
-          </cdk-header-cell>
-          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.clientName}} </cdk-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="Price">
-          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi Total</h3>
-          </cdk-header-cell>
-          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.totalPrice}} </cdk-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="Actions">
-          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">Modifikimet
-          </cdk-header-cell>
-          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
-            <div class="flex justify-content-space-evenly cursor-pointer">
-              <div (click)="print(row)" class="client-info flex align-items-center fshi ">
-                <span class="client-label">Printo</span>
-                <span class="material-symbols-outlined close-icon">print</span>
+  <div>
+
+    <div class="fullWidth flex gap-40 mt-30 mb-30">
+      <app-button class="fullWidth" text="Te papaguara" (click)="statusTerm=false"></app-button>
+      <app-button class="fullWidth" text="Te paguara" btnStyle="secondary" (click)="statusTerm=true"></app-button>
+    </div>
+    <div style="height:80vh;overflow-y: auto;border-top: 1px solid black">
+      <ng-container cdkColumnDef="username">
+        <cdk-table #table [dataSource]="filteredInvoices" class="example-table flex-direction-column">
+          <ng-container cdkColumnDef="invoiceId">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3
+              style="border-right:1px solid black">#</h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"><h4>{{row.invoiceId}}</h4></cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="Name">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Emri Klientit</h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.clientName}} </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="Price">
+            <cdk-header-cell *cdkHeaderCellDef  class="example-header-cell textCenter"><h3>Vetura</h3>
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.car}} </cdk-cell>
+          </ng-container>
+
+          <ng-container cdkColumnDef="Actions">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">Modifikimet
+            </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
+              <div class="flex justify-content-space-evenly cursor-pointer">
+                <div (click)="print(row)" class="client-info flex align-items-center fshi ">
+                  <span class="client-label">Printo</span>
+                  <span class="material-symbols-outlined close-icon">print</span>
+                </div>
+                <div (click)="selectedId=row._id;deleteModal=true" class="client-info flex align-items-center fshi ">
+                  <span class="client-label">Fshi</span>
+                  <span class="material-symbols-outlined close-icon">close</span>
+                </div>
+                <div (click)="openPreview(row)" class="client-info flex align-items-center fshi ">
+                  <span class="client-label">Shiko</span>
+                  <span class="material-symbols-outlined close-icon">visibility</span>
+                </div>
+                <div (click)="selectedId=row._id;showModal=true;newInvoice=row" class="client-info flex align-items-center fshi ">
+                  <span class="client-label">Edito</span>
+                  <span class="material-symbols-outlined close-icon">edit</span>
+                </div>
               </div>
+            </cdk-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="price">
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
               <div (click)="selectedId=row._id;deleteModal=true" class="client-info flex align-items-center fshi ">
                 <span class="client-label">Fshi</span>
                 <span class="material-symbols-outlined close-icon">close</span>
               </div>
-              <div (click)="openPreview(row)" class="client-info flex align-items-center fshi ">
-                <span class="client-label">Shiko</span>
-                <span class="material-symbols-outlined close-icon">visibility</span>
-              </div>
-            </div>
-          </cdk-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="price">
-          <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
-          <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
-            <div (click)="selectedId=row._id;deleteModal=true" class="client-info flex align-items-center fshi ">
-              <span class="client-label">Fshi</span>
-              <span class="material-symbols-outlined close-icon">close</span>
-            </div>
-          </cdk-cell>
-        </ng-container>
-        <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
-        <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
-      </cdk-table>
-    </ng-container>
-  </div>
+            </cdk-cell>
+          </ng-container>
+          <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
+          <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
+        </cdk-table>
+      </ng-container>
+    </div>
 
+  </div>
 </div>
+
 
 <div class="modals" [class.show-modal]="showModal">
   <div class="modal-content">
     <span class="close" (click)="showModal=!showModal">&times;</span>
-    <div>
+    <div style="height: 80vh;overflow-y: auto;overflow-x: hidden">
       <h2>Shto Fakture</h2>
       <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
         <app-button style="width: 50%" [text]="isNewClient ? 'Zgjidh Klient Ekzistues' : 'Shto Klient te Ri'"
@@ -80,13 +93,27 @@
 
           <div class="flex flex-direction-row justify-content-space-between fullWidth gap-40"
                *ngIf="isNewClient; else existingClientForm">
-            <div class=" fullWidth ">
-              <h3>Emri dhe Mbiemri:</h3>
-              <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
+            <div>
+
+              <div class=" fullWidth ">
+                <h3>Emri dhe Mbiemri:</h3>
+                <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
+              </div>
+              <div class="fullWidth">
+                <h3>Telefoni:</h3>
+                <input type="tel" id="phone" name="phone" [(ngModel)]="newInvoice.phone">
+              </div>
             </div>
-            <div class="fullWidth">
-              <h3>Telefoni:</h3>
-              <input type="tel" id="phone" name="phone" [(ngModel)]="newInvoice.phone">
+            <div>
+
+              <div class="fullWidth">
+                <h3>Makina:</h3>
+                <input type="tel" id="car" name="phone" [(ngModel)]="newInvoice.car">
+                <div class="fullWidth">
+                  <h3>Kilometrat:</h3>
+                  <input type="tel" id="km" name="phone" [(ngModel)]="newInvoice.km">
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -120,6 +147,11 @@
         <div class="fullWidth">
           <h3>Zbritje:</h3>
           <input type="number" id="disc" name="disc" [(ngModel)]="newInvoice.discount">
+        </div>
+
+        <div class="flex align-items-center gap-40">
+          <h3>E paguar</h3>
+          <input class="checkbox" [(ngModel)]="newInvoice.status" type="checkbox">
         </div>
 
       </div>
@@ -209,7 +241,7 @@
       <span class="close material-symbols-outlined" (click)="previewModal=false;invoiceToPrint=null">close</span>
 
       <div>
-        <div class="invoice-container">
+        <div class="invoice-container" [class.unpaid]="!invoiceToPrint?.status" [class.paid]="invoiceToPrint?.status">
           <div class="header">
             <div class="company-info">
               <p><strong>Auto Service Bajram</strong><br>
@@ -236,6 +268,10 @@
               Telefoni i Klientit:
               <span class="title"> {{invoiceToPrint?.phone}}</span>
             </p>
+            <p *ngIf="invoiceToPrint.car">
+              Makina e Klientit:
+              <span class="title"> {{invoiceToPrint.car}}</span>
+            </p>
           </div>
 
           <div class="section">
@@ -248,7 +284,7 @@
                 <th>Cmimi</th>
               </tr>
               </thead>
-              <tbody  *ngFor="let art of invoiceToPrint?.items;index as i">
+              <tbody *ngFor="let art of invoiceToPrint?.items;index as i">
               <tr>
                 <td>{{i}}</td>
                 <td>{{art.art}}</td>
@@ -271,12 +307,16 @@
               <div class="total-row">
                 <span>Per pages MKD:</span>
                 <span *ngIf="!invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice}} MKD</span>
-                <span *ngIf="invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice - ((invoiceToPrint?.discount/100)*invoiceToPrint?.totalPrice)}} MKD</span>
+                <span
+                  *ngIf="invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice - ((invoiceToPrint?.discount / 100) * invoiceToPrint?.totalPrice)}}
+                  MKD</span>
               </div>
               <div class="total-row">
                 <span>Per pages ne euro:</span>
                 <span *ngIf="!invoiceToPrint?.discount">{{(invoiceToPrint?.totalPrice / 61.4).toFixed(2)}} EURO</span>
-                <span *ngIf="invoiceToPrint?.discount">{{((invoiceToPrint.totalPrice -((invoiceToPrint?.discount/100)*invoiceToPrint?.totalPrice))/61.4).toFixed(2)}} EURO</span>
+                <span
+                  *ngIf="invoiceToPrint?.discount">{{((invoiceToPrint.totalPrice - ((invoiceToPrint?.discount / 100) * invoiceToPrint?.totalPrice)) / 61.4).toFixed(2)}}
+                  EURO</span>
               </div>
             </div>
           </div>
@@ -297,10 +337,36 @@
             <p>Ju falemnderit</p>
           </div>
         </div>
+        <app-button *ngIf="!invoiceToPrint.status" text="Paguaj" btnStyle="secondary"
+                    (click)="payModal=true;selectedId=invoiceToPrint._id"></app-button>
       </div>
     </div>
   </div>
 
 
+</div>
 
+<div class="modals" [class.show-modal]="payModal">
+  <div class="modal-content">
+    <div>
+      <span class="close material-symbols-outlined" (click)="afterSaveModal=false;invoiceToPrint=null">close</span>
+      <div class="flex justify-content-center flex-direction-column gap-40">
+        <h2>
+          A jeni i sigurt se doni te paguani faturen ?
+        </h2>
+        <span class="material-symbols-outlined close-icon align-self-center"
+              style="font-size: 60px;color: #dc3545">
+      live_help
+    </span>
+        <h3 class="textCenter">
+          Ne qofte se vazhdoni me pagesen , fatura do llogaritet si borxh i paguar !
+        </h3>
+      </div>
+      <div class="flex fullWidth gap-40">
+        <app-button class="fullWidth" (click)="payInvoice()" text="Paguaj" iconName="print"></app-button>
+        <app-button class="fullWidth" (click)="payModal=false" text="Dil"
+                    iconName="close"></app-button>
+      </div>
+    </div>
+  </div>
 </div>

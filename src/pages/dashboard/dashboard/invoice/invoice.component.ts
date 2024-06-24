@@ -16,6 +16,7 @@ export class InvoiceComponent implements OnInit {
   showModal = false
   deleteModal = false
   afterSaveModal = false
+  payModal = false
   previewModal = false
   selectedId: string = ''
   selectedClient: any
@@ -25,14 +26,29 @@ export class InvoiceComponent implements OnInit {
   newItem: any
   isNewClient: boolean = true
   searchTerm: string = ''
-  newInvoice: any = {
+  statusTerm: boolean = false
+  newInvoice: {
+    carId: string,
+    clientName: string,
+    phone: string,
+    items: [{ art: string, price: number | null, qty: null | number }],
+    car: string,
+    km: string,
+    discount: string,
+    status: boolean
+  } = {
     clientName: '',
+    carId: '',
     phone: '',
     items: [{
       art: '',
-      price: '',
-      qty: ''
-    }]
+      price: null,
+      qty: null
+    }],
+    car: '',
+    km: '',
+    discount: '',
+    status: false
   }
   invoiceToPrint: any = null
   canSubmit = false
@@ -54,22 +70,34 @@ export class InvoiceComponent implements OnInit {
   async ngOnInit() {
     await this.loadInvoices()
     await this.loadClients();
+    console.log(this.filteredInvoices)
 
   }
 
   get filteredInvoices() {
-    return this.invoices?.filter((item: { clientName: string; invoiceId: number; }) =>
-      item.clientName?.toLowerCase().includes(this.searchTerm?.toLowerCase()) ||
-      item.invoiceId === parseInt(this.searchTerm)
-    );
+    return this.invoices?.filter((item: { clientName: string; invoiceId: number; status: boolean }) => {
+      const matchesSearchTerm = item.clientName?.toLowerCase().includes(this.searchTerm?.toLowerCase()) ||
+        item.invoiceId === parseInt(this.searchTerm);
+      const matchesStatusTerm = item.status === this.statusTerm;
+      return matchesSearchTerm && matchesStatusTerm;
+    });
   }
 
+
   async addInvoice() {
+    this.selectedId = ''
     this.invoiceToPrint = this.newInvoice
-    return await this.globalService.saveInvoice(this.newInvoice).then(async res => {
+    if (this.selectedCar) {
       this.newService.carId = this.selectedCar._id
+      this.newInvoice.car = this.selectedCar.model
+    }
+
+    return await this.globalService.saveInvoice(this.newInvoice).then(async res => {
+
       this.newService.invoiceId = res.data._id
-      await this.globalService.addService(this.newService, this.selectedClient._id)
+      if (this.selectedClient) {
+        await this.globalService.addService(this.newService, this.selectedClient._id)
+      }
       this.selectedId = res.data._id
       if (res.status === 201) {
         this.toast?.show(false, 'Faktura u shtua me sukses')
@@ -83,7 +111,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   addItem() {
-    this.newInvoice.items.push({art: '', qty: '', price: ''})
+    this.newInvoice.items.push({art: '', qty: null, price: null})
   }
 
   async loadInvoices() {
@@ -141,6 +169,7 @@ export class InvoiceComponent implements OnInit {
 
   updatePrice(i: any) {
     if (this.newItem) {
+      // @ts-ignore
       this.newInvoice.items[i].price = this.newInvoice.items[i].qty * this.newItem.price
     }
   }
@@ -160,6 +189,21 @@ export class InvoiceComponent implements OnInit {
     this.invoiceToPrint = row
     this.previewModal = true
   }
+
+  async payInvoice() {
+    await this.globalService.payInvoice(this.selectedId).then(res => {
+      this.toast?.show(false, 'Fatura u paguaj me sukses')
+      this.afterSaveModal = false
+      this.previewModal = false
+      this.payModal = false;
+      this.selectedId = ''
+    }).catch(err => {
+      this.toast?.show(true, 'Fatura nuk u pagua')
+      this.afterSaveModal = false
+      this.payModal = false
+    })
+  }
+
 
   protected readonly Date = Date;
 }

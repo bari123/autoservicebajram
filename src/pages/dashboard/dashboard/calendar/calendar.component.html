@@ -2,23 +2,15 @@
   <app-date-slider (dateSelected)="selectedDate($event)"></app-date-slider>
   <div class="agenda-container fullWidth flex justify-content-space-evenly">
     <div class="mt-30  flex flex-direction-column justify-content-inherit">
-      <div class="time" *ngFor="let slot of lifts[0].timeslots">
+      <div class="time" *ngFor="let slot of lifts[0]?.timeslots">
         {{ slot.time }}
       </div>
     </div>
     <div *ngFor="let item of lifts">
-      <h3 class="textCenter">Lifti {{item.lift}}</h3>
+      <div class="textCenter">Lift {{item.lift}}</div>
       <div class="slots-main">
-        <div class="slot-container flex" *ngFor="let slot of item.timeslots;index as i">
-          <div class="slot-time"> {{slot.time}}</div>
-          <div class="agenda-slot mt-10 fullWidth flex align-items-center">
-            <div [appTooltip]="showAgenda(item.lift,slot.time)" class="slot textCenter"
-                 [ngClass]="{'reserved': slot.reserved, 'available': !slot.reserved,'done':isDoneAgenda(item.lift,slot.time)}"
-                 (click)="reserveSlot(item.lift - 1, i,slot);openModal({newAgenda : slot.reserved, liftNumber : item.lift, slot : slot.time, doneModal : isDoneAgenda(item.lift,slot.time)})">
-              {{ (slot.reserved ? showAgenda(item.lift, slot.time) : 'I Lir')  | truncate:30}}
-            </div>
-          </div>
-        </div>
+      <app-dragdropcomp (clicked)="testFunc($event)" (newTimeSlot)="newTimeslot($event)" [timeslots]="item.timeslots" [lift]="item.lift"
+                        [agenda]="agenda"></app-dragdropcomp>
       </div>
     </div>
   </div>
@@ -157,7 +149,8 @@
 
       <div>
         <app-button [text]="'Mbyll'" iconName="close" (click)="this.closeModal()"></app-button>
-        <app-button [text]="'Perfundo Punen'" btnStyle="secondary" (click)="finishWork()" iconName="task_alt"></app-button>
+        <app-button [text]="'Perfundo Punen'" btnStyle="secondary" (click)="finishWork()"
+                    iconName="task_alt"></app-button>
       </div>
     </div>
   </div>

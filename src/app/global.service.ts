@@ -24,11 +24,14 @@ export class GlobalService {
 
   async createClient(newClient: any) {
     await this.axiosInstance.post('/clients', newClient)
+  }
 
+  async editClient(newClient: any,id:string|null) {
+    await this.axiosInstance.post(`/clients/${id}/edit`, newClient)
   }
 
   async getClients(): Promise<any[]> {
-    const {data}= await this.axiosInstance.get('/clients/getAll')
+    const {data} = await this.axiosInstance.get('/clients/getAll')
     return data
   }
 
@@ -77,7 +80,7 @@ export class GlobalService {
     })
   }
 
-  async addServiceFromInvoice(invoiceId:string,clientId:string|null){
+  async addServiceFromInvoice(invoiceId: string, clientId: string | null) {
     return await this.axiosInstance.post(`/clients/${clientId}/service/invoice/${invoiceId}`)
   }
 
@@ -119,6 +122,23 @@ export class GlobalService {
     })
   }
 
+  async saveAgendaDrop(selectedId: string, slot: any, lift: any, client: any, car: any, service: any, newClient: any, date: string, estimation: string) {
+    let body = {
+      lift: {
+        time: slot,
+        lift: lift,
+        client: client ?? newClient,
+        car: car,
+        service: service,
+      },
+      date: date,
+      estimation: estimation
+    }
+    return await this.axiosInstance.post(`agenda/${selectedId}/update`, body).then(res => {
+      return 'Success'
+    })
+  }
+
   async getAgenda(currentDate: string | null) {
     return await this.axiosInstance.post(`/agenda/getAll`, {currentDate: currentDate}).then(res => {
       return res.data
@@ -130,20 +150,20 @@ export class GlobalService {
     return data
   }
 
-  async saveItem(item:any){
-    return await this.axiosInstance.post('items',item)
+  async saveItem(item: any) {
+    return await this.axiosInstance.post('items', item)
   }
 
-  async updateItem(item:any,id:string){
-    return await this.axiosInstance.patch(`items/${id}`,item)
+  async updateItem(item: any, id: string) {
+    return await this.axiosInstance.patch(`items/${id}`, item)
   }
 
-  async deleteItem(id:string){
+  async deleteItem(id: string) {
     return await this.axiosInstance.delete(`items/${id}`)
   }
 
-  async getItemBySerialCode(code:string){
-    const {data}= await this.axiosInstance.get('items/serialCode/'+code)
+  async getItemBySerialCode(code: string) {
+    const {data} = await this.axiosInstance.get('items/serialCode/' + code)
     return data
   }
 
@@ -152,20 +172,24 @@ export class GlobalService {
     return data
   }
 
-  async saveInvoice(invoice:any){
-    return await this.axiosInstance.post('invoice',invoice)
+  async saveInvoice(invoice: any) {
+    return await this.axiosInstance.post('invoice', invoice)
   }
 
-  async updateInvoice(invoice:any,id:string){
-    return await this.axiosInstance.patch(`invoice/${id}`,invoice)
+  async updateInvoice(invoice: any, id: string) {
+    return await this.axiosInstance.patch(`invoice/${id}`, invoice)
   }
 
-  async deleteInvoice(id:string){
+  async deleteInvoice(id: string) {
     return await this.axiosInstance.delete(`invoice/${id}`)
   }
 
-  async getInvoice(id:string){
-    const {data}=await this.axiosInstance.get(`invoice/${id}`)
+  async payInvoice(id: string) {
+    return await this.axiosInstance.post(`invoice/${id}/pay`)
+  }
+
+  async getInvoice(id: string) {
+    const {data} = await this.axiosInstance.get(`invoice/${id}`)
     return data
   }
 

@@ -1,15 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GlobalService} from "../../../../app/global.service";
 import {ToasterComponent} from "../../../compo/toaster/toaster.component";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-storage',
   templateUrl: './storage.component.html',
   styleUrls: ['./storage.component.css']
 })
-export class StorageComponent implements OnInit {
+export class StorageComponent implements OnInit, OnDestroy {
   @ViewChild(ToasterComponent) toast?: ToasterComponent;
-  displayedColumns = ['count','serialCode','name', 'shelfNumber','price', 'qnt','carAndYear','engineType','description','saveButton'];
+  displayedColumns = ['count', 'serialCode', 'name', 'shelfNumber', 'price', 'qnt', 'carAndYear', 'engineType', 'description', 'saveButton'];
 
   // @ts-ignore
   items: [{
@@ -18,21 +19,21 @@ export class StorageComponent implements OnInit {
     price: number,
     serialCode: string,
     qnt: number,
-    shelfNumber:string,
-    description:string,
-    engineType:string,
-    carAndYear:string,
+    shelfNumber: string,
+    description: string,
+    engineType: string,
+    carAndYear: string,
     originalQty: number
-  }]  = []
+  }] = []
   newItem = {
     name: '',
     serialCode: '',
     price: 0,
     qnt: 0,
-    shelfNumber:'',
-    description:'',
-    engineType:'',
-    carAndYear:''
+    shelfNumber: '',
+    description: '',
+    engineType: '',
+    carAndYear: ''
   }
   code = ""
   mouseenter: boolean = false
@@ -49,6 +50,21 @@ export class StorageComponent implements OnInit {
     await this.loadItems()
   }
 
+  ngOnDestroy() {
+    this.searchSubject.complete();
+  }
+
+  private searchSubject = new Subject<string>();
+  private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
+
+  onSearch(searchValue: string) {
+    this.searchSubject.next(searchValue);
+  }
+
+  async performSearch(event: any) {
+   await this.changes(event)
+  }
+
   get filteredItems() {
     return this.items?.filter(item =>
       item.serialCode?.toLowerCase().includes(this.searchTerm?.toLowerCase()) ||
@@ -58,7 +74,7 @@ export class StorageComponent implements OnInit {
   }
 
   itemQuantity(item: any, method: string) {
-    method==='add'?item.qnt++:item.qnt--
+    method === 'add' ? item.qnt++ : item.qnt--
   }
 
   hasChanged(item: any) {
@@ -76,25 +92,36 @@ export class StorageComponent implements OnInit {
     } catch (e) {
       this.toast?.show(true, 'Klienti nuk u ruajt ')
     }
-    this.showModal=false
+    this.showModal = false
   }
 
   async loadItems() {
     this.items = await this.globalService.getItems()
     // @ts-ignore
-    this.originalQuantities = this.items.reduce((acc: { [x: string]: any; }, item: { serialCode: string | number; qnt: any; }) => {
+    this.originalQuantities = this.items.reduce((acc: { [x: string]: any; }, item: {
+      serialCode: string | number;
+      qnt: any;
+    }) => {
       acc[item.serialCode] = item.qnt;
       return acc;
     }, {});
   }
 
-  changes(event: any) {
-    if (event.target.value.length >= 6) {
-      setTimeout(async () => {
-        this.newItem = {...await this.globalService.getItemBySerialCode(event.target.value)}
-      }, 2000)
-    }
+  async changes(event: any) {
+    this.newItem = {...await this.globalService.getItemBySerialCode(event)}
   }
+
+  // debounce(func: any, timeout = 300) {
+  //   let timer: string | number | NodeJS.Timeout | undefined;
+  //   return (...args: any) => {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(() => {
+  //       func.apply(this, args);
+  //     }, timeout);
+  //   };
+  // }
+  //
+  // processChange = this.debounce(() => this.changes(event));
 
   async deleteItem(id: string) {
     try {
@@ -121,11 +148,10 @@ export class StorageComponent implements OnInit {
     if (this.items) {
       let items;
       if (state === 'warning') {
-        items = this.items.filter(item => item.qnt < 5 && item.qnt >= 3 ).map(item => item.serialCode);
-      } else if (state==='dangerous'){
-        items = this.items.filter(item => item.qnt===0 ).map(item => item.serialCode);
-      }
-      else {
+        items = this.items.filter(item => item.qnt < 5 && item.qnt >= 3).map(item => item.serialCode);
+      } else if (state === 'dangerous') {
+        items = this.items.filter(item => item.qnt === 0).map(item => item.serialCode);
+      } else {
         items = this.items.filter(item => item.qnt < 3).map(item => item.serialCode);
       }
       return items.toString();

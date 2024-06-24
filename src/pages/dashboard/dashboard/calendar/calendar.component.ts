@@ -41,6 +41,7 @@ interface AgendaSlot {
   service: string;
   status: string
   estimation: string
+  date?: string
 }
 
 
@@ -83,15 +84,11 @@ export class CalendarComponent implements OnInit {
     this.initializeLifts();
   }
 
-  isSunday() {
-    return this.currentDate.day() === 0
-  }
-
   isWeekDay(date: moment.Moment) {
     return date.day() !== 0
   }
 
- async selectedDate(date: moment.Moment) {
+  async selectedDate(date: moment.Moment) {
     this.initializeLifts()
     this.currentDate = date
     await this.loadAgenda()
@@ -118,7 +115,7 @@ export class CalendarComponent implements OnInit {
     this.description = null
     this.toast?.show(false, 'Termini u rezervua me sukses')
     this.closeModal()
-    this.loadAgenda()
+    await this.loadAgenda()
   }
 
   async deleteAgenda() {
@@ -161,11 +158,6 @@ export class CalendarComponent implements OnInit {
       {time: '16:00', reserved: false},
       {time: '17:00', reserved: false},
     ];
-  }
-
-  reserveSlot(liftIndex: number, slotIndex: number, slot: Timeslot): void {
-    this.selectedSlot = [slot.time];
-    this.selectedLift = liftIndex + 1;
   }
 
   openModal({newAgenda, liftNumber, slot, doneModal}: {
@@ -258,37 +250,73 @@ export class CalendarComponent implements OnInit {
     this.isNewClient = !this.isNewClient;
   }
 
-  private updateReservedStatus(liftNumber: number, time: string[], newReservedStatus: boolean): void {
-    const lift = this.lifts.find(l => l.lift === liftNumber);
+  private updateReservedStatus(liftNumber: number, times: string[], newReservedStatus: boolean): void {
+    const lift = this.findLift(liftNumber);
     if (lift) {
-      time.forEach(slotTime => {
-        const slot = lift.timeslots.find(s => s.time === slotTime);
-        if (slot) {
-          slot.reserved = newReservedStatus;
-        }
-      });
+      times.forEach(time => this.updateTimeSlotStatus(lift, time, newReservedStatus));
     }
   }
 
-  showAgenda(liftNumber: any, slot: any): string {
-    for (const test of this.agenda) {
-      for (const lift of test.lift) {
-        if (lift.time.includes(slot) && lift.lift === liftNumber) {
-          return lift.service + '--' + lift.client?.fullname
-        }
-      }
+  private findLift(liftNumber: number): Lift | undefined {
+    return this.lifts.find(lift => lift.lift === liftNumber);
+  }
+
+  private updateTimeSlotStatus(lift: Lift, time: string, newReservedStatus: boolean): void {
+    const slot = lift.timeslots.find(slot => slot.time === time);
+    if (slot) {
+      slot.reserved = newReservedStatus;
     }
-    return 'Lir'
+  }
+
+
+  testFunc(test: any) {
+    this.selectedLift = test.liftIndex;
+    this.selectedSlot = [test.slot.time]
+    this.openModal({
+      newAgenda: test.reserved,
+      liftNumber: test.liftIndex,
+      slot: test.slot.time,
+      doneModal: this.isDoneAgenda(test.liftIndex, test.time)
+    })
   }
 
   isDoneAgenda(liftNumber: any, slot: any): boolean {
-    for (const agenda of this.agenda) {
-      for (const lift of agenda.lift) {
-        if (lift.time.includes(slot) && lift.lift === liftNumber && lift.status === 'Done') {
-          return true
+    return this.agenda.some((agenda: { lift: { time: string | any[]; lift: any; status: string; }[]; }) =>
+      agenda.lift.some((lift: { time: string | any[]; lift: any; status: string; }) =>
+        lift.time.includes(slot) && lift.lift === liftNumber && lift.status === 'Done'
+      )
+    );
+  }
+
+
+  async newTimeslot(event: any) {
+    const liftNumber = event.lift;
+    const updatedTimeslots = event.timeslots;
+    let date
+    const slots = updatedTimeslots.filter((res: { reserved: any; }) => res.reserved)
+    this.selectedSlot = slots.map((res: { time: any; }) => res.time)
+    this.selectedLift=liftNumber
+    for (const test of this.agenda) {
+      for (const lift of test.lift) {
+        if (lift.lift === liftNumber) {
+          date = test.date
+          this.selectedLiftId = test._id
+          this.car = lift.car;
+          // @ts-ignore
+          this.newCar = lift.car
+          // @ts-ignore
+          this.client = lift.client;
+          // @ts-ignore
+          this.newClient = lift.client
+          this.description = lift.service;
+          this.estimation = test.estimation
         }
       }
     }
-    return false
+    //@ts-ignore
+    await this.service.saveAgendaDrop(this.selectedLiftId,this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, date, this.estimation);
+
+
   }
 }
+

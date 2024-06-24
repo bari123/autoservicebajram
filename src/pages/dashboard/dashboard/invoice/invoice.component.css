@@ -1,5 +1,5 @@
 @media print {
-  .non-printable{
+  .non-printable {
     display: none;
   }
 }
@@ -60,7 +60,6 @@
 }
 
 
-
 .register-client:hover {
   color: #dc3545;
 }
@@ -76,21 +75,21 @@
 }
 
 
-.icon-round{
+.icon-round {
   border-radius: 60px;
   box-shadow: 0 0 2px #888;
   padding: 0.5em 0.6em
 }
 
-.icon-round:hover{
+.icon-round:hover {
   box-shadow: 0 0 7px #888;
 }
 
-.icon-minus:hover{
+.icon-minus:hover {
   border: 1px solid red;
 }
 
-.icon-plus:hover{
+.icon-plus:hover {
   border: 1px solid green;
 }
 
@@ -136,6 +135,39 @@
   border: 1px solid #ccc;
   height: 95%;
 }
+
+.paid::after {
+  content: "E Paguar";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg); /* Center and rotate the stamp */
+  font-size: 5em; /* Adjust size as needed */
+  color: green;
+  font-weight: bold;
+  border: 3px solid green; /* Red border with transparency */
+  padding: 10px 20px; /* Padding for the stamp */
+  opacity: 0.5; /* Adjust transparency */
+  z-index: 10; /* Ensure it is above other content */
+  pointer-events: none; /* Allow clicking through the stamp */
+}
+
+.unpaid::after {
+  content: "E Pa Paguar";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg); /* Center and rotate the stamp */
+  font-size: 5em; /* Adjust size as needed */
+  color: rgba(255, 0, 0, 0.5); /* Red color with transparency */
+  font-weight: bold;
+  border: 3px solid rgba(255, 0, 0, 0.5); /* Red border with transparency */
+  padding: 10px 20px; /* Padding for the stamp */
+  opacity: 0.5; /* Adjust transparency */
+  z-index: 10; /* Ensure it is above other content */
+  pointer-events: none; /* Allow clicking through the stamp */
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -145,46 +177,58 @@
 .header .company-info, .header .invoice-info {
   width: 45%;
 }
+
 .header .company-info {
   text-align: left;
 }
+
 .header .invoice-info {
   text-align: right;
 }
+
 .section {
   margin-top: 20px;
 }
+
 .section .title {
   font-weight: bold;
   margin-bottom: 10px;
 }
+
 .details-table, .items-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
+
 .details-table th, .details-table td, .items-table th, .items-table td {
   border: 1px solid #ccc;
   padding: 8px;
 }
+
 .items-table th, .details-table th {
   background-color: #f2f2f2;
 }
+
 .totals {
   text-align: right;
   margin-top: 20px;
 }
+
 .totals .total-row {
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
 }
+
 .totals .total-row span {
   width: 50%;
 }
+
 .payments {
   margin-top: 20px;
 }
+
 .footer {
   bottom: 0;
   left: 25%;
@@ -193,17 +237,24 @@
   font-size: 0.9em;
   color: #666;
 }
+
 .items-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;  /* adjust the font size to ensure the content fits */
+  font-size: 12px; /* adjust the font size to ensure the content fits */
 }
 
 .items-table th, .items-table td {
   border: 1px solid #ccc;
-  padding: 4px;  /* reduce padding to fit more content */
+  padding: 4px; /* reduce padding to fit more content */
 }
 
 .items-table th {
   background-color: #f2f2f2;
+}
+
+
+.checkbox {
+  height: 28px;
+  width: 28px;
 }

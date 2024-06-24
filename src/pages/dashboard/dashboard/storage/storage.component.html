@@ -45,16 +45,16 @@
           </ng-container>
           <ng-container cdkColumnDef="name">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter "><h3>Emri</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer" [appTooltip]="row.name"> {{row.name | truncate:10}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer" [appTooltip]="row.name"> {{row.name | truncate:12}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="shelfNumber" >
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile "><h3> Renditja ne raft </h3>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile" [appTooltip]="row.shelfNumber"> {{row.shelfNumber | truncate:10}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile cursor-pointer" [appTooltip]="row.shelfNumber"> {{row.shelfNumber | truncate:10}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="price">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter" [appTooltip]="row.price + 'den / ' +
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer" [appTooltip]="row.price + 'den / ' +
                Math.round(row.price / 61.5 ) + 'euro'">{{ row.price + 'den / ' +
                Math.round(row.price / 61.5 ) + 'euro' | truncate:10}}
             </cdk-cell>
@@ -62,12 +62,12 @@
           <ng-container cdkColumnDef="carAndYear" >
             <cdk-header-cell *cdkHeaderCellDef class="is-mobile example-header-cell textCenter"><h3>Vetura / Viti</h3>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.carAndYear}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile cursor-pointer"> {{row.carAndYear}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="engineType" >
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3> Tipi Motorit </h3>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile"> {{row.engineType}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile cursor-pointer" [appTooltip]="row.engineType"> {{row.engineType |truncate:12}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="qnt">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3> Sasia </h3></cdk-header-cell>
@@ -101,6 +101,11 @@
                 <span class="client-label">Fshi</span>
                 <span class="material-symbols-outlined close-icon cursor-pointer  ">close</span>
               </div>
+              <div  (click)="selectedId=row._id;showModal=true;code=row.serialCode;changes(row.serialCode)"
+                   class="client-info flex align-items-center fshi ">
+                <span class="client-label">Edit</span>
+                <span class="material-symbols-outlined close-icon cursor-pointer  ">edit</span>
+              </div>
             </cdk-cell>
           </ng-container>
           <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
@@ -120,7 +125,7 @@
       <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
         <div class="fullWidth">
           <h3>Kodi:</h3>
-          <input (input)="changes($event)" [(ngModel)]="code" type="text" id="serialCode" name="serialCode">
+          <input (input)="changes(code)" [(ngModel)]="code" type="text" id="serialCode" name="serialCode">
         </div>
         <div class="fullWidth" *ngIf="code.length>=6 && newItem!==null">
           <div class=" fullWidth">

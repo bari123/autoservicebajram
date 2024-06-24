@@ -26,6 +26,8 @@ import {IconComponent} from "../components/icon/icon.component";
 import {InvoiceComponent} from "../pages/dashboard/dashboard/invoice/invoice.component";
 import {PrintLayoutComponent} from "../pages/dashboard/dashboard/print-layout/print-layout.component";
 import {CdkTableModule} from "@angular/cdk/table";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {DragdropcompComponent} from "../components/dragdropcomp/dragdropcomp.component";
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import {CdkTableModule} from "@angular/cdk/table";
     ButtonComponent,
     IconComponent,
     InvoiceComponent,
-    PrintLayoutComponent
+    PrintLayoutComponent,
+    DragdropcompComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import {CdkTableModule} from "@angular/cdk/table";
     FormsModule,
     BrowserAnimationsModule,
     CdkTableModule,
+    DragDropModule,
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
