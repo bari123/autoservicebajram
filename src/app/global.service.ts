@@ -155,7 +155,7 @@ export class GlobalService {
   }
 
   async updateItem(item: any, id: string) {
-    return await this.axiosInstance.patch(`items/${id}`, item)
+    return await this.axiosInstance.post(`items/${id}`, item)
   }
 
   async deleteItem(id: string) {
