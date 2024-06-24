@@ -130,13 +130,13 @@
               <app-icon *ngIf="cantSubmit(art)" [appTooltip]="'Nuk ka njesi te mjaftueshme '"
                         class="cursor-pointer" style="color:red" iconName="error"></app-icon>
             </div>
-            <input type="number" id="sasia" name="address" [max]="newItem?newItem.qnt:''" (input)="updatePrice(i)"
+            <input  type="number" id="sasia" name="address" [max]="newItem?newItem.qnt:''" (input)="updatePrice(i)"
                    [(ngModel)]="art.qty">
 
           </div>
           <div class="halfWidth">
             <h3>Cmimi:</h3>
-            <input type="text" id="cmimi" name="address" (keyup.enter)="addItem()" (input)="updatePrice(i)" [(ngModel)]="art.price">
+            <input type="text" id="cmimi" name="address" (keyup.tab)="addItem()" (keyup.enter)="addItem()" (input)="updatePrice(i)" [(ngModel)]="art.price">
           </div>
           <div class="halfWidth">
             <h3>Totali:</h3>

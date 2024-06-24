@@ -206,4 +206,5 @@ export class InvoiceComponent implements OnInit {
 
 
   protected readonly Date = Date;
+  protected readonly focus = focus;
 }
