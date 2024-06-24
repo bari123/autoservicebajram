@@ -45,9 +45,18 @@ export class ClientCarInfoComponent implements OnInit {
 
   async setService(history: any) {
     this.newService = history
+    console.log(this.newService.invoiceId)
     if (this.newService.invoiceId) {
       this.invoice = await this.service.getInvoice(this.newService.invoiceId)
     }
+    console.log(this.invoice)
+  }
+
+  get filteredHistory(){
+    return this.serviceHistory.filter(res=>res.invoiceId)
+  }
+  get filteredHistoryNoInvoice(){
+    return this.serviceHistory.filter(res=>!res.invoiceId)
   }
 
   protected readonly history = history;

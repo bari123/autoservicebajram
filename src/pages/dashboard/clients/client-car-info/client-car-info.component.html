@@ -7,8 +7,8 @@
     <h3 class="textCenter">
       Historia e Faturave
     </h3>
-    <div *ngFor="let history of serviceHistory">
-      <div *ngIf="history.invoiceId" class="flex justify-content-space-between" (click)="setService(history)">
+    <div *ngFor="let history of filteredHistory">
+      <div class="flex justify-content-space-between" (click)="setService(history)">
         <p>
           Data e fatures:
         </p>
@@ -22,7 +22,7 @@
     <h3 class="textCenter">
       Historia e Serviseve
     </h3>
-    <div *ngFor="let history of serviceHistory">
+    <div *ngFor="let history of filteredHistoryNoInvoice">
       <div class="flex justify-content-space-between" (click)="setService(history)">
         <p>
           Data e servisit:
@@ -126,7 +126,7 @@
             Emri Klientit:
             <span class="title"> {{invoice?.clientName}}</span>
           </p>
-          <p *ngIf="invoice.phone">
+          <p *ngIf="invoice?.phone">
             Telefoni i Klientit:
             <span class="title"> {{invoice?.phone}}</span>
           </p>
