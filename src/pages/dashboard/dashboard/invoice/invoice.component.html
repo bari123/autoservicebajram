@@ -32,7 +32,7 @@
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.clientName}} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="Price">
-            <cdk-header-cell *cdkHeaderCellDef  class="example-header-cell textCenter"><h3>Vetura</h3>
+            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Vetura</h3>
             </cdk-header-cell>
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.car}} </cdk-cell>
           </ng-container>
@@ -54,7 +54,8 @@
                   <span class="client-label">Shiko</span>
                   <span class="material-symbols-outlined close-icon">visibility</span>
                 </div>
-                <div (click)="selectedId=row._id;showModal=true;newInvoice=row" class="client-info flex align-items-center fshi ">
+                <div (click)="selectedId=row._id;showModal=true;newInvoice=row"
+                     class="client-info flex align-items-center fshi ">
                   <span class="client-label">Edito</span>
                   <span class="material-symbols-outlined close-icon">edit</span>
                 </div>
@@ -133,9 +134,13 @@
                    [(ngModel)]="art.qty">
 
           </div>
-          <div class="fullWidth">
+          <div class="halfWidth">
             <h3>Cmimi:</h3>
-            <input type="text" id="cmimi" name="address" [(ngModel)]="art.price">
+            <input type="text" id="cmimi" name="address" (keyup.enter)="addItem()" (input)="updatePrice(i)" [(ngModel)]="art.price">
+          </div>
+          <div class="halfWidth">
+            <h3>Totali:</h3>
+            <input [disabled]="true" type="text" id="totali" name="address" class="textCenter"  [(ngModel)]="art.total">
           </div>
 
         </div>
@@ -282,6 +287,7 @@
                 <th>Artikulli</th>
                 <th>Sasia</th>
                 <th>Cmimi</th>
+                <th>Totali</th>
               </tr>
               </thead>
               <tbody *ngFor="let art of invoiceToPrint?.items;index as i">
@@ -290,6 +296,7 @@
                 <td>{{art.art}}</td>
                 <td>{{art.qty}}</td>
                 <td>{{art.price}}</td>
+                <td>{{art.total}}</td>
               </tr>
               </tbody>
             </table>

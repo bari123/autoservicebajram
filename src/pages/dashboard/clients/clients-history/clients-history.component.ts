@@ -13,6 +13,8 @@ export class ClientsHistoryComponent implements OnInit {
   }
 
   showModal = false;
+  previewModal = false
+  invoiceToPrint: any
 
   info = {
     km: '',
@@ -30,9 +32,15 @@ export class ClientsHistoryComponent implements OnInit {
     this.showModal = false
   }
 
-  openModal(service: any) {
-    this.showModal = true
-    this.info = service
+  async openModal(service: any) {
+    if (service.invoiceId) {
+      this.invoiceToPrint=await this.service.getInvoice(service.invoiceId)
+      this.previewModal = true
+    } else {
+
+      this.showModal = true
+      this.info = service
+    }
   }
 
   async getService() {
@@ -42,5 +50,8 @@ export class ClientsHistoryComponent implements OnInit {
   async ngOnInit() {
     this.history = await this.getService()
   }
+
+  protected readonly Date = Date;
+
 
 }

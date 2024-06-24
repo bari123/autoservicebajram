@@ -108,29 +108,17 @@ export class StorageComponent implements OnInit, OnDestroy {
   }
 
   async changes(event: any) {
+    event.toUpperCase()
     this.newItem = {...await this.globalService.getItemBySerialCode(event)}
   }
-
-  // debounce(func: any, timeout = 300) {
-  //   let timer: string | number | NodeJS.Timeout | undefined;
-  //   return (...args: any) => {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(() => {
-  //       func.apply(this, args);
-  //     }, timeout);
-  //   };
-  // }
-  //
-  // processChange = this.debounce(() => this.changes(event));
 
   async deleteItem(id: string) {
     try {
       await this.globalService.deleteItem(id)
       this.toast?.show(true, 'Artikulli u fshi me sukses')
-      this.loadItems()
+      await this.loadItems()
     } catch (e) {
       this.toast?.show(true, 'Artikulli nuk u fshi me sukses , kontaktoni supportin')
-
     }
   }
 
@@ -162,4 +150,5 @@ export class StorageComponent implements OnInit, OnDestroy {
 
 
   protected readonly Math = Math;
+  protected readonly localStorage = localStorage;
 }

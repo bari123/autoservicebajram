@@ -99,17 +99,17 @@
                       [appTooltip]="row.description!==null ? row.description : ' '"> {{row.description ? row.description : '' | truncate:12}} </cdk-cell>
           </ng-container>
 
-          <ng-container cdkColumnDef="saveButton">
+          <ng-container  cdkColumnDef="saveButton">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">Modifikimet</cdk-header-cell>
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter flex  justify-content-center">
               <app-button *ngIf="hasChanged(row)" text="Ruaj Ndryshimet" iconName="save"
                           (click)="updateItem(row)"></app-button>
-              <div *ngIf="!hasChanged(row)" (click)="selectedId=row._id;deleteModal=true"
+              <div *ngIf="!hasChanged(row) &&localStorage.getItem('role')==='admin' " (click)="selectedId=row._id;deleteModal=true"
                    class="client-info flex align-items-center fshi ">
                 <span class="client-label">Fshi</span>
                 <span class="material-symbols-outlined close-icon cursor-pointer  ">close</span>
               </div>
-              <div (click)="selectedId=row._id;showModal=true;code=row.serialCode;changes(row.serialCode)"
+              <div *ngIf="localStorage.getItem('role')==='admin'" (click)="selectedId=row._id;showModal=true;code=row.serialCode;changes(row.serialCode)"
                    class="client-info flex align-items-center fshi ">
                 <span class="client-label">Edit</span>
                 <span class="material-symbols-outlined close-icon cursor-pointer  ">edit</span>
@@ -133,9 +133,9 @@
       <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
         <div class="fullWidth">
           <h3>Kodi:</h3>
-          <input (input)="changes(code)" [(ngModel)]="code" type="text" id="serialCode" name="serialCode">
+          <input (input)="changes(code)" style="text-transform: uppercase" [(ngModel)]="code" type="text" id="serialCode" name="serialCode">
         </div>
-        <div class="fullWidth" *ngIf="newItem!==null">
+        <div class="fullWidth" *ngIf="code.length >=6 && newItem!==null">
           <div class=" fullWidth">
             <h3>Emri Artikullit:</h3>
             <input type="text" id="name" name="name" [(ngModel)]="newItem.name" required>

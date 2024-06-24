@@ -13,7 +13,6 @@
         Terminet
       </a></li>
       <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')"
-             *ngIf="localStorage.getItem('role') ==='admin'"
              [routerLink]="'/dashboard/storage'">
         <app-icon iconName="warehouse"></app-icon>
         Magazina

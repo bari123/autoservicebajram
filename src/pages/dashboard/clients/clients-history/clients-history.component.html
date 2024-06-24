@@ -3,7 +3,7 @@
   <div *ngIf="history.length===0">Ska Rezultate</div>
   <ul class="history-list" *ngFor="let service of history">
     <li class="textDecorationUnderline cursor-pointer" (click)="openModal(service)">
-      {{service.createdAt}}
+      {{service.createdAt}} {{service.invoiceId ? 'Fature':'Servis'}}
     </li>
   </ul>
 
@@ -49,3 +49,115 @@
   </div>
 
 </div>
+
+<div *ngIf="previewModal">
+  <div class="modals" [class.show-modal]="previewModal">
+    <div class="modal-content">
+      <span class="close material-symbols-outlined" (click)="previewModal=false;invoiceToPrint=null">close</span>
+
+      <div>
+        <div class="invoice-container" [class.unpaid]="!invoiceToPrint?.status" [class.paid]="invoiceToPrint?.status">
+          <div class="header">
+            <div class="company-info">
+              <p><strong>Auto Service Bajram</strong><br>
+                Bajram Iseni<br>
+                Recice e Madhe bb 101<br>
+                Tel. 070 532 371</p>
+            </div>
+            <div class="logo">
+              <img src="/assets/AA.png" height="180" width="240" alt="Company Logo">
+            </div>
+            <div class="invoice-info">
+              <p><strong>Numri Fatures: {{invoiceToPrint?.invoiceId}}</strong><br>
+                Vendi Leshimit : Tetove<br>
+                Data e Leshimit:<span>{{Date() | date: 'dd/MM/yyyy'}}</span> <br>
+            </div>
+          </div>
+
+          <div class="section">
+            <p>
+              Emri Klientit:
+              <span class="title"> {{invoiceToPrint?.clientName}}</span>
+            </p>
+            <p *ngIf="invoiceToPrint.phone">
+              Telefoni i Klientit:
+              <span class="title"> {{invoiceToPrint?.phone}}</span>
+            </p>
+            <p *ngIf="invoiceToPrint.car">
+              Makina e Klientit:
+              <span class="title"> {{invoiceToPrint.car}}</span>
+            </p>
+          </div>
+
+          <div class="section">
+            <table class="items-table">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Artikulli</th>
+                <th>Sasia</th>
+                <th>Cmimi</th>
+                <th>Totali</th>
+              </tr>
+              </thead>
+              <tbody *ngFor="let art of invoiceToPrint?.items;index as i">
+              <tr>
+                <td>{{i}}</td>
+                <td>{{art.art}}</td>
+                <td>{{art.qty}}</td>
+                <td>{{art.price}}</td>
+                <td>{{art.total}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section mb-30">
+            <div class="title">Kontrolli</div>
+            <p *ngIf="invoiceToPrint?.discount">
+              Totali pa zbritje: {{invoiceToPrint?.totalPrice}}<br>
+              <span *ngIf="invoiceToPrint?.discount">
+        Zbritje: {{invoiceToPrint?.discount}} %
+        </span>
+            </p>
+            <div class="totals">
+              <div class="total-row">
+                <span>Per pages MKD:</span>
+                <span *ngIf="!invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice}} MKD</span>
+                <span
+                  *ngIf="invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice - ((invoiceToPrint?.discount / 100) * invoiceToPrint?.totalPrice)}}
+                  MKD</span>
+              </div>
+              <div class="total-row">
+                <span>Per pages ne euro:</span>
+                <span *ngIf="!invoiceToPrint?.discount">{{(invoiceToPrint?.totalPrice / 61.4).toFixed(2)}} EURO</span>
+                <span
+                  *ngIf="invoiceToPrint?.discount">{{((invoiceToPrint.totalPrice - ((invoiceToPrint?.discount / 100) * invoiceToPrint?.totalPrice)) / 61.4).toFixed(2)}}
+                  EURO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-30 flex justify-content-space-between">
+            <div>
+              <p>Dorezoi</p>
+              <p>_______________________________</p>
+            </div>
+            <div>
+              <p>Pranoi</p>
+              <p>_______________________________</p>
+            </div>
+          </div>
+          <div class="footer">
+            <p>Vlera e perdorur per te konvertuar Denarin ne euro eshte 61.4</p>
+            <p>Me ne gjithmone te sigurte</p>
+            <p>Ju falemnderit</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+

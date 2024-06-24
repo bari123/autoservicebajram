@@ -11,6 +11,7 @@ export class InvoiceComponent implements OnInit {
   @ViewChild(ToasterComponent) toast?: ToasterComponent
 
   displayedColumns = ['invoiceId', 'Name', 'Price', 'Actions'];
+  total:number=0
 
   invoices: any
   showModal = false
@@ -31,7 +32,7 @@ export class InvoiceComponent implements OnInit {
     carId: string,
     clientName: string,
     phone: string,
-    items: [{ art: string, price: number | null, qty: null | number }],
+    items: [{ art: string, price: number | null, qty: null | number ,total:null|number}],
     car: string,
     km: string,
     discount: string,
@@ -43,7 +44,8 @@ export class InvoiceComponent implements OnInit {
     items: [{
       art: '',
       price: null,
-      qty: null
+      qty: null,
+      total:null
     }],
     car: '',
     km: '',
@@ -111,7 +113,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   addItem() {
-    this.newInvoice.items.push({art: '', qty: null, price: null})
+    this.newInvoice.items.push({art: '', qty: null, price: null,total:null})
   }
 
   async loadInvoices() {
@@ -168,10 +170,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   updatePrice(i: any) {
-    if (this.newItem) {
       // @ts-ignore
-      this.newInvoice.items[i].price = this.newInvoice.items[i].qty * this.newItem.price
-    }
+       this.newInvoice.items[i].total= this.newInvoice.items[i].price * this.newInvoice.items[i].qty
   }
 
   carSelected() {

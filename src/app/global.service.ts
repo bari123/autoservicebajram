@@ -61,7 +61,7 @@ export class GlobalService {
   }
 
   async editCarById(clientId: string | null, carId: string, car: any) {
-    return await this.axiosInstance.patch(`/clients/${clientId}/car/${carId}`, car).then(res => {
+    return await this.axiosInstance.post(`/clients/${clientId}/car/${carId}`, car).then(res => {
 
     })
   }

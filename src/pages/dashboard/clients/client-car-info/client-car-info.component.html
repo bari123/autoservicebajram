@@ -140,6 +140,7 @@
               <th>Artikulli</th>
               <th>Sasia</th>
               <th>Cmimi</th>
+              <th>Totali</th>
             </tr>
             </thead>
             <tbody *ngFor="let art of invoice?.items;index as i">
@@ -148,6 +149,7 @@
               <td>{{art.art}}</td>
               <td>{{art.qty}}</td>
               <td>{{art.price}}</td>
+              <td>{{art.totali}}</td>
             </tr>
             </tbody>
           </table>
