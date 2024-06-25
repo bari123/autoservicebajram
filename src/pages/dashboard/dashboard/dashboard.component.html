@@ -7,16 +7,16 @@
         <app-icon iconName="people"></app-icon>
         Klientet
       </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/calendar')"
-             [routerLink]="'/dashboard/calendar'">
-        <app-icon iconName="calendar_month"></app-icon>
-        Terminet
-      </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')"
-             [routerLink]="'/dashboard/storage'">
-        <app-icon iconName="warehouse"></app-icon>
-        Magazina
-      </a></li>
+<!--      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/calendar')"-->
+<!--             [routerLink]="'/dashboard/calendar'">-->
+<!--        <app-icon iconName="calendar_month"></app-icon>-->
+<!--        Terminet-->
+<!--      </a></li>-->
+<!--      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')"-->
+<!--             [routerLink]="'/dashboard/storage'">-->
+<!--        <app-icon iconName="warehouse"></app-icon>-->
+<!--        Magazina-->
+<!--      </a></li>-->
       <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/invoice')"
              *ngIf="localStorage.getItem('role') ==='admin'"
              [routerLink]="'/dashboard/invoice'">
@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="right-side fullWidth ">
-    <div style="background-color: #dc3545" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
+    <div style="background-color: #0085ad" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
       <app-icon iconName="menu"></app-icon>
     </div>
     <router-outlet></router-outlet>
@@ -55,12 +55,12 @@
            *ngIf="localStorage.getItem('role')==='admin'"
            [routerLink]="'/dashboard/clients-list'"><span class="menuSize material-symbols-outlined">people</span>Klientet
       </div>
-      <div class="mt-20 gap-10 flex align-items-center" [routerLink]="'/dashboard/calendar'"><span
-        class="menuSize material-symbols-outlined">calendar_month</span>Terminet
-      </div>
-      <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
-           [routerLink]="'/dashboard/storage'"><span class="menuSize material-symbols-outlined">warehouse</span>Magazina
-      </div>
+<!--      <div class="mt-20 gap-10 flex align-items-center" [routerLink]="'/dashboard/calendar'"><span-->
+<!--        class="menuSize material-symbols-outlined">calendar_month</span>Terminet-->
+<!--      </div>-->
+<!--      <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"-->
+<!--           [routerLink]="'/dashboard/storage'"><span class="menuSize material-symbols-outlined">warehouse</span>Magazina-->
+<!--      </div>-->
       <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
            [routerLink]="'/dashboard/invoice'"><span class="menuSize material-symbols-outlined">receipt_long</span>Fakturat
       </div>

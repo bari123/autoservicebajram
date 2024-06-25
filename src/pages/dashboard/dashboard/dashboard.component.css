@@ -5,7 +5,7 @@
 .left-side {
   padding: 20px;
   overflow: hidden;
-  background-color: #dc3545; /* Red background */
+  background-color: #0085ad; /* Red background */
   /*padding: 50px;*/
 }
 
@@ -89,7 +89,7 @@
 
 
 .menuStackContent {
-  background-color: #dc3545;
+  background-color: #0085ad;
 }
 
 @media screen and (max-width: 768px) {
