@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <app-dragdropcomp (clicked)="testFunc($event)" (newTimeSlot)="newTimeslot($event)"
+    <app-dragdropcomp [date]="currentDate" (clicked)="testFunc($event)" (newTimeSlot)="newTimeslot($event)"
     ></app-dragdropcomp>
   </div>
 
