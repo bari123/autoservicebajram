@@ -66,7 +66,7 @@ export class GlobalService {
     })
   }
 
-  async deleteCar(carId: string, clientId: string | null) {
+  async deleteCar(carId: string | null, clientId: string | null) {
     return await this.axiosInstance.delete(`/clients/${clientId}/car/${carId}`).then(res => {
     })
   }
@@ -105,8 +105,9 @@ export class GlobalService {
     return await this.axiosInstance.delete(`/agenda/${serviceId}`)
   }
 
-  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any, date: string, estimation: string) {
+  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any, date: string, estimation: string,id:string|null) {
     let body = {
+      _id:id,
       lift: {
         time: slot,
         lift: lift,

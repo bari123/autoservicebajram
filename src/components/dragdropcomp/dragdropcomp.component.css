@@ -1,26 +1,13 @@
 .slot {
   width: 320px;
-  height: 35px;
+  height: 50px;
   padding: 10px;
-  border-radius: 8px;
   border: 1px solid #ccc;
   cursor: pointer;
+  color: black;
   transition: background-color 0.3s ease;
 }
 
-.slot:hover {
-  box-shadow: 0 0 0 10px #ccc;
-}
-
-.slot-container {
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.agenda-slot {
-  margin: 8px;
-}
 
 .reserved {
   background-color: #dc3545;
@@ -41,3 +28,23 @@
 .reserved, .available, .done {
   color: white;
 }
+
+
+.slot {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.merged {
+  border-bottom: 0;
+  border-top: 0;
+}
+
+.centeredText {
+  padding-top: 50px;
+}
+
+
+
+

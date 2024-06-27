@@ -3,16 +3,13 @@
   <div class="agenda-container fullWidth flex justify-content-space-evenly">
     <div class="mt-30  flex flex-direction-column justify-content-inherit">
       <div class="time" *ngFor="let slot of lifts[0]?.timeslots">
-        {{ slot.time }}
+        <div style="border: 1px solid black ;padding: 5px">
+          {{ slot.time }}
+        </div>
       </div>
     </div>
-    <div *ngFor="let item of lifts">
-      <div class="textCenter">Lift {{item.lift}}</div>
-      <div class="slots-main">
-      <app-dragdropcomp (clicked)="testFunc($event)" (newTimeSlot)="newTimeslot($event)" [timeslots]="item.timeslots" [lift]="item.lift"
-                        [agenda]="agenda"></app-dragdropcomp>
-      </div>
-    </div>
+    <app-dragdropcomp (clicked)="testFunc($event)" (newTimeSlot)="newTimeslot($event)"
+    ></app-dragdropcomp>
   </div>
 
 
@@ -170,4 +167,3 @@
   </div>
 </div>
 
-<app-toaster></app-toaster>

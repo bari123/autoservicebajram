@@ -7,7 +7,7 @@
 <div class="client-list p-20">
   <div class="client-list-child car-list flex flex-direction-row justify-content-space-between align-items-center cursor-pointer"
       *ngFor="let car of filteredClients">
-    <div (click)="openCarInfo()" [routerLink]="['car/'+car._id]"
+    <div  [routerLink]="['car/'+car._id]"
          class="client-details flex justify-content-space-evenly align-items-center">
       <div class="client-info">
         <span class="client-label">Brendi:</span>
@@ -103,7 +103,7 @@
         <input [(ngModel)]="newCar.year" type="text" >
       </div>
     </div>
-    <app-button class="flex mt-30" (click)="editCar(newCar)" text="Ruaj" iconName="save"></app-button>
+    <app-button class="flex mt-30" (click)="editCar()" text="Ruaj" iconName="save"></app-button>
   </div>
 </div>
 
@@ -126,4 +126,3 @@
   </div>
 </div>
 
-<app-toaster></app-toaster>

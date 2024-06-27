@@ -28,6 +28,8 @@ import {PrintLayoutComponent} from "../pages/dashboard/dashboard/print-layout/pr
 import {CdkTableModule} from "@angular/cdk/table";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {DragdropcompComponent} from "../components/dragdropcomp/dragdropcomp.component";
+import {OverlayModule} from "@angular/cdk/overlay";
+import {ToasterService} from "../pages/compo/toaster/toaster.service";
 
 @NgModule({
   declarations: [
@@ -59,12 +61,13 @@ import {DragdropcompComponent} from "../components/dragdropcomp/dragdropcomp.com
     BrowserAnimationsModule,
     CdkTableModule,
     DragDropModule,
+    OverlayModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass:CookieInterceptor,
     multi:true
-  }],
+  },ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

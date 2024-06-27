@@ -1,15 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalService} from "../../../../app/global.service";
 import {ActivatedRoute} from "@angular/router";
-import {ToasterComponent} from "../../../compo/toaster/toaster.component";
+import {ToasterService} from "../../../compo/toaster/toaster.service";
+import {CarModel} from 'src/utils/models/models.util';
 
-interface CarModel{
-  model:string,
-  make:string,
-  _id?:string,
-  year:string,
-  engine:string
-}
 
 @Component({
   selector: 'app-client-cars',
@@ -17,85 +11,94 @@ interface CarModel{
   styleUrls: ['./client-cars.component.css']
 })
 export class ClientCarsComponent implements OnInit {
-
-  @ViewChild(ToasterComponent) successToast?: ToasterComponent;
-
   showModal = false;
   serviceModal = false;
   deleteModal = false;
-  carIdSelected: any
-  newCar:CarModel = {
-    _id:undefined,
-    model: '',
-    make: '',
-    year: '',
-    engine: ''
+  carIdSelected: string | null = null;
+  newCar: CarModel = this.createEmptyCar();
+  newService = this.createEmptyService();
+  filteredClients: CarModel[] = [];
+
+
+  constructor(private service: GlobalService, private route: ActivatedRoute, private toast: ToasterService) {
   }
 
-  newService = {
-    km: '',
-    airFilter: undefined,
-    oilFilter: undefined,
-    engineOil: undefined,
-    pumpFilter: undefined,
-    airConFilter: undefined,
-    description: '',
-    carId: ''
+  async ngOnInit() {
+    await this.getCars()
   }
 
-  filteredClients: any [] = []
 
-  openModal(modal: string, carId: any | null) {
-    if (modal === 'edit') {
-      this.showModal = true
-      if(carId){
-      this.newCar = carId
-      }
-    } else if (modal === 'delete') {
-      this.carIdSelected = carId._id
-      this.deleteModal = true
-    } else {
-      this.carIdSelected = carId._id
-      this.serviceModal = true
+  createEmptyCar(): CarModel {
+    return {
+      _id: undefined,
+      model: '',
+      make: '',
+      year: '',
+      engine: ''
+    };
+  }
+
+  createEmptyService() {
+    return {
+      km: '',
+      airFilter: undefined,
+      oilFilter: undefined,
+      engineOil: undefined,
+      pumpFilter: undefined,
+      airConFilter: undefined,
+      description: '',
+      carId: ''
+    };
+  }
+
+  openModal(modal: string, car: any): void {
+    switch (modal) {
+      case 'edit':
+        this.showModal = true;
+        if (car) this.newCar = car;
+        break;
+      case 'delete':
+        if (car) this.carIdSelected = car._id!;
+        this.deleteModal = true;
+        break;
+      case 'service':
+        if (car) this.carIdSelected = car._id!;
+        this.serviceModal = true;
+        break;
     }
   }
 
 
-  closeModal() {
-    this.serviceModal = false
-    this.showModal = false
-    this.deleteModal = false
+  closeModal(): void {
+    this.showModal = this.serviceModal = this.deleteModal = false;
+    this.newCar = this.createEmptyCar();
+    this.newService = this.createEmptyService();
+    this.carIdSelected = null;
   }
-
-  constructor(private service: GlobalService, private route: ActivatedRoute) {
-  }
-
 
   async addCar() {
-    return this.service.addCarsToClients(this.newCar, this.route.snapshot.paramMap.get('id')).then(res => {
+    return this.service.addCarsToClients(this.newCar, this.route.snapshot.paramMap.get('id')).then(() => {
         this.closeModal()
         this.getCars()
-        this.successToast?.show(false, 'Makina u ruajt me sukses')
+        this.toast.showToast(false, 'Makina u ruajt me sukses')
       }
     )
   }
 
-  async editCar(car: any) {
-    this.closeModal()
-    if (car._id!==undefined) {
-      return this.service.editCarById(this.route.snapshot.paramMap.get('id'), car._id, car).then(res => {
-        this.closeModal()
-        this.getCars()
-        this.successToast?.show(false, 'Makina u ruajt me sukses')
-      })
+  async editCar(): Promise<void> {
+    if (this.newCar._id) {
+      await this.service.editCarById(this.route.snapshot.paramMap.get('id')!, this.newCar._id, this.newCar);
+      this.toast.showToast(false, 'Makina u ruajt me sukses');
     } else {
-      await this.addCar()
+      await this.addCar();
     }
+    this.closeModal();
+    await this.getCars();
   }
 
   async deleteCar() {
-    return this.service.deleteCar(this.carIdSelected, this.route.snapshot.paramMap.get('id')).then(res => {
-      this.successToast?.show(true, 'Makina u fshi me sukses')
+    return this.service.deleteCar(this.carIdSelected, this.route.snapshot.paramMap.get('id')).then(() => {
+      this.toast.showToast(true, 'Makina u fshi me sukses')
       this.closeModal()
       this.getCars()
     })
@@ -105,20 +108,11 @@ export class ClientCarsComponent implements OnInit {
     this.filteredClients = await this.service.getClientCarsById(this.route.snapshot.paramMap.get('id'))
   }
 
-  async addService() {
-    this.newService.carId = this.carIdSelected
-    await this.service.addService(this.newService, this.route.snapshot.paramMap.get('id'))
-    this.closeModal()
-  }
-
-
-  async ngOnInit() {
-    await this.getCars()
-  }
-
-
-  openCarInfo() {
-    // this.route.s
+  async addService(): Promise<void> {
+    this.newService.carId = this.carIdSelected!;
+    await this.service.addService(this.newService, this.route.snapshot.paramMap.get('id')!);
+    this.toast.showToast(false, 'Shërbimi u shtua me sukses');
+    this.closeModal();
   }
 
 }

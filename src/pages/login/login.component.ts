@@ -3,6 +3,7 @@ import {GlobalService} from "../../app/global.service";
 import {Router} from "@angular/router";
 import * as jwt_decode from "jwt-decode";
 import {ToasterComponent} from "../compo/toaster/toaster.component";
+import {ToasterService} from "../compo/toaster/toaster.service";
 
 
 @Component({
@@ -12,11 +13,10 @@ import {ToasterComponent} from "../compo/toaster/toaster.component";
 })
 export class LoginComponent {
 
-  @ViewChild(ToasterComponent) toast?: ToasterComponent;
-  constructor(private service:GlobalService,private router:Router) {
+  constructor(private service: GlobalService, private router: Router, private toasterService: ToasterService) {
   }
 
-  user:{username:string,password:string}= {
+  user: { username: string, password: string } = {
     username: '',
     password: ''
   }
@@ -24,29 +24,29 @@ export class LoginComponent {
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode.jwtDecode(token);
-    } catch(Error) {
+    } catch (Error) {
       return null;
     }
   }
 
   async login() {
     let role
-    let token = await this.service.login(this.user).catch(err=>{
-      if(err.response.status===401){
-       this.toast?.show(true,'USERNAME APO PASSWORDI GABIM')
+    let token = await this.service.login(this.user).catch(err => {
+      if (err.response.status === 401) {
+        this.toasterService.showToast(true, 'USERNAME APO PASSWORDI GABIM')
       }
     })
-    role=this.getDecodedAccessToken(token)
+    role = this.getDecodedAccessToken(token)
 
-    if(token){
-      localStorage.setItem('token',token)
-      localStorage.setItem('role',role.role)
-      if(role.role==='user'){
-      await this.router.navigate(['/dashboard/calendar'])
-      }else{
-      await this.router.navigate(['/dashboard'])
+    if (token) {
+      localStorage.setItem('token', token)
+      localStorage.setItem('role', role.role)
+      if (role.role === 'user') {
+        await this.router.navigate(['/dashboard/calendar'])
+      } else {
+        await this.router.navigate(['/dashboard'])
       }
-      this.toast?.show(false,'Useri u logua me sukses')
+      this.toasterService.showToast(false, 'Useri u logua me sukses')
     }
   }
 }

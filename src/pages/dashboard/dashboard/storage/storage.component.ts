@@ -1,30 +1,16 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalService} from "../../../../app/global.service";
-import {ToasterComponent} from "../../../compo/toaster/toaster.component";
-import {Subject} from "rxjs";
+import {ItemsModel} from "../../../../utils/models/models.util";
+import {ToasterService} from "../../../compo/toaster/toaster.service";
 
 @Component({
   selector: 'app-storage',
   templateUrl: './storage.component.html',
   styleUrls: ['./storage.component.css']
 })
-export class StorageComponent implements OnInit, OnDestroy {
-  @ViewChild(ToasterComponent) toast?: ToasterComponent;
-  displayedColumns = ['count', 'serialCode', 'name', 'shelfNumber', 'price', 'qnt', 'carAndYear', 'engineType', 'description', 'saveButton'];
-
-  // @ts-ignore
-  items: [{
-    _id: string,
-    name: string,
-    price: number,
-    serialCode: string,
-    qnt: number,
-    shelfNumber: string,
-    description: string,
-    engineType: string,
-    carAndYear: string,
-    originalQty: number
-  }] = []
+export class StorageComponent implements OnInit {
+  displayedColumns = [ 'serialCode', 'name', 'shelfNumber', 'price', 'qnt', 'carAndYear', 'engineType', 'description', 'saveButton'];
+  items: ItemsModel[]= []
   newItem = {
     name: '',
     serialCode: '',
@@ -40,30 +26,20 @@ export class StorageComponent implements OnInit, OnDestroy {
   searchTerm: string = ""
   showModal = false
   deleteModal = false
+  remainingModal = false
   selectedId = ''
   originalQuantities: { [serialCode: string]: number } = {};
+  remainingItems: any
+  remainingModalTitle:string=''
 
-  constructor(private globalService: GlobalService) {
+  constructor(private globalService: GlobalService,private toasterService: ToasterService) {
   }
 
   async ngOnInit() {
     await this.loadItems()
   }
 
-  ngOnDestroy() {
-    this.searchSubject.complete();
-  }
 
-  private searchSubject = new Subject<string>();
-  private readonly debounceTimeMs = 300; // Set the debounce time (in milliseconds)
-
-  onSearch(searchValue: string) {
-    this.searchSubject.next(searchValue);
-  }
-
-  async performSearch(event: any) {
-   await this.changes(event)
-  }
 
   get filteredItems() {
     return this.items?.filter(item =>
@@ -87,17 +63,16 @@ export class StorageComponent implements OnInit, OnDestroy {
     }
     try {
       await this.globalService.saveItem(this.newItem)
-      this.toast?.show(false, 'Klienti u ruajt me sukses')
+      this.toasterService.showToast(false, 'Klienti u ruajt me sukses')
       await this.loadItems()
     } catch (e) {
-      this.toast?.show(true, 'Klienti nuk u ruajt ')
+      this.toasterService.showToast(true, 'Klienti nuk u ruajt ')
     }
     this.showModal = false
   }
 
   async loadItems() {
     this.items = await this.globalService.getItems()
-    // @ts-ignore
     this.originalQuantities = this.items.reduce((acc: { [x: string]: any; }, item: {
       serialCode: string | number;
       qnt: any;
@@ -108,44 +83,44 @@ export class StorageComponent implements OnInit, OnDestroy {
   }
 
   async changes(event: any) {
-    event.toUpperCase()
-    this.newItem = {...await this.globalService.getItemBySerialCode(event)}
+    this.newItem = {...await this.globalService.getItemBySerialCode(event.toUpperCase())}
   }
 
   async deleteItem(id: string) {
     try {
       await this.globalService.deleteItem(id)
-      this.toast?.show(true, 'Artikulli u fshi me sukses')
+      this.toasterService.showToast(true, 'Artikulli u fshi me sukses')
       await this.loadItems()
     } catch (e) {
-      this.toast?.show(true, 'Artikulli nuk u fshi me sukses , kontaktoni supportin')
+      this.toasterService.showToast(true, 'Artikulli nuk u fshi me sukses , kontaktoni supportin')
     }
   }
 
   async updateItem(item: any) {
     try {
       await this.globalService.updateItem(item, item._id)
-      this.toast?.show(false, 'Artikulli u azhurua me sukses')
+      this.toasterService.showToast(false, 'Artikulli u azhurua me sukses')
       await this.loadItems()
     } catch (e) {
-      this.toast?.show(true, 'Artikulli nuk u azhurua , kontaktoni supportin')
+      this.toasterService.showToast(true, 'Artikulli nuk u azhurua , kontaktoni supportin')
     }
   }
 
   reminders(state: string) {
-    if (this.items) {
-      let items;
-      if (state === 'warning') {
-        items = this.items.filter(item => item.qnt < 5 && item.qnt >= 3).map(item => item.serialCode);
-      } else if (state === 'dangerous') {
-        items = this.items.filter(item => item.qnt === 0).map(item => item.serialCode);
-      } else {
-        items = this.items.filter(item => item.qnt < 3).map(item => item.serialCode);
-      }
-      return items.toString();
-    } else {
-      return null;
+    if (!this.items) return null;
+    switch (state) {
+      case 'warning':
+        return this.items.filter(item => item.qnt < 5 && item.qnt >= 3);
+      case 'dangerous':
+        return this.items.filter(item => item.qnt === 0);
+      default:
+        return this.items.filter(item => item.qnt < 3);
     }
+  }
+
+  openRemainingModal(state: string) {
+    this.remainingItems = this.reminders(state)
+    this.remainingModal = true
   }
 
 

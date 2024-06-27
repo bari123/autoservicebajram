@@ -1,49 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalService} from '../../../../app/global.service';
 import * as moment from "moment";
-import {ToasterComponent} from "../../../compo/toaster/toaster.component";
-
-interface Client {
-  _id: string;
-  fullname: string;
-  address: string;
-  phone: string;
-  email: string;
-}
-
-interface Car {
-  make: string;
-  model: string;
-  year: string;
-  engine: string;
-}
-
-interface Timeslot {
-  time: string;
-  reserved: boolean;
-}
-
-interface Lift {
-  service: string | null;
-  client: Client | null;
-  car: Car | null;
-  time: string[];
-  lift: number;
-  timeslots: Timeslot[];
-  status: string;
-}
-
-interface AgendaSlot {
-  _id: string;
-  lift: Lift[];
-  client: Client;
-  car: Car;
-  service: string;
-  status: string
-  estimation: string
-  date?: string
-}
-
+import {ToasterService} from "../../../compo/toaster/toaster.service";
+import {AgendaSlot, Car, Client, Lift, ModalModel} from 'src/utils/models/models.util';
+import {generateTimeslots} from "../../../../utils/timeslotGenerator.util";
 
 @Component({
   selector: 'app-calendar',
@@ -51,7 +11,6 @@ interface AgendaSlot {
   styleUrls: ['./calendar.component.css', '../../../../styles.css']
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild(ToasterComponent) toast?: ToasterComponent
   agenda: AgendaSlot[] = [];
   clients: Client[] = [];
   cars: Car[] = [];
@@ -63,7 +22,7 @@ export class CalendarComponent implements OnInit {
   selectedLift: number | null = null;
   selectedLiftId: string | null = null
   description: string | null = null;
-  currentDate: moment.Moment
+  currentDate: moment.Moment = moment()
   isNewClient = false;
   estimation = ''
   showModal = false;
@@ -74,8 +33,7 @@ export class CalendarComponent implements OnInit {
   car: Car | null = null;
   lifts: Lift[] = [];
 
-  constructor(private service: GlobalService, private cdr: ChangeDetectorRef) {
-    this.currentDate = moment();
+  constructor(private service: GlobalService, private toaster: ToasterService) {
   }
 
   async ngOnInit() {
@@ -84,15 +42,9 @@ export class CalendarComponent implements OnInit {
     this.initializeLifts();
   }
 
-  isWeekDay(date: moment.Moment) {
-    return date.day() !== 0
-  }
-
   async selectedDate(date: moment.Moment) {
-    this.initializeLifts()
     this.currentDate = date
     await this.loadAgenda()
-    this.isWeekDay(this.currentDate)
   }
 
   async loadClients() {
@@ -110,140 +62,72 @@ export class CalendarComponent implements OnInit {
       if (this.selectedCar !== null) {
         this.newCar = this.selectedCar
       }
-      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, this.currentDate.toDate().toLocaleDateString(), estimation);
+      await this.service.saveAgenda(this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, this.currentDate.toDate().toLocaleDateString(), estimation, this.selectedLiftId);
     }
     this.description = null
-    this.toast?.show(false, 'Termini u rezervua me sukses')
+    this.toaster.showToast(false, 'Termini u rezervua me sukses')
     this.closeModal()
     await this.loadAgenda()
   }
 
   async deleteAgenda() {
-    await this.service.deleteAgenda(this.selectedLiftId).then(res => {
+    await this.service.deleteAgenda(this.selectedLiftId).then(() => {
       this.closeModal()
       this.loadAgenda()
-      this.toast?.show(false, 'Termini u fshi me sukses')
+      this.toaster.showToast(false, 'Termini u fshi me sukses')
     })
   }
 
 
   async loadAgenda() {
     this.agenda = await this.service.getAgenda(this.currentDate.toDate().toLocaleDateString());
-    for (const lift of this.agenda) {
-      for (const slot of lift.lift) {
-        await this.updateReservedStatus(slot.lift, slot.time, true);
-      }
-    }
+    this.initializeLifts();
+    this.agenda.forEach(lift =>
+      lift.lift.forEach(slot =>
+        this.updateReservedStatus(slot.lift, slot.time, true)
+      )
+    );
   }
 
   initializeLifts(): void {
-    this.description = ''
     // @ts-ignore
     this.lifts = Array.from({length: 4}, (_, index) => ({
       lift: index + 1,
-      timeslots: this.generateTimeslots()
+      timeslots: generateTimeslots()
     }));
   }
 
-  generateTimeslots(): Timeslot[] {
-    return [
-      {time: '08:00', reserved: false},
-      {time: '09:00', reserved: false},
-      {time: '10:00', reserved: false},
-      {time: '11:00', reserved: false},
-      {time: '12:00', reserved: false},
-      {time: '13:00', reserved: false},
-      {time: '14:00', reserved: false},
-      {time: '15:00', reserved: false},
-      {time: '16:00', reserved: false},
-      {time: '17:00', reserved: false},
-    ];
-  }
 
-  openModal({newAgenda, liftNumber, slot, doneModal}: {
-    newAgenda: boolean,
-    liftNumber?: number,
-    slot?: any,
-    doneModal: any
-  }) {
-
-    if (!newAgenda && localStorage.getItem('role') === 'user') {
-      this.toast?.show(true, 'Roli juaj nuk mund te rezervoj termin')
-      return
+  openModal({newAgenda, liftNumber, slot, doneModal}: ModalModel) {
+    const role = localStorage.getItem('role');
+    if (role === 'user' && !newAgenda) {
+      this.toaster.showToast(true, 'Roli juaj nuk mund te rezervoj termin');
+      return;
     }
-    if (localStorage.getItem('role') === 'admin') {
-      if (doneModal) {
-        this.doneModals = true
-      } else {
-        this.isNewClient = true
-        this.showModal = true;
-
-      }
-      if (liftNumber && slot) {
-        for (const test of this.agenda) {
-          for (const lift of test.lift) {
-            if (lift.time.includes(slot) && lift.lift === liftNumber) {
-              this.selectedLiftId = test._id
-              this.car = lift.car;
-              // @ts-ignore
-              this.newCar = lift.car
-              // @ts-ignore
-              this.client = lift.client;
-              // @ts-ignore
-              this.newClient = lift.client
-              this.description = lift.service;
-              this.estimation = test.estimation
-            }
-          }
-        }
-      }
+    if (role === 'admin') {
+      this.isNewClient = true;
+      this.showModal = !doneModal;
+      this.doneModals = doneModal;
     } else {
-
-      if (liftNumber && slot) {
-        for (const test of this.agenda) {
-          for (const lift of test.lift) {
-            if (lift.time.includes(slot) && lift.lift === liftNumber) {
-              this.selectedLiftId = test._id
-              this.car = lift.car;
-              // @ts-ignore
-              this.newCar = lift.car
-              // @ts-ignore
-              this.client = lift.client;
-              // @ts-ignore
-              this.newClient = lift.client
-              this.description = lift.service;
-            }
-          }
-        }
-      }
-      if (doneModal) {
-        this.doneModals = true
-      } else {
-        this.infoModal = true;
-      }
+      this.infoModal = !doneModal;
+      this.doneModals = doneModal;
     }
+    this.setModalValues(liftNumber, slot);
+
   }
 
   closeModal(): void {
-    this.showModal = false;
-    this.infoModal = false
-    this.finishWorkModal = false;
-    this.doneModals = false;
-    this.newClient = {_id: '', fullname: '', address: '', phone: '', email: ''};
-    this.newCar = {make: '', model: '', year: '', engine: ''};
-    this.description = ''
-    this.estimation = ''
-    this.selectedLiftId = null
+    this.showModal = this.infoModal = this.finishWorkModal = this.doneModals = false;
+    this.resetForm();
   }
 
   async finishWork() {
-    await this.service.editAgendaService(this.selectedLiftId).then(res => {
-      if (res.status === 201) {
-        this.toast?.show(false, 'Puna perfundoj me sukses')
-        this.loadAgenda()
-        this.closeModal()
-      }
-    })
+    const res = await this.service.editAgendaService(this.selectedLiftId!);
+    if (res.status === 201) {
+      this.toaster.showToast(false, 'Puna perfundoj me sukses');
+      await this.loadAgenda();
+      this.closeModal();
+    }
   }
 
   toggleClientSelection(): void {
@@ -251,32 +135,20 @@ export class CalendarComponent implements OnInit {
   }
 
   private updateReservedStatus(liftNumber: number, times: string[], newReservedStatus: boolean): void {
-    const lift = this.findLift(liftNumber);
-    if (lift) {
-      times.forEach(time => this.updateTimeSlotStatus(lift, time, newReservedStatus));
-    }
+    const lift = this.lifts.find(lift => lift.lift === liftNumber);
+    lift?.timeslots.forEach(slot => {
+      if (times.includes(slot.time)) slot.reserved = newReservedStatus;
+    });
   }
 
-  private findLift(liftNumber: number): Lift | undefined {
-    return this.lifts.find(lift => lift.lift === liftNumber);
-  }
-
-  private updateTimeSlotStatus(lift: Lift, time: string, newReservedStatus: boolean): void {
-    const slot = lift.timeslots.find(slot => slot.time === time);
-    if (slot) {
-      slot.reserved = newReservedStatus;
-    }
-  }
-
-
-  testFunc(test: any) {
-    this.selectedLift = test.liftIndex;
-    this.selectedSlot = [test.slot.time]
+  testFunc(data: any) {
+    this.selectedLift = data.liftIndex;
+    this.selectedSlot = [data.slot.time]
     this.openModal({
-      newAgenda: test.reserved,
-      liftNumber: test.liftIndex,
-      slot: test.slot.time,
-      doneModal: this.isDoneAgenda(test.liftIndex, test.time)
+      newAgenda: data.slot.reserved,
+      liftNumber: data.liftIndex,
+      slot: data.slot,
+      doneModal: this.isDoneAgenda(data.liftIndex, data.slot.time)
     })
   }
 
@@ -288,17 +160,17 @@ export class CalendarComponent implements OnInit {
     );
   }
 
-
   async newTimeslot(event: any) {
     const liftNumber = event.lift;
+    const oldLift = event.oldLift
     const updatedTimeslots = event.timeslots;
     let date
     const slots = updatedTimeslots.filter((res: { reserved: any; }) => res.reserved)
     this.selectedSlot = slots.map((res: { time: any; }) => res.time)
-    this.selectedLift=liftNumber
+    this.selectedLift = liftNumber
     for (const test of this.agenda) {
       for (const lift of test.lift) {
-        if (lift.lift === liftNumber) {
+        if (lift.lift === liftNumber || lift.lift === oldLift) {
           date = test.date
           this.selectedLiftId = test._id
           this.car = lift.car;
@@ -314,9 +186,45 @@ export class CalendarComponent implements OnInit {
       }
     }
     //@ts-ignore
-    await this.service.saveAgendaDrop(this.selectedLiftId,this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, date, this.estimation);
+    await this.service.saveAgendaDrop(this.selectedLiftId, this.selectedSlot, this.selectedLift, this.selectedClient, this.newCar, this.description, this.newClient, date, this.estimation);
 
 
   }
+
+
+  private createEmptyClient(): Client {
+    return {_id: '', fullname: '', address: '', phone: '', email: ''};
+  }
+
+  private createEmptyCar(): Car {
+    return {make: '', model: '', year: '', engine: ''};
+  }
+
+
+  private resetForm(): void {
+    this.newClient = this.createEmptyClient();
+    this.newCar = this.createEmptyCar();
+    this.description = null;
+    this.estimation = '';
+    this.selectedLiftId = null;
+  }
+
+  private setModalValues(liftNumber: any, slot: any) {
+    const agendaItem = this.agenda.find(agenda =>
+      agenda.lift.some(lift => lift.lift === liftNumber && lift.time.includes(slot.time))
+    )
+    const liftItem = agendaItem?.lift.find(lift => lift.lift === liftNumber && lift.time.includes(slot.time));
+    if (agendaItem && liftItem) {
+      this.selectedLiftId = agendaItem._id;
+      // @ts-ignore
+      this.newCar = liftItem.car;
+      // @ts-ignore
+      this.newClient = liftItem.client;
+      this.description = liftItem.service;
+      this.estimation = agendaItem.estimation;
+    }
+
+  }
+
 }
 

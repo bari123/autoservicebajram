@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalService} from "../../../../app/global.service";
-import {ToasterComponent} from "../../../compo/toaster/toaster.component";
+import {ToasterService} from "../../../compo/toaster/toaster.service";
 
 @Component({
   selector: 'app-invoice',
@@ -8,7 +8,6 @@ import {ToasterComponent} from "../../../compo/toaster/toaster.component";
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
-  @ViewChild(ToasterComponent) toast?: ToasterComponent
 
   displayedColumns = ['invoiceId', 'Name', 'Price', 'Actions'];
   total:number=0
@@ -66,7 +65,7 @@ export class InvoiceComponent implements OnInit {
     invoiceId: ''
   }
 
-  constructor(private globalService: GlobalService) {
+  constructor(private globalService: GlobalService,private toast:ToasterService) {
   }
 
   async ngOnInit() {
@@ -102,9 +101,9 @@ export class InvoiceComponent implements OnInit {
       }
       this.selectedId = res.data._id
       if (res.status === 201) {
-        this.toast?.show(false, 'Faktura u shtua me sukses')
+        this.toast.showToast(false, 'Faktura u shtua me sukses')
       } else {
-        this.toast?.show(true, 'Faktura nuk mundi te shtohej')
+        this.toast.showToast(true, 'Faktura nuk mundi te shtohej')
       }
       this.showModal = false
       this.afterSaveModal = true
@@ -123,9 +122,9 @@ export class InvoiceComponent implements OnInit {
   async deleteInvoice(id: string) {
     await this.globalService.deleteInvoice(id).then(res => {
       if (res.status === 200) {
-        this.toast?.show(false, 'Faktura u fshi me sukses')
+        this.toast.showToast(false, 'Faktura u fshi me sukses')
       } else {
-        this.toast?.show(true, 'Faktura nuk mundi te fshihej')
+        this.toast.showToast(true, 'Faktura nuk mundi te fshihej')
       }
     })
     await this.loadInvoices()
@@ -158,12 +157,12 @@ export class InvoiceComponent implements OnInit {
       setTimeout(async () => {
         this.newItem = await this.globalService.getItemBySerialCode(event.target.value)
         if (this.newItem.length !== 0) {
-          this.toast?.show(false, 'Te dhenat u gjeten me sukses')
+          this.toast.showToast(false, 'Te dhenat u gjeten me sukses')
           this.newInvoice.items[index].art = this.newItem.serialCode
           this.newInvoice.items[index].qty = 1
           this.newInvoice.items[index].price = this.newItem.price
         } else {
-          this.toast?.show(true, 'Nuk egziston nje artikull me kete kod')
+          this.toast.showToast(true, 'Nuk egziston nje artikull me kete kod')
         }
       }, 1000)
     }
@@ -191,14 +190,14 @@ export class InvoiceComponent implements OnInit {
   }
 
   async payInvoice() {
-    await this.globalService.payInvoice(this.selectedId).then(res => {
-      this.toast?.show(false, 'Fatura u paguaj me sukses')
+    await this.globalService.payInvoice(this.selectedId).then(() => {
+      this.toast.showToast(false, 'Fatura u paguaj me sukses')
       this.afterSaveModal = false
       this.previewModal = false
       this.payModal = false;
       this.selectedId = ''
-    }).catch(err => {
-      this.toast?.show(true, 'Fatura nuk u pagua')
+    }).catch(() => {
+      this.toast.showToast(true, 'Fatura nuk u pagua')
       this.afterSaveModal = false
       this.payModal = false
     })

@@ -16,17 +16,20 @@
     <div class="mt-20 mb-10 flex gap-20">
       <div *ngIf="reminders('warning')" class="flex align-items-center justify-content-space-between">
         Artikujt me sasi shume te vogel
-        <app-icon [appTooltip]="reminders('warning')" class="cursor-pointer" style="color:orange"
+        <app-icon (click)="openRemainingModal('warning');remainingModalTitle=' Artikujt me sasi shume te vogel'"
+                  class="cursor-pointer" style="color:orange"
                   iconName="warning"></app-icon>
       </div>
       <div *ngIf="reminders('danger')" class="flex align-items-center justify-content-space-between">
         Artikujt ne perfundim e siper
-        <app-icon [appTooltip]="reminders('danger')" class="cursor-pointer" style="color:red"
+        <app-icon (click)="openRemainingModal('danger');remainingModalTitle='Artikujt ne perfundim e siper'"
+                  class="cursor-pointer" style="color:red"
                   iconName="error"></app-icon>
       </div>
       <div *ngIf="reminders('dangerous')" class="flex align-items-center justify-content-space-between">
         Artikujt qe kane perfunduar
-        <app-icon [appTooltip]="reminders('danger')" class="cursor-pointer" style="color:red"
+        <app-icon (click)="openRemainingModal('dangerous');remainingModalTitle='Artikujt qe kane perfunduar'"
+                  class="cursor-pointer" style="color:red"
                   iconName="dangerous"></app-icon>
       </div>
     </div>
@@ -34,12 +37,6 @@
 
       <ng-container cdkColumnDef="username">
         <cdk-table #table [dataSource]="filteredItems" class="example-table flex-direction-column">
-          <ng-container cdkColumnDef="count">
-            <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile"><h3
-              style="border-right:1px solid black">#</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row,index as i" class="example-cell textCenter is-mobile"><h4>{{i + 1}}</h4>
-            </cdk-cell>
-          </ng-container>
           <ng-container cdkColumnDef="serialCode">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3> Numri Serik</h3>
             </cdk-header-cell>
@@ -48,7 +45,7 @@
           <ng-container cdkColumnDef="name">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter "><h3>Emri</h3></cdk-header-cell>
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer"
-                      [appTooltip]="row.name"> {{row.name | truncate:12}} </cdk-cell>
+                      [appTooltip]="row.name"> {{row.name }} </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="shelfNumber">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile "><h3> Renditja ne
@@ -99,17 +96,19 @@
                       [appTooltip]="row.description!==null ? row.description : ' '"> {{row.description ? row.description : '' | truncate:12}} </cdk-cell>
           </ng-container>
 
-          <ng-container  cdkColumnDef="saveButton">
+          <ng-container cdkColumnDef="saveButton">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">Modifikimet</cdk-header-cell>
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter flex  justify-content-center">
               <app-button *ngIf="hasChanged(row)" text="Ruaj Ndryshimet" iconName="save"
                           (click)="updateItem(row)"></app-button>
-              <div *ngIf="!hasChanged(row) &&localStorage.getItem('role')==='admin' " (click)="selectedId=row._id;deleteModal=true"
+              <div *ngIf="!hasChanged(row) &&localStorage.getItem('role')==='admin' "
+                   (click)="selectedId=row._id;deleteModal=true"
                    class="client-info flex align-items-center fshi ">
                 <span class="client-label">Fshi</span>
                 <span class="material-symbols-outlined close-icon cursor-pointer  ">close</span>
               </div>
-              <div *ngIf="localStorage.getItem('role')==='admin'" (click)="selectedId=row._id;showModal=true;code=row.serialCode;changes(row.serialCode)"
+              <div *ngIf="localStorage.getItem('role')==='admin'"
+                   (click)="selectedId=row._id;showModal=true;code=row.serialCode;changes(row.serialCode)"
                    class="client-info flex align-items-center fshi ">
                 <span class="client-label">Edit</span>
                 <span class="material-symbols-outlined close-icon cursor-pointer  ">edit</span>
@@ -133,7 +132,8 @@
       <div class="flex flex-direction-column align-items-center fullWidth mb-10 ">
         <div class="fullWidth">
           <h3>Kodi:</h3>
-          <input (input)="changes(code)" style="text-transform: uppercase" [(ngModel)]="code" type="text" id="serialCode" name="serialCode">
+          <input (input)="changes(code)" style="text-transform: uppercase" [(ngModel)]="code" type="text"
+                 id="serialCode" name="serialCode">
         </div>
         <div class="fullWidth" *ngIf="code.length >=6 && newItem!==null">
           <div class=" fullWidth">
@@ -192,5 +192,27 @@
   </div>
 </div>
 
-<app-toaster></app-toaster>
+
+<div class="modals" [class.show-modal]="remainingModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined " (click)="remainingModal=false">close</span>
+    <div>
+      {{remainingModalTitle}}
+    </div>
+    <div *ngFor="let item of remainingItems" class="mt-10">
+      <ul>
+        <li class="flex justify-content-space-evenly" style="border-bottom: 1px solid black">
+          <div>
+            KODI:
+            {{item.serialCode}}
+          </div>
+          <div>
+            EMRI:
+            {{item.name}}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
