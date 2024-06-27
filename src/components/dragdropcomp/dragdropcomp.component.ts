@@ -41,12 +41,10 @@ export class DragdropcompComponent implements OnInit, OnChanges {
   }
 
   async loadAgenda() {
-    let dateToSearch
-    if (this.date.toDate().toLocaleDateString() === this.currentDate.toDate().toLocaleDateString()) {
-      dateToSearch = this.currentDate.toDate().toLocaleDateString()
-    } else {
-      dateToSearch = this.date.toDate().toLocaleDateString()
-    }
+    const currentDateString = this.currentDate.toDate().toLocaleDateString();
+    const dateString = this.date.toDate().toLocaleDateString();
+
+    const dateToSearch = (dateString === currentDateString) ? currentDateString : dateString;
     this.agenda = await this.service.getAgenda(dateToSearch);
     this.lifts = Array.from({length: 4}, (_, index) => ({
       lift: index + 1,
