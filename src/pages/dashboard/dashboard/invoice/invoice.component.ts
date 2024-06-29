@@ -71,7 +71,6 @@ export class InvoiceComponent implements OnInit {
   async ngOnInit() {
     await this.loadInvoices()
     await this.loadClients();
-    console.log(this.filteredInvoices)
 
   }
 

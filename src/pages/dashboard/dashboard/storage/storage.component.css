@@ -88,6 +88,10 @@
   border: 1px solid green;
 }
 
+.not-allowed{
+  cursor: not-allowed ;
+}
+
 /* Structure */
 .example-container {
   display: flex;

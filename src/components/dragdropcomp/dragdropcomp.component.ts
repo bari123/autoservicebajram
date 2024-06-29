@@ -56,7 +56,6 @@ export class DragdropcompComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<any[]>, lift: any): void {
-    console.log(event)
     let oldLift
     if (event.previousContainer === event.container) {
       let value = this.lifts[lift.lift - 1].timeslots[event.currentIndex].value
@@ -66,7 +65,6 @@ export class DragdropcompComponent implements OnInit, OnChanges {
       this.lifts[lift.lift - 1].timeslots[event.previousIndex].value = value
       this.lifts[lift.lift - 1].timeslots[event.previousIndex].reserved = reserved
     } else {
-      console.log(event.container.id)
       let liftIndex = event.container.id.slice(-1)
       let liftIndexPrevious = event.previousContainer.id.slice(-1)
       let value = this.lifts[liftIndex].timeslots[event.currentIndex].value

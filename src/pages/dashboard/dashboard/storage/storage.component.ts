@@ -9,8 +9,8 @@ import {ToasterService} from "../../../compo/toaster/toaster.service";
   styleUrls: ['./storage.component.css']
 })
 export class StorageComponent implements OnInit {
-  displayedColumns = [ 'serialCode', 'name', 'shelfNumber', 'price', 'qnt', 'carAndYear', 'engineType', 'description', 'saveButton'];
-  items: ItemsModel[]= []
+  displayedColumns = ['serialCode', 'name', 'shelfNumber', 'price', 'qnt', 'carAndYear', 'engineType', 'description', 'saveButton'];
+  items: ItemsModel[] = []
   newItem = {
     name: '',
     serialCode: '',
@@ -31,25 +31,22 @@ export class StorageComponent implements OnInit {
   selectedId = ''
   originalQuantities: { [serialCode: string]: number } = {};
   remainingItems: any
-  remainingModalTitle:string=''
-  soldItem:any
-  totalSold:any
+  remainingModalTitle: string = ''
+  soldItem: any
+  totalSold: any
 
-  constructor(private globalService: GlobalService,private toasterService: ToasterService) {
+  constructor(private globalService: GlobalService, private toasterService: ToasterService) {
   }
 
   async ngOnInit() {
-    this.soldItem=await this.getSoldItems()
+    this.soldItem = await this.getSoldItems()
     await this.loadItems()
-    console.log(this.soldItem)
     this.sumSoldItems()
   }
 
 
   sumSoldItems() {
-    // Ensure totalSold is initialized to 0
     this.totalSold = 0;
-
     for (const items of this.soldItem) {
       for (const item of items.items) {
         const price = parseFloat(item.item.price); // Ensure price is a number
@@ -73,12 +70,15 @@ export class StorageComponent implements OnInit {
   }
 
 
-  async getSoldItems(){
+  async getSoldItems() {
     const {data} = await this.globalService.getSoldItems(new Date().toLocaleDateString())
     return data
   }
 
   itemQuantity(item: any, method: string) {
+    if (method === 'remove' && item.qnt === 0) {
+      return
+    }
     method === 'add' ? item.qnt++ : item.qnt--
   }
 
@@ -86,8 +86,8 @@ export class StorageComponent implements OnInit {
     return item.qnt !== this.originalQuantities[item.serialCode];
   }
 
-  soldItems(item:any){
-    return item.qnt-this.originalQuantities[item.serialCode]
+  soldItems(item: any) {
+    return item.qnt - this.originalQuantities[item.serialCode]
   }
 
   async saveItem() {
@@ -131,8 +131,8 @@ export class StorageComponent implements OnInit {
 
   async updateItem(item: any) {
     try {
-      // await this.globalService.updateItem(item, item._id)
-      let newItemSold={...item,sold:this.soldItems(item),date:new Date().toLocaleDateString()}
+      await this.globalService.updateItem(item, item._id)
+      let newItemSold = {...item, sold: this.soldItems(item), date: new Date().toLocaleDateString()}
       await this.globalService.soldItem(newItemSold, item._id)
       this.toasterService.showToast(false, 'Artikulli u azhurua me sukses')
       await this.loadItems()

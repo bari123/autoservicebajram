@@ -91,7 +91,7 @@
                   <app-icon iconName="add"></app-icon>
                 </div>
                 <span class="client-name">{{ row.qnt }}</span>
-                <div class="icon-round cursor-pointer" [class.icon-minus]="mouseenter" (mouseover)="mouseenter=true"
+                <div  class="icon-round cursor-pointer" [class.icon-minus]="mouseenter" [class.not-allowed]="row.qnt===0" (mouseover)="mouseenter=true"
                      (click)="itemQuantity(row,'remove')">
                   <app-icon iconName="remove"></app-icon>
                 </div>
