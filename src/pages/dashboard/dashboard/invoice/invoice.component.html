@@ -136,11 +136,14 @@
           </div>
           <div class="halfWidth">
             <h3>Cmimi:</h3>
-            <input type="text" id="cmimi" name="address" (keyup.tab)="addItem()" (keyup.enter)="addItem()" (input)="updatePrice(i)" [(ngModel)]="art.price">
+            <input type="text" id="cmimi" name="address"  (keyup.enter)="addItem()" (input)="updatePrice(i)" [(ngModel)]="art.price">
           </div>
           <div class="halfWidth">
             <h3>Totali:</h3>
             <input [disabled]="true" type="text" id="totali" name="address" class="textCenter"  [(ngModel)]="art.total">
+          </div>
+          <div class="cursor-pointer align-items-center" (click)="removeItem(i)" *ngIf="i!==0">
+          <app-icon iconName="remove" style="color: red"></app-icon>
           </div>
 
         </div>

@@ -114,6 +114,10 @@ export class InvoiceComponent implements OnInit {
     this.newInvoice.items.push({art: '', qty: null, price: null,total:null})
   }
 
+  removeItem(i:number){
+    this.newInvoice.items.splice(i,1)
+  }
+
   async loadInvoices() {
     this.invoices = await this.globalService.getInvoices()
   }
