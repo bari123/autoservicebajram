@@ -27,19 +27,42 @@ export class StorageComponent implements OnInit {
   showModal = false
   deleteModal = false
   remainingModal = false
+  soldModal = false
   selectedId = ''
   originalQuantities: { [serialCode: string]: number } = {};
   remainingItems: any
   remainingModalTitle:string=''
+  soldItem:any
+  totalSold:any
 
   constructor(private globalService: GlobalService,private toasterService: ToasterService) {
   }
 
   async ngOnInit() {
+    this.soldItem=await this.getSoldItems()
     await this.loadItems()
+    console.log(this.soldItem)
+    this.sumSoldItems()
   }
 
 
+  sumSoldItems() {
+    // Ensure totalSold is initialized to 0
+    this.totalSold = 0;
+
+    for (const items of this.soldItem) {
+      for (const item of items.items) {
+        const price = parseFloat(item.item.price); // Ensure price is a number
+        const count = parseInt(item.count, 10); // Ensure count is a number
+        if (!isNaN(price) && !isNaN(count)) {
+          this.totalSold += (price * count);
+        } else {
+          console.error("Invalid price or count:", item.item.price, item.count);
+        }
+      }
+    }
+
+  }
 
   get filteredItems() {
     return this.items?.filter(item =>
@@ -49,12 +72,22 @@ export class StorageComponent implements OnInit {
     );
   }
 
+
+  async getSoldItems(){
+    const {data} = await this.globalService.getSoldItems(new Date().toLocaleDateString())
+    return data
+  }
+
   itemQuantity(item: any, method: string) {
     method === 'add' ? item.qnt++ : item.qnt--
   }
 
   hasChanged(item: any) {
     return item.qnt !== this.originalQuantities[item.serialCode];
+  }
+
+  soldItems(item:any){
+    return item.qnt-this.originalQuantities[item.serialCode]
   }
 
   async saveItem() {
@@ -98,7 +131,9 @@ export class StorageComponent implements OnInit {
 
   async updateItem(item: any) {
     try {
-      await this.globalService.updateItem(item, item._id)
+      // await this.globalService.updateItem(item, item._id)
+      let newItemSold={...item,sold:this.soldItems(item),date:new Date().toLocaleDateString()}
+      await this.globalService.soldItem(newItemSold, item._id)
       this.toasterService.showToast(false, 'Artikulli u azhurua me sukses')
       await this.loadItems()
     } catch (e) {

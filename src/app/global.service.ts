@@ -159,6 +159,14 @@ export class GlobalService {
     return await this.axiosInstance.post(`items/${id}`, item)
   }
 
+  async soldItem(item: any, id: string) {
+    return await this.axiosInstance.post(`items/sold/${id}`, item)
+  }
+
+  async getSoldItems(date:string) {
+    return await this.axiosInstance.post(`items/get/sold`,{date})
+  }
+
   async deleteItem(id: string) {
     return await this.axiosInstance.delete(`items/${id}`)
   }

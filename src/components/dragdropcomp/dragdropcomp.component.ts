@@ -34,10 +34,12 @@ export class DragdropcompComponent implements OnInit, OnChanges {
 
   async ngOnInit() {
     this.agenda = await this.service.getAgenda(this.currentDate.toDate().toLocaleDateString());
+    this.lifts=[]
     this.lifts = Array.from({length: 4}, (_, index) => ({
       lift: index + 1,
       timeslots: this.generateTimeslotsWithAgenda(index + 1)
     }));
+
   }
 
   async loadAgenda() {
@@ -46,48 +48,38 @@ export class DragdropcompComponent implements OnInit, OnChanges {
 
     const dateToSearch = (dateString === currentDateString) ? currentDateString : dateString;
     this.agenda = await this.service.getAgenda(dateToSearch);
+    this.lifts=[]
     this.lifts = Array.from({length: 4}, (_, index) => ({
       lift: index + 1,
       timeslots: this.generateTimeslotsWithAgenda(index + 1)
     }));
   }
 
-
   drop(event: CdkDragDrop<any[]>, lift: any): void {
-    const currentLiftIndex = lift.lift - 1;
-    let oldLift;
-
-    // Determine the indices of the current and previous lifts
-    const currentIndex = event.currentIndex;
-    const previousIndex = event.previousIndex;
-    const containerId = parseInt(event.container.id.slice(-1));
-    const previousContainerId = parseInt(event.previousContainer.id.slice(-1));
-
-    // Determine if the drag event is within the same container
-    const isSameContainer = event.previousContainer === event.container;
-
-    // Retrieve the relevant timeslots
-    const currentTimeslot = this.lifts[containerId].timeslots[currentIndex];
-    const previousTimeslot = this.lifts[previousContainerId].timeslots[previousIndex];
-
-    // Swap values and reserved statuses
-    [currentTimeslot.value, previousTimeslot.value] = [previousTimeslot.value, currentTimeslot.value];
-    [currentTimeslot.reserved, previousTimeslot.reserved] = [previousTimeslot.reserved, currentTimeslot.reserved];
-
-    // Set oldLift if the drag event is between different containers
-    if (!isSameContainer) {
-      oldLift = previousContainerId + 1;
+    console.log(event)
+    let oldLift
+    if (event.previousContainer === event.container) {
+      let value = this.lifts[lift.lift - 1].timeslots[event.currentIndex].value
+      let reserved = this.lifts[lift.lift - 1].timeslots[event.currentIndex].reserved
+      this.lifts[lift.lift - 1].timeslots[event.currentIndex].value = this.lifts[lift.lift - 1].timeslots[event.previousIndex].value
+      this.lifts[lift.lift - 1].timeslots[event.currentIndex].reserved = this.lifts[lift.lift - 1].timeslots[event.previousIndex].reserved
+      this.lifts[lift.lift - 1].timeslots[event.previousIndex].value = value
+      this.lifts[lift.lift - 1].timeslots[event.previousIndex].reserved = reserved
+    } else {
+      console.log(event.container.id)
+      let liftIndex = event.container.id.slice(-1)
+      let liftIndexPrevious = event.previousContainer.id.slice(-1)
+      let value = this.lifts[liftIndex].timeslots[event.currentIndex].value
+      let reserved = this.lifts[liftIndex].timeslots[event.currentIndex].reserved
+      this.lifts[liftIndex].timeslots[event.currentIndex].value = this.lifts[liftIndexPrevious].timeslots[event.previousIndex].value
+      this.lifts[liftIndex].timeslots[event.currentIndex].reserved = this.lifts[liftIndexPrevious].timeslots[event.previousIndex].reserved
+      this.lifts[liftIndexPrevious].timeslots[event.previousIndex].value = value
+      this.lifts[liftIndexPrevious].timeslots[event.previousIndex].reserved = reserved
+      oldLift = parseInt(liftIndexPrevious)
+      oldLift = oldLift + 1
     }
-
-    // Emit the new timeslot event
-    this.newTimeSlot.emit({
-      lift: lift.lift,
-      timeslots: this.lifts[currentLiftIndex].timeslots,
-      oldLift
-    });
+    this.newTimeSlot.emit({lift: lift.lift, timeslots: this.lifts[lift.lift - 1].timeslots, oldLift});
   }
-
-
   trackByItem(index: number, item: any): any {
     return item;
   }

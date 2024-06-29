@@ -13,24 +13,33 @@
     <input class="input-search" type="text" placeholder="   Kerko artikull me numer serik" [(ngModel)]="searchTerm">
   </div>
   <div style="height:80vh;overflow-y: auto;">
-    <div class="mt-20 mb-10 flex gap-20">
-      <div *ngIf="reminders('warning')" class="flex align-items-center justify-content-space-between">
-        Artikujt me sasi shume te vogel
-        <app-icon (click)="openRemainingModal('warning');remainingModalTitle=' Artikujt me sasi shume te vogel'"
-                  class="cursor-pointer" style="color:orange"
-                  iconName="warning"></app-icon>
+    <div class="flex justify-content-space-between">
+      <div class="mt-20 mb-10 flex gap-20">
+        <div *ngIf="reminders('warning')" class="flex align-items-center justify-content-space-between">
+          Artikujt me sasi shume te vogel
+          <app-icon (click)="openRemainingModal('warning');remainingModalTitle=' Artikujt me sasi shume te vogel'"
+                    class="cursor-pointer" style="color:orange"
+                    iconName="warning"></app-icon>
+        </div>
+        <div *ngIf="reminders('danger')" class="flex align-items-center justify-content-space-between">
+          Artikujt ne perfundim e siper
+          <app-icon (click)="openRemainingModal('danger');remainingModalTitle='Artikujt ne perfundim e siper'"
+                    class="cursor-pointer" style="color:red"
+                    iconName="error"></app-icon>
+        </div>
+        <div *ngIf="reminders('dangerous')" class="flex align-items-center justify-content-space-between">
+          Artikujt qe kane perfunduar
+          <app-icon (click)="openRemainingModal('dangerous');remainingModalTitle='Artikujt qe kane perfunduar'"
+                    class="cursor-pointer" style="color:red"
+                    iconName="dangerous"></app-icon>
+        </div>
       </div>
-      <div *ngIf="reminders('danger')" class="flex align-items-center justify-content-space-between">
-        Artikujt ne perfundim e siper
-        <app-icon (click)="openRemainingModal('danger');remainingModalTitle='Artikujt ne perfundim e siper'"
+
+      <div class="mt-20 mb-10 flex ">
+        Artikujt e shitur
+        <app-icon (click)="soldModal=true"
                   class="cursor-pointer" style="color:red"
-                  iconName="error"></app-icon>
-      </div>
-      <div *ngIf="reminders('dangerous')" class="flex align-items-center justify-content-space-between">
-        Artikujt qe kane perfunduar
-        <app-icon (click)="openRemainingModal('dangerous');remainingModalTitle='Artikujt qe kane perfunduar'"
-                  class="cursor-pointer" style="color:red"
-                  iconName="dangerous"></app-icon>
+                  iconName="fact_check"></app-icon>
       </div>
     </div>
     <div>
@@ -211,6 +220,40 @@
             {{item.name}}
           </div>
         </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modals" [class.show-modal]="soldModal">
+  <div class="modal-content">
+    <span class="close material-symbols-outlined " (click)="soldModal=false">close</span>
+    <div>
+      {{remainingModalTitle}}
+    </div>
+    <div *ngFor="let items of soldItem" class="mt-10">
+      <ul>
+        <li>
+          <div style="border-bottom: 1px solid black" *ngFor="let item of items.items"
+               class="flex justify-content-space-between">
+            <div>
+              Emri:
+              {{item.item.name}}
+            </div>
+            <div>
+              Shitur:
+              {{item.count}}
+            </div>
+            <div>
+              Cmimi:
+              {{item.item.price}}
+            </div>
+
+          </div>
+        </li>
+        <div class="flex justify-content-space-between fullWidth">
+          TOTALI:{{totalSold}} - DEN
+        </div>
       </ul>
     </div>
   </div>
