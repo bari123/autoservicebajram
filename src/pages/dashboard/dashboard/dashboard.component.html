@@ -1,33 +1,13 @@
 <div class="container flex  fullHeight ">
   <div class="left-side flex flex-direction-column justify-content-space-between  ">
     <div class="underline-nav fullWidth ">
-      <li><a class="flex  align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/clients-list')"
-             *ngIf="localStorage.getItem('role')==='admin'"
-             [routerLink]="'/dashboard/clients-list'">
-        <app-icon iconName="people"></app-icon>
-        Klientet
-      </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/calendar')"
-             [routerLink]="'/dashboard/calendar'">
-        <app-icon iconName="calendar_month"></app-icon>
-        Terminet
-      </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/storage')"
-             [routerLink]="'/dashboard/storage'">
-        <app-icon iconName="warehouse"></app-icon>
-        Magazina
-      </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/invoice')"
-             *ngIf="localStorage.getItem('role') ==='admin'"
-             [routerLink]="'/dashboard/invoice'">
-        <app-icon iconName="receipt_long"></app-icon>
-        Fakturat
-      </a></li>
-      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/statistics')"
-             *ngIf="localStorage.getItem('role') ==='admin'"
-             [routerLink]="'/dashboard/statistics'">
-        <app-icon iconName="monitoring"></app-icon>
-       Statistika
+      <li *ngFor="let info of routes"><a class="flex gap-20 align-items-center menuItem"
+                                         [class.selected]="route.url.includes(info.route)"
+                                         [class.funnel]="route.url.includes(info.route)"
+                                         *ngIf="info.role.includes(localStorage.getItem('role')!)"
+                                         [routerLink]="info.route">
+        <app-icon [iconName]="info.icon"></app-icon>
+        {{info.name}}
       </a></li>
     </div>
     <div class=" underline-nav logout-icon flex align-items-center   cursor-pointer ">
@@ -54,24 +34,17 @@
   </div>
   <div
     class="p-20 menuStackContent flex  flex-direction-column fullWidth fullHeight align-items-center justify-content-space-evenly ">
-
     <div (click)="mobileMenuToggle=false" style="flex-wrap: wrap"
-         class="fullWidth menuSize flex flex-direction-column mt-20  justify-content-center align-content-center">
-      <div class="mt-20 gap-10 flex align-items-center"
-           *ngIf="localStorage.getItem('role')==='admin'"
-           [routerLink]="'/dashboard/clients-list'"><span class="menuSize material-symbols-outlined">people</span>Klientet
-      </div>
-      <div class="mt-20 gap-10 flex align-items-center" [routerLink]="'/dashboard/calendar'"><span
-        class="menuSize material-symbols-outlined">calendar_month</span>Terminet
-      </div>
-      <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
-           [routerLink]="'/dashboard/storage'"><span class="menuSize material-symbols-outlined">warehouse</span>Magazina
-      </div>
-      <div class="mt-20 gap-10 flex align-items-center" *ngIf="localStorage.getItem('role') ==='admin'"
-           [routerLink]="'/dashboard/invoice'"><span class="menuSize material-symbols-outlined">receipt_long</span>Fakturat
+         class="fullWidth menuSize flex flex-direction-column mt-20 justify-content-center align-content-center">
+      <div *ngFor="let info of routes">
+        <div class="mt-20 gap-10 flex align-items-center"
+             *ngIf="info.role.includes(localStorage.getItem('role')!)"
+             [routerLink]="info.route"><span
+          class="menuSize material-symbols-outlined">{{info.icon}}</span>{{info.name}}
+        </div>
       </div>
     </div>
-    <div (click)="logOut()" class="logout-icon menuSize flex align-items-center   cursor-pointer "><span
+    <div (click)="logOut()" class="logout-icon menuSize flex align-items-center cursor-pointer"><span
       class="menuSize material-symbols-outlined">logout</span>Dil
     </div>
   </div>

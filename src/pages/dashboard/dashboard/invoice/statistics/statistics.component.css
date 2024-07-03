@@ -9,13 +9,12 @@
 }
 
 .highlight {
-  width: 350px;
+  width: 370px;
   height: 250px;
   margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /*background-color: #32373a;*/
   background-color: #dc3545;
   border-radius: 20px;
 }
@@ -29,16 +28,14 @@
 
 
 .highlight-icon {
-  right: 0;
-  margin-top: 10px;
   font-size: 30px;
   display: flex;
   align-self: center;
   justify-content: center;
-  border-radius: 50px;
-  background-color: red;
-  height: 50px;
-  width: 50px;
+  border-radius: 10px;
+  background-color: #32373a;
+  height: 40px;
+  width: 40px;
 }
 
 

@@ -177,6 +177,16 @@ export class GlobalService {
     return data
   }
 
+  async getClientStats(){
+    const {data} = await this.axiosInstance.get(`invoice/stats/clients`)
+    return data
+  }
+
+  async getPeakSales(){
+    const {data} = await this.axiosInstance.get(`invoice/stats/peakSales`)
+    return data
+  }
+
   async deleteItem(id: string) {
     return await this.axiosInstance.delete(`items/${id}`)
   }

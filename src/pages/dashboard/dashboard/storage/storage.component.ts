@@ -34,6 +34,7 @@ export class StorageComponent implements OnInit {
   remainingModalTitle: string = ''
   soldItem: any
   totalSold: any
+  method:string=''
 
   constructor(private globalService: GlobalService, private toasterService: ToasterService) {
   }
@@ -76,6 +77,7 @@ export class StorageComponent implements OnInit {
   }
 
   itemQuantity(item: any, method: string) {
+    this.method=method
     if (method === 'remove' && item.qnt === 0) {
       return
     }
@@ -133,7 +135,9 @@ export class StorageComponent implements OnInit {
     try {
       await this.globalService.updateItem(item, item._id)
       let newItemSold = {...item, sold: this.soldItems(item), date: new Date().toLocaleDateString()}
+      if(this.method!=='add'){
       await this.globalService.soldItem(newItemSold, item._id)
+      }
       this.toasterService.showToast(false, 'Artikulli u azhurua me sukses')
       await this.loadItems()
     } catch (e) {

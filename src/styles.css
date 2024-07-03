@@ -281,7 +281,7 @@ input:focus-visible {
 
 .page-content {
   height: 100%;
-  padding: 20px;
+  /*padding: 20px;*/
 }
 
 .canvasjs-chart-canvas {

@@ -9,11 +9,16 @@ import {GlobalService} from "../../../../../app/global.service";
 export class StatisticsComponent implements OnInit {
   dataPoints: any = [];
   chart: any
+  pieChart: any
+  salesChart: any
   items: any
   soldItem: any
   finalList: any[] = []
   totalSold: any
-  monthStats:any
+  monthStats: any
+  clientStats: any
+  highestSalesClient: any
+  peakSales:any
 
   displayedColumns = ['serialCode', 'name', 'price', 'qnt',];
 
@@ -21,11 +26,25 @@ export class StatisticsComponent implements OnInit {
     this.chart = chart;
   }
 
+  getPieChartInstance(chart: object) {
+    this.pieChart = chart
+  }
+
+  getSalesChartInstance(chart: object) {
+    this.salesChart = chart
+  }
+
   constructor(private globalService: GlobalService) {
   }
 
   async ngOnInit() {
-    this.monthStats=await this.globalService.getLastMonthStats()
+    this.peakSales=await this.globalService.getPeakSales()
+    this.peakSales.forEach((res: { x: string | number | Date; y: string }) => {
+      res.x = new Date(res.x)
+    })
+    this.monthStats = await this.globalService.getLastMonthStats()
+    this.clientStats = await this.globalService.getClientStats()
+    this.highestSalesClient = this.clientStats.highestClient
     this.soldItem = (await this.globalService.getSoldItems(new Date().toLocaleDateString())).data
     for (const items of this.soldItem) {
       for (const innerItem of items.items) {
@@ -38,7 +57,11 @@ export class StatisticsComponent implements OnInit {
     })
 
     this.chartOptions.data[0].dataPoints = this.dataPoints
+    this.piechartOptions.data[0].dataPoints = this.clientStats.result
+    this.saleschartOptions.data[0].dataPoints = this.peakSales
     this.chart.render()
+    this.pieChart.render()
+    this.salesChart.render()
     this.sumSoldItems()
   }
 
@@ -72,6 +95,35 @@ export class StatisticsComponent implements OnInit {
     }]
   }
 
+  saleschartOptions = {
+    theme: 'dark2',
+    backgroundColor: '#dc3545',
+    title: {
+      text: "Shitjet ne muajt e fundit",
+      fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+      fontWeight: "bold",
+      fontColor: "black",
+
+    },
+    axisY: {
+      title: "Shuma e fakturave ne denar",
+      titleFontColor: "black",
+      valueFormatString: "#,###.##"
+    },
+    axisX: {
+      title: "Data",
+      valueFormatString: "DD/MM/YYYY"
+    },
+    data: [{
+      type: "line",
+      xValueFormatString: "DD/MM/YYYY",
+      yValueFormatString: "#,###.## mkd",
+      lineColor: 'white',
+      markerColor: 'black',
+      dataPoints: []
+    }]
+  }
+
   piechartOptions = {
     animationEnabled: true,
     title: {
@@ -84,16 +136,10 @@ export class StatisticsComponent implements OnInit {
       fontColor: 'black'
     }],
     data: [{
-      type: "pie", //change type to column, line, area, doughnut, etc
+      type: "pie",
       indexLabel: "{name}: {y}%",
       indexLabelFontColor: "white",
-      dataPoints: [
-        {name: "Iljaz Iseni", y: 9.1},
-        {name: "Bari Ademi", y: 3.7},
-        {name: "Auto Shkolla Momento", y: 36.4},
-        {name: "Agan Beqiri", y: 30.7},
-        {name: "Bajram Iseni", y: 20.1}
-      ]
+      dataPoints: []
     }]
   }
 

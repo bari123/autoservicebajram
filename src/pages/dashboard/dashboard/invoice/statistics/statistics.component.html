@@ -1,13 +1,16 @@
-<div class="page">
-  <div class="page-header">
-    <h2>Statistikat</h2>
-  </div>
-
-  <div class="page-content">
+<div class="page" style="height: 100%;overflow-y: auto ;padding-bottom: 30px">
+  <div class="page-content" style="padding-right: 20px;padding-left: 20px">
+    <div class="flex gap-10 align-items-center">
+      <div class="highlight-icon">
+        <app-icon style="margin-top: 4px;color: white" iconName="speed" [fontSize]="30"></app-icon>
+      </div>
+      <h2>Pasqyre e shpejt</h2>
+    </div>
     <div class="stats-highlights">
       <div class="highlight">
         <div class="highlight-content">
-          <canvasjs-chart style="border-radius: 20px!important;" [styles]="{width:'350px', height:'250px'}"
+          <canvasjs-chart (chartInstance)="getPieChartInstance($event)" style="border-radius: 20px!important;"
+                          [styles]="{width:'350px', height:'250px'}"
                           [options]="piechartOptions"></canvasjs-chart>
         </div>
       </div>
@@ -46,10 +49,10 @@
         <div class="highlight-content">
           <div>
             <h3 class="highlight-title">
-              Filter Vaji - FCK100
+              {{highestSalesClient?.name}} - {{highestSalesClient?.totalAmount}} MKD
             </h3>
             <div class="highlight-desc">
-              Ne periudhen 1 mujore ky artikull eshte shitur me shume
+              Klienti me me shume shitje
             </div>
           </div>
           <div>
@@ -59,9 +62,24 @@
       </div>
 
     </div>
+    <div class="flex fullWidth">
+      <div class="flex gap-10">
+        <div class="highlight-icon">
+          <app-icon style="margin-top: 4px;color: white" iconName="leaderboard" [fontSize]="30"></app-icon>
+        </div>
+        <h2>Aktivitet e fundit</h2>
+      </div>
+      <div class="flex gap-10 " style="margin-left: 600px">
+        <div class="highlight-icon">
+          <app-icon style="margin-top: 4px;color: white" iconName="bar_chart_4_bars" [fontSize]="30"></app-icon>
+        </div>
+        <h2>Tabelat</h2>
+      </div>
+    </div>
     <div class="stats-charts mt-30 flex fullWidth gap-30">
-      <div class="halfWidth ">
-        <div style="background-color:#dc3545;height:300px;overflow-y: auto;border-radius: 20px">
+
+      <div class="halfWidth " style="margin-left: 10px">
+        <div style="background-color:#dc3545;height:80%;overflow-y: auto;border-radius: 20px">
           <ng-container *ngIf="finalList.length>0" cdkColumnDef="solds">
             <cdk-table #table [dataSource]="finalList" class="example-table flex-direction-column">
               <ng-container cdkColumnDef="name">
@@ -116,7 +134,9 @@
           </div>
         </div>
       </div>
-      <div class="halfWidth">
+      <div class="halfWidth flex flex-direction-column gap-10" style="margin-right: 10px">
+        <canvasjs-chart id="saleschart" [options]="saleschartOptions"
+                        (chartInstance)="getSalesChartInstance($event)"></canvasjs-chart>
         <canvasjs-chart id="chart" [options]="chartOptions" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
       </div>
     </div>
