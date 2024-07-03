@@ -43,7 +43,12 @@
           <ng-container cdkColumnDef="serialCode">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3> Numri Serik</h3>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter"> {{row.serialCode}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
+
+              <div class="flex align-items-center justify-content-center gap-10">
+              <app-icon [iconName]="qntStatus(row.qnt)" style="color: red"></app-icon> {{row.serialCode}}
+              </div>
+            </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="name">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter "><h3>Emri</h3></cdk-header-cell>
@@ -219,37 +224,5 @@
   </div>
 </div>
 
-<div class="modals" [class.show-modal]="soldModal">
-  <div class="modal-content">
-    <span class="close material-symbols-outlined " (click)="soldModal=false">close</span>
-    <div>
-      {{remainingModalTitle}}
-    </div>
-    <div *ngFor="let items of soldItem" class="mt-10">
-      <ul>
-        <li>
-          <div style="border-bottom: 1px solid black" *ngFor="let item of items.items"
-               class="flex justify-content-space-between">
-            <div>
-              Emri:
-              {{item.item.name}}
-            </div>
-            <div>
-              Shitur:
-              {{item.count}}
-            </div>
-            <div>
-              Cmimi:
-              {{item.item.price}}
-            </div>
 
-          </div>
-        </li>
-        <div class="flex justify-content-space-between fullWidth">
-          TOTALI:{{totalSold}} - DEN
-        </div>
-      </ul>
-    </div>
-  </div>
-</div>
 

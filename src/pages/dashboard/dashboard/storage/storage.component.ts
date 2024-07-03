@@ -34,7 +34,7 @@ export class StorageComponent implements OnInit {
   remainingModalTitle: string = ''
   soldItem: any
   totalSold: any
-  method:string=''
+  method: string = ''
 
   constructor(private globalService: GlobalService, private toasterService: ToasterService) {
   }
@@ -77,7 +77,7 @@ export class StorageComponent implements OnInit {
   }
 
   itemQuantity(item: any, method: string) {
-    this.method=method
+    this.method = method
     if (method === 'remove' && item.qnt === 0) {
       return
     }
@@ -135,8 +135,8 @@ export class StorageComponent implements OnInit {
     try {
       await this.globalService.updateItem(item, item._id)
       let newItemSold = {...item, sold: this.soldItems(item), date: new Date().toLocaleDateString()}
-      if(this.method!=='add'){
-      await this.globalService.soldItem(newItemSold, item._id)
+      if (this.method !== 'add') {
+        await this.globalService.soldItem(newItemSold, item._id)
       }
       this.toasterService.showToast(false, 'Artikulli u azhurua me sukses')
       await this.loadItems()
@@ -149,11 +149,19 @@ export class StorageComponent implements OnInit {
     if (!this.items) return null;
     switch (state) {
       case 'warning':
-        return this.items.filter(item => item.qnt < 5 && item.qnt >= 3);
+        return this.items.filter(item => item.qnt < 5 && item.qnt > 1);
       case 'dangerous':
         return this.items.filter(item => item.qnt === 0);
       default:
-        return this.items.filter(item => item.qnt < 3);
+        return this.items.filter(item => item.qnt === 1);
+    }
+  }
+
+  qntStatus(qnt: any) {
+    if (qnt === 0) {
+      return 'dangerous'
+    }else {
+      return ''
     }
   }
 
