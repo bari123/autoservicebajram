@@ -26,7 +26,7 @@ export class GlobalService {
     await this.axiosInstance.post('/clients', newClient)
   }
 
-  async editClient(newClient: any,id:string|null) {
+  async editClient(newClient: any, id: string | null) {
     await this.axiosInstance.post(`/clients/${id}/edit`, newClient)
   }
 
@@ -105,9 +105,9 @@ export class GlobalService {
     return await this.axiosInstance.delete(`/agenda/${serviceId}`)
   }
 
-  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any, date: string, estimation: string,id:string|null) {
+  async saveAgenda(slot: any, lift: any, client: any, car: any, service: any, newClient: any, date: string, estimation: string, id: string | null) {
     let body = {
-      _id:id,
+      _id: id,
       lift: {
         time: slot,
         lift: lift,
@@ -163,8 +163,18 @@ export class GlobalService {
     return await this.axiosInstance.post(`items/sold/${id}`, item)
   }
 
-  async getSoldItems(date:string) {
-    return await this.axiosInstance.post(`items/get/sold`,{date})
+  async getSoldItems(date: string) {
+    return await this.axiosInstance.post(`items/get/sold`, {date})
+  }
+
+  async getStats() {
+    const {data} = await this.axiosInstance.get(`items/sold/stats`)
+    return data
+  }
+
+  async getLastMonthStats() {
+    const {data} = await this.axiosInstance.get(`items/sold/stats/month`)
+    return data
   }
 
   async deleteItem(id: string) {

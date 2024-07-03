@@ -23,6 +23,12 @@
         <app-icon iconName="receipt_long"></app-icon>
         Fakturat
       </a></li>
+      <li><a class="flex align-items-center menuItem" [class.selected]="route.url.includes('/dashboard/statistics')"
+             *ngIf="localStorage.getItem('role') ==='admin'"
+             [routerLink]="'/dashboard/statistics'">
+        <app-icon iconName="monitoring"></app-icon>
+       Statistika
+      </a></li>
     </div>
     <div class=" underline-nav logout-icon flex align-items-center   cursor-pointer ">
       <li>

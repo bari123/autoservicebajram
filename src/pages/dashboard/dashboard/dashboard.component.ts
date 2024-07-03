@@ -21,5 +21,5 @@ export class DashboardComponent implements OnInit {
     location.reload()
   }
 
-  protected readonly localStorage = localStorage;
+    protected readonly localStorage = localStorage;
 }

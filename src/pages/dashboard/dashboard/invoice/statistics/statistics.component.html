@@ -1,0 +1,131 @@
+<div class="page">
+  <div class="page-header">
+    <h2>Statistikat</h2>
+  </div>
+
+  <div class="page-content">
+    <div class="stats-highlights">
+      <div class="highlight">
+        <div class="highlight-content">
+          <canvasjs-chart style="border-radius: 20px!important;" [styles]="{width:'350px', height:'250px'}"
+                          [options]="piechartOptions"></canvasjs-chart>
+        </div>
+      </div>
+      <div class="highlight">
+        <div class="highlight-content">
+          <div>
+            <h3 class="highlight-title">
+              {{monthStats?.highest?.item?.name}} - {{monthStats?.highest?.item?.serialCode}}
+
+            </h3>
+            <div class="highlight-desc">
+              Ne periudhen 1 mujore ky artikull eshte shitur me shume
+            </div>
+          </div>
+          <div>
+            <app-icon style="color: white" [fontSize]="130" iconName="trending_up"></app-icon>
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+        <div class="highlight-content">
+          <div>
+            <h3 class="highlight-title">
+              {{monthStats?.lowest?.item?.name}} - {{monthStats?.lowest?.item?.serialCode}}
+            </h3>
+            <div class="highlight-desc">
+              Ne periudhen 1 mujore ky artikull ka renje te shitjeve
+            </div>
+          </div>
+          <div>
+            <app-icon [fontSize]="130" style="color: white" iconName="trending_down"></app-icon>
+          </div>
+        </div>
+      </div>
+      <div class="highlight">
+        <div class="highlight-content">
+          <div>
+            <h3 class="highlight-title">
+              Filter Vaji - FCK100
+            </h3>
+            <div class="highlight-desc">
+              Ne periudhen 1 mujore ky artikull eshte shitur me shume
+            </div>
+          </div>
+          <div>
+            <app-icon [fontSize]="130" style="color: white" iconName="verified"></app-icon>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="stats-charts mt-30 flex fullWidth gap-30">
+      <div class="halfWidth ">
+        <div style="background-color:#dc3545;height:300px;overflow-y: auto;border-radius: 20px">
+          <ng-container *ngIf="finalList.length>0" cdkColumnDef="solds">
+            <cdk-table #table [dataSource]="finalList" class="example-table flex-direction-column">
+              <ng-container cdkColumnDef="name">
+                <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">
+                  <h3>Emri</h3>
+                </cdk-header-cell>
+                <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
+                  {{row.name}}
+                </cdk-cell>
+              </ng-container>
+              <ng-container cdkColumnDef="serialCode">
+                <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">
+                  <h3>Kodi</h3>
+                </cdk-header-cell>
+                <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer">
+                  {{row.serialCode}}
+                </cdk-cell>
+              </ng-container>
+              <ng-container cdkColumnDef="qnt">
+                <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter is-mobile">
+                  <h3>Shitur</h3>
+                </cdk-header-cell>
+                <cdk-cell *cdkCellDef="let row" class="example-cell textCenter is-mobile cursor-pointer">
+                  {{row.qnt }}
+                </cdk-cell>
+              </ng-container>
+              <ng-container cdkColumnDef="price">
+                <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">
+                  <h3>Cmimi</h3>
+                </cdk-header-cell>
+                <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer">
+                  {{ row.price }}
+                </cdk-cell>
+              </ng-container>
+              <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
+              <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
+            </cdk-table>
+          </ng-container>
+          <ng-template [ngIf]="finalList.length===0">
+            <div class="flex justify-content-center align-items-center">
+              <h1>Ska Rezultate</h1>
+            </div>
+          </ng-template>
+        </div>
+        <div>
+
+          <div>
+            <h1 class="flex justify-content-space-evenly">
+              <div>Totali i artikujve te shitur sot :</div>
+              <div>{{totalSold}} MKD</div>
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div class="halfWidth">
+        <canvasjs-chart id="chart" [options]="chartOptions" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+

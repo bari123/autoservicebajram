@@ -9,6 +9,7 @@ import {StorageComponent} from "../pages/dashboard/dashboard/storage/storage.com
 import {ClientCarInfoComponent} from "../pages/dashboard/clients/client-car-info/client-car-info.component";
 import {AuthGuard} from "../pages/login/auth.guard";
 import {InvoiceComponent} from "../pages/dashboard/dashboard/invoice/invoice.component";
+import { StatisticsComponent } from 'src/pages/dashboard/dashboard/invoice/statistics/statistics.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
       {path:'calendar',component:CalendarComponent},
       {path:'storage',component:StorageComponent},
       {path:'invoice',component:InvoiceComponent},
+      {path:'statistics',component:StatisticsComponent},
       {path: '', redirectTo: 'clients-list', pathMatch: 'full'},
     ]
   },

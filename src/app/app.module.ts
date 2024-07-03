@@ -30,6 +30,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {DragdropcompComponent} from "../components/dragdropcomp/dragdropcomp.component";
 import {OverlayModule} from "@angular/cdk/overlay";
 import {ToasterService} from "../pages/compo/toaster/toaster.service";
+import {StatisticsComponent} from "../pages/dashboard/dashboard/invoice/statistics/statistics.component";
+import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import {ToasterService} from "../pages/compo/toaster/toaster.service";
     IconComponent,
     InvoiceComponent,
     PrintLayoutComponent,
-    DragdropcompComponent
+    DragdropcompComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import {ToasterService} from "../pages/compo/toaster/toaster.service";
     BrowserAnimationsModule,
     CdkTableModule,
     DragDropModule,
-    OverlayModule
+    OverlayModule,
+    CanvasJSAngularChartsModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
