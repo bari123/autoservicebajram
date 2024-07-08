@@ -30,8 +30,10 @@
       <p *ngIf="data.car">
         Makina e Klientit:
         <span class="title"> {{data.car}}</span>
-      </p>
-
+        <span *ngIf="data.km">
+              Kilometrazha e Makines:
+              <span class="title"> {{data.km}} km</span>
+            </span>
     </div>
 
     <div class="section">

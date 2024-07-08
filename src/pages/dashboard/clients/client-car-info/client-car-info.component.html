@@ -130,6 +130,13 @@
             Telefoni i Klientit:
             <span class="title"> {{invoice?.phone}}</span>
           </p>
+          <p *ngIf="invoice?.car">
+            Makina e Klientit:
+            <span class="title"> {{invoice?.car}}</span>
+            <span *ngIf="invoice?.km">
+              Kilometrazha e Makines:
+              <span class="title"> {{invoice?.km}} km</span>
+            </span>
         </div>
 
         <div class="section">
@@ -149,7 +156,7 @@
               <td>{{art.art}}</td>
               <td>{{art.qty}}</td>
               <td>{{art.price}}</td>
-              <td>{{art.totali}}</td>
+              <td>{{art.total}}</td>
             </tr>
             </tbody>
           </table>

@@ -86,7 +86,10 @@
             <p *ngIf="invoiceToPrint.car">
               Makina e Klientit:
               <span class="title"> {{invoiceToPrint.car}}</span>
-            </p>
+              <span *ngIf="invoiceToPrint.km">
+              Kilometrazha e Makines:
+              <span class="title"> {{invoiceToPrint.km}} km</span>
+            </span>
           </div>
 
           <div class="section">

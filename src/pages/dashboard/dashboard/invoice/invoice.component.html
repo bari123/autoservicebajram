@@ -130,20 +130,21 @@
               <app-icon *ngIf="cantSubmit(art)" [appTooltip]="'Nuk ka njesi te mjaftueshme '"
                         class="cursor-pointer" style="color:red" iconName="error"></app-icon>
             </div>
-            <input  type="number" id="sasia" name="address" [max]="newItem?newItem.qnt:''" (input)="updatePrice(i)"
+            <input type="number" id="sasia" name="address" [max]="newItem?newItem.qnt:''" (input)="updatePrice(i)"
                    [(ngModel)]="art.qty">
 
           </div>
           <div class="halfWidth">
             <h3>Cmimi:</h3>
-            <input type="text" id="cmimi" name="address"  (keyup.enter)="addItem()" (input)="updatePrice(i)" [(ngModel)]="art.price">
+            <input type="text" id="cmimi" name="address" (keyup.enter)="addItem()" (input)="updatePrice(i)"
+                   [(ngModel)]="art.price">
           </div>
           <div class="halfWidth">
             <h3>Totali:</h3>
-            <input [disabled]="true" type="text" id="totali" name="address" class="textCenter"  [(ngModel)]="art.total">
+            <input [disabled]="true" type="text" id="totali" name="address" class="textCenter" [(ngModel)]="art.total">
           </div>
           <div class="cursor-pointer align-items-center" (click)="removeItem(i)" *ngIf="i!==0">
-          <app-icon iconName="remove" style="color: red"></app-icon>
+            <app-icon iconName="remove" style="color: red"></app-icon>
           </div>
 
         </div>
@@ -278,7 +279,12 @@
             <p *ngIf="invoiceToPrint.car">
               Makina e Klientit:
               <span class="title"> {{invoiceToPrint.car}}</span>
+              <span *ngIf="invoiceToPrint.km">
+              Kilometrazha e Makines:
+              <span class="title"> {{invoiceToPrint.km}} km</span>
+            </span>
             </p>
+
           </div>
 
           <div class="section">

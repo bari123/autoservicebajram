@@ -9,13 +9,6 @@
     <div class="stats-highlights">
       <div class="highlight">
         <div class="highlight-content">
-          <canvasjs-chart (chartInstance)="getPieChartInstance($event)" style="border-radius: 20px!important;"
-                          [styles]="{width:'350px', height:'250px'}"
-                          [options]="piechartOptions"></canvasjs-chart>
-        </div>
-      </div>
-      <div class="highlight">
-        <div class="highlight-content">
           <div>
             <h3 class="highlight-title">
               {{monthStats?.highest?.item?.name}} - {{monthStats?.highest?.item?.serialCode}}
@@ -45,21 +38,7 @@
           </div>
         </div>
       </div>
-      <div class="highlight">
-        <div class="highlight-content">
-          <div>
-            <h3 class="highlight-title">
-              {{highestSalesClient?.name}} - {{highestSalesClient?.totalAmount}} MKD
-            </h3>
-            <div class="highlight-desc">
-              Klienti me me shume shitje
-            </div>
-          </div>
-          <div>
-            <app-icon [fontSize]="130" style="color: white" iconName="verified"></app-icon>
-          </div>
-        </div>
-      </div>
+
 
     </div>
     <div class="flex fullWidth">
@@ -69,16 +48,11 @@
         </div>
         <h2>Aktivitet e fundit</h2>
       </div>
-      <div class="flex gap-10 " style="margin-left: 600px">
-        <div class="highlight-icon">
-          <app-icon style="margin-top: 4px;color: white" iconName="bar_chart_4_bars" [fontSize]="30"></app-icon>
-        </div>
-        <h2>Tabelat</h2>
-      </div>
+
     </div>
     <div class="stats-charts mt-30 flex fullWidth gap-30">
 
-      <div class="halfWidth " style="margin-left: 10px">
+      <div class="fullWidth " style="margin-left: 10px">
         <div style="background-color:#dc3545;height:80%;overflow-y: auto;border-radius: 20px">
           <ng-container *ngIf="finalList.length>0" cdkColumnDef="solds">
             <cdk-table #table [dataSource]="finalList" class="example-table flex-direction-column">
@@ -114,6 +88,14 @@
                   {{ row.price }}
                 </cdk-cell>
               </ng-container>
+              <ng-container cdkColumnDef="carAndYear">
+                <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter">
+                  <h3>Cmimi</h3>
+                </cdk-header-cell>
+                <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer">
+                  {{ row.carAndYear }}
+                </cdk-cell>
+              </ng-container>
               <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="example-header-row"></cdk-header-row>
               <cdk-row *cdkRowDef="let row; columns: displayedColumns;" class="example-row"></cdk-row>
             </cdk-table>
@@ -133,11 +115,6 @@
             </h1>
           </div>
         </div>
-      </div>
-      <div class="halfWidth flex flex-direction-column gap-10" style="margin-right: 10px">
-        <canvasjs-chart id="saleschart" [options]="saleschartOptions"
-                        (chartInstance)="getSalesChartInstance($event)"></canvasjs-chart>
-        <canvasjs-chart id="chart" [options]="chartOptions" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
       </div>
     </div>
   </div>

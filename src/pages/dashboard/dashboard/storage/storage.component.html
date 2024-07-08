@@ -46,7 +46,8 @@
             <cdk-cell *cdkCellDef="let row" class="example-cell textCenter">
 
               <div class="flex align-items-center justify-content-center gap-10">
-              <app-icon [iconName]="qntStatus(row.qnt)" style="color: red"></app-icon> {{row.serialCode}}
+                <app-icon [iconName]="qntStatus(row.qnt)" style="color: red"></app-icon>
+                {{row.serialCode}}
               </div>
             </cdk-cell>
           </ng-container>
@@ -90,7 +91,8 @@
                   <app-icon iconName="add"></app-icon>
                 </div>
                 <span class="client-name">{{ row.qnt }}</span>
-                <div  class="icon-round cursor-pointer" [class.icon-minus]="mouseenter" [class.not-allowed]="row.qnt===0" (mouseover)="mouseenter=true"
+                <div class="icon-round cursor-pointer" [class.icon-minus]="mouseenter" [class.not-allowed]="row.qnt===0"
+                     (mouseover)="mouseenter=true"
                      (click)="itemQuantity(row,'remove')">
                   <app-icon iconName="remove"></app-icon>
                 </div>
@@ -217,6 +219,10 @@
           <div>
             EMRI:
             {{item.name}}
+          </div>
+          <div>
+            VETURA:
+            {{item.carAndYear}}
           </div>
         </li>
       </ul>

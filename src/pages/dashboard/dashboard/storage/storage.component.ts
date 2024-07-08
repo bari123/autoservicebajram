@@ -149,7 +149,7 @@ export class StorageComponent implements OnInit {
     if (!this.items) return null;
     switch (state) {
       case 'warning':
-        return this.items.filter(item => item.qnt < 5 && item.qnt > 1);
+        return this.items.filter(item => item.qnt <= 3 && item.qnt >= 2);
       case 'dangerous':
         return this.items.filter(item => item.qnt === 0);
       default:
