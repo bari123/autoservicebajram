@@ -9,18 +9,18 @@
 
 .left-side {
   height: 100%;
+  width: 100%;
   background-color: #f8f9fa; /* Light gray background */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
 }
 
 .right-side {
-  height: 100%;
-  width: 60%;
+  width: 100%;
   background-color: #dc3545; /* Red background */
   display: flex;
+  padding: 200px;
   font-size: 20px;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@
   font-size: 24px;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #333; /* Darker text color */
+  color: #333;
 }
 
 .form-group {
@@ -49,13 +49,10 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
   color: black; /* Lighter text color */
 }
 
 .form-control {
-  width: 100%;
-  padding: 1rem;
   border: 1px solid #ced4da;
   border-radius: 5px;
   background-color: #f8f9fa;

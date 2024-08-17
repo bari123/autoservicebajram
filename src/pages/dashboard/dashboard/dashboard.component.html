@@ -1,31 +1,33 @@
-<div class="container flex  fullHeight ">
-  <div class="left-side flex flex-direction-column justify-content-space-between  ">
-    <div class="underline-nav fullWidth ">
-      <li *ngFor="let info of routes"><a class="flex gap-20 align-items-center menuItem"
-                                         [class.selected]="route.url.includes(info.route)"
-                                         [class.funnel]="route.url.includes(info.route)"
-                                         *ngIf="info.role.includes(localStorage.getItem('role')!)"
-                                         [routerLink]="info.route">
-        <app-icon [iconName]="info.icon"></app-icon>
-        {{info.name}}
-      </a></li>
-    </div>
-    <div class=" underline-nav logout-icon flex align-items-center   cursor-pointer ">
-      <li>
-        <a class="flex align-items-center menuItem" (click)="logOut()">
-          <app-icon iconName="logout"></app-icon>
-          Dil</a>
+<div style="display: flex;height: 100%;background-color: #e2e2e2">
+  <nav class="main-menu">
+    <ul>
+      <li *ngFor="let info of routes">
+        <a [routerLink]="info.route" *ngIf="info.role.includes(localStorage.getItem('role')!)">
+          <app-icon class="fa" [iconName]="info.icon"></app-icon>
+          <span class="nav-text">
+                            {{info.name}}
+                        </span>
+        </a>
       </li>
-    </div>
-  </div>
-  <div class="right-side fullWidth ">
+    </ul>
+    <ul class="logout">
+      <li>
+        <a (click)="logOut()">
+          <span class=" fa material-symbols-outlined">power_settings_new</span>
+          <span class="nav-text">
+                            Dil
+                        </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="area">
     <div style="background-color: #dc3545" (click)="mobileMenuToggle=!mobileMenuToggle" class="mobileMenu p-20">
       <app-icon iconName="menu"></app-icon>
     </div>
     <router-outlet></router-outlet>
   </div>
 </div>
-
 
 <div class="modals flex fullWidth flex-direction-column" [class.show-modal]="mobileMenuToggle">
   <div (click)="mobileMenuToggle=!mobileMenuToggle" class="fullWidth p-20 align-items-center flex menuStackContent">
@@ -49,3 +51,4 @@
     </div>
   </div>
 </div>
+

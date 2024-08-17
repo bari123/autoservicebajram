@@ -1,11 +1,12 @@
 <div class="container">
   <div class="left-side">
     <!-- Your company logo/branding -->
-    <img class="image" src="/assets/AA.png" alt="Company Logo" style="max-width: 100%; height: auto;">
+    <img class="image" src="/assets/AA.png" alt="Company Logo" style="max-width: 100%; height: auto;mix-blend-mode: multiply">
   </div>
   <div class="right-side">
-    <form>
-      <h2>Login</h2>
+    <div style="background-color: white;width: 50%;height: 100%;overflow: hidden;padding: 30px;border-radius: 50px;display: flex;flex-direction: column;justify-content: space-evenly">
+      <h2 style="text-align: center">Login</h2>
+      <div>
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" class="form-control" [(ngModel)]="user.username" required>
@@ -14,8 +15,9 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" [(ngModel)]="user.password" class="form-control" required>
       </div>
+      </div>
       <button (click)="login()" class="btn btn-primary">Login</button>
-    </form>
+    </div>
   </div>
 </div>
 
