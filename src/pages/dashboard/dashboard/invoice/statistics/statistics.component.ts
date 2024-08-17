@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GlobalService} from "../../../../../app/global.service";
+import * as moment from "moment/moment";
 
 @Component({
   selector: 'app-statistics',
@@ -13,9 +14,15 @@ export class StatisticsComponent implements OnInit {
   finalList: any[] = []
   totalSold: any
   monthStats: any
+  currentDate: moment.Moment;
+  dates?: moment.Moment[];
+  selectedDate:any
+
 
 
   constructor(private globalService: GlobalService) {
+    this.currentDate = moment();
+    this.generateDates()
   }
 
   async ngOnInit() {
@@ -28,10 +35,32 @@ export class StatisticsComponent implements OnInit {
       }
     }
 
+    console.log(this.monthStats)
 
     this.sumSoldItems()
   }
 
+  generateDates() {
+    this.dates = [];
+    let currentDate = moment(this.currentDate).startOf('week').add(1, 'day').locale('sq');
+    for (let i = 0; i < 10; i++) {
+      this.dates.push(currentDate.clone());
+      currentDate.add(1, 'day');
+    }
+  }
+
+  async loadSales(){
+    this.finalList=[]
+    if (this.selectedDate) {
+      this.soldItem = (await this.globalService.getSoldItems(new Date(this.selectedDate).toLocaleDateString())).data
+      for (const items of this.soldItem) {
+        for (const innerItem of items.items) {
+          this.finalList.push({...innerItem.item, qnt: innerItem.count})
+          this.sumSoldItems()
+        }
+      }
+    }
+  }
 
 
   sumSoldItems() {

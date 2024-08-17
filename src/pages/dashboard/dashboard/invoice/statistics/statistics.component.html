@@ -10,10 +10,11 @@
       <div class="highlight">
         <div class="highlight-content">
           <div>
+            <div *ngFor="let highest of monthStats?.highest">
             <h3 class="highlight-title">
-              {{monthStats?.highest?.item?.name}} - {{monthStats?.highest?.item?.serialCode}}
-
+              {{highest?.item?.name}} - {{highest?.item?.serialCode}}
             </h3>
+            </div>
             <div class="highlight-desc">
               Ne periudhen 1 mujore ky artikull eshte shitur me shume
             </div>
@@ -50,8 +51,13 @@
       </div>
 
     </div>
+    <div class="select-wrapper">
+      <h3>Dita</h3>
+      <select class="select-client" [(ngModel)]="selectedDate" (change)="loadSales()">
+        <option [ngValue]="date" *ngFor="let date of dates">{{ date.format('DD-MM-YYYY')}} </option>
+      </select>
+    </div>
     <div class="stats-charts mt-30 flex fullWidth gap-30">
-
       <div class="fullWidth " style="margin-left: 10px">
         <div style="background-color:#dc3545;height:80%;overflow-y: auto;border-radius: 20px">
           <ng-container *ngIf="finalList.length>0" cdkColumnDef="solds">
