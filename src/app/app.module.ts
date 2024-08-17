@@ -32,6 +32,8 @@ import {OverlayModule} from "@angular/cdk/overlay";
 import {ToasterService} from "../pages/compo/toaster/toaster.service";
 import {StatisticsComponent} from "../pages/dashboard/dashboard/invoice/statistics/statistics.component";
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
+import {NgOptimizedImage} from "@angular/common";
+import {ModalComponent} from "../components/modal/modal.component";
 
 @NgModule({
   declarations: [
@@ -55,18 +57,20 @@ import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
     InvoiceComponent,
     PrintLayoutComponent,
     DragdropcompComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    CdkTableModule,
-    DragDropModule,
-    OverlayModule,
-    CanvasJSAngularChartsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        CdkTableModule,
+        DragDropModule,
+        OverlayModule,
+        CanvasJSAngularChartsModule,
+        NgOptimizedImage
+    ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass:CookieInterceptor,

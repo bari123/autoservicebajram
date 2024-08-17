@@ -65,7 +65,7 @@
                 Tel. 070 532 371</p>
             </div>
             <div class="logo">
-              <img src="/assets/AA.png" height="180" width="240" alt="Company Logo">
+              <img style="mix-blend-mode: multiply" ngSrc="/assets/AA.png" height="180" width="240" alt="Company Logo">
             </div>
             <div class="invoice-info">
               <p><strong>Numri Fatures: {{invoiceToPrint?.invoiceId}}</strong><br>
@@ -87,7 +87,7 @@
               Makina e Klientit:
               <span class="title"> {{invoiceToPrint.car}}</span>
               <span *ngIf="invoiceToPrint.km">
-              Kilometrazha e Makines:
+              KM:
               <span class="title"> {{invoiceToPrint.km}} km</span>
             </span>
           </div>

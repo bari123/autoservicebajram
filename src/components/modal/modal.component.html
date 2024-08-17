@@ -1,0 +1,11 @@
+<div class="modals" [class.show-modal]="showModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <p>{{title}}</p>
+    <span class="close" (click)="showModal=!showModal">&times;</span>
+    </div>
+    <div>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -18,7 +18,7 @@
       <app-button class="fullWidth" text="Te papaguara" (click)="statusTerm=false"></app-button>
       <app-button class="fullWidth" text="Te paguara" btnStyle="secondary" (click)="statusTerm=true"></app-button>
     </div>
-    <div style="height:80vh;overflow-y: auto;border-top: 1px solid black">
+    <div class="handleBar" style="height:80vh;overflow-y: auto;border-top: 1px solid black">
       <ng-container cdkColumnDef="username">
         <cdk-table #table [dataSource]="filteredInvoices" class="example-table flex-direction-column">
           <ng-container cdkColumnDef="invoiceId">
@@ -91,11 +91,9 @@
                     [iconName]="isNewClient ? 'edit' : 'add'"
                     (click)="isNewClient=!isNewClient"></app-button>
         <div class="flex justify-content-space-between gap-20 fullWidth">
-
-          <div class="flex flex-direction-row justify-content-space-between fullWidth gap-40"
+          <div class="flex flex-direction-row justify-content-space-evenly fullWidth gap-40"
                *ngIf="isNewClient; else existingClientForm">
-            <div>
-
+            <div >
               <div class=" fullWidth ">
                 <h3>Emri dhe Mbiemri:</h3>
                 <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
@@ -239,6 +237,13 @@
         </select>
       </div>
 
+      <div class="select-wrapper">
+        <h3>KM</h3>
+        <input type="number" name="address" [(ngModel)]="newInvoice.km" >
+      </div>
+
+
+
     </div>
   </div>
 </ng-template>
@@ -258,7 +263,7 @@
                 Tel. 070 532 371</p>
             </div>
             <div class="logo">
-              <img src="/assets/AA.png" height="180" width="240" alt="Company Logo">
+              <img style="mix-blend-mode: multiply" src="/assets/AA.png" height="180" width="240" alt="Company Logo">
             </div>
             <div class="invoice-info">
               <p><strong>Numri Fatures: {{invoiceToPrint?.invoiceId}}</strong><br>
