@@ -93,7 +93,7 @@
         <div class="flex justify-content-space-between gap-20 fullWidth">
           <div class="flex flex-direction-row justify-content-space-evenly fullWidth gap-40"
                *ngIf="isNewClient; else existingClientForm">
-            <div >
+            <div>
               <div class=" fullWidth ">
                 <h3>Emri dhe Mbiemri:</h3>
                 <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
@@ -239,9 +239,8 @@
 
       <div class="select-wrapper">
         <h3>KM</h3>
-        <input type="number" name="address" [(ngModel)]="newInvoice.km" >
+        <input type="number" name="address" [(ngModel)]="newInvoice.km">
       </div>
-
 
 
     </div>
@@ -276,16 +275,16 @@
             <p>
               Emri Klientit:
               <span class="title"> {{invoiceToPrint?.clientName}}</span>
-            </p>
-            <p *ngIf="invoiceToPrint.phone">
+              <span *ngIf="invoiceToPrint.phone">
               Telefoni i Klientit:
               <span class="title"> {{invoiceToPrint?.phone}}</span>
+            </span>
             </p>
             <p *ngIf="invoiceToPrint.car">
               Makina e Klientit:
               <span class="title"> {{invoiceToPrint.car}}</span>
               <span *ngIf="invoiceToPrint.km">
-              Kilometrazha e Makines:
+              KM:
               <span class="title"> {{invoiceToPrint.km}} km</span>
             </span>
             </p>
