@@ -1,47 +1,6 @@
 <div class="page" style="height: 100%;overflow-y: auto ;padding-bottom: 30px">
   <div class="page-content" style="padding-right: 20px;padding-left: 20px">
-    <div class="flex gap-10 align-items-center">
-      <div class="highlight-icon">
-        <app-icon style="margin-top: 4px;color: white" iconName="speed" [fontSize]="30"></app-icon>
-      </div>
-      <h2>Pasqyre e shpejt</h2>
-    </div>
-    <div class="stats-highlights">
-      <div class="highlight">
-        <div class="highlight-content">
-          <div>
-            <div *ngFor="let highest of monthStats?.highest">
-            <h3 class="highlight-title">
-              {{highest?.item?.name}} - {{highest?.item?.serialCode}}
-            </h3>
-            </div>
-            <div class="highlight-desc">
-              Ne periudhen 1 mujore ky artikull eshte shitur me shume
-            </div>
-          </div>
-          <div>
-            <app-icon style="color: white" [fontSize]="130" iconName="trending_up"></app-icon>
-          </div>
-        </div>
-      </div>
-      <div class="highlight">
-        <div class="highlight-content">
-          <div>
-            <h3 class="highlight-title">
-              {{monthStats?.lowest?.item?.name}} - {{monthStats?.lowest?.item?.serialCode}}
-            </h3>
-            <div class="highlight-desc">
-              Ne periudhen 1 mujore ky artikull ka renje te shitjeve
-            </div>
-          </div>
-          <div>
-            <app-icon [fontSize]="130" style="color: white" iconName="trending_down"></app-icon>
-          </div>
-        </div>
-      </div>
 
-
-    </div>
     <div class="flex fullWidth">
       <div class="flex gap-10">
         <div class="highlight-icon">
@@ -54,7 +13,7 @@
     <div class="select-wrapper">
       <h3>Dita</h3>
       <select class="select-client" [(ngModel)]="selectedDate" (change)="loadSales()">
-        <option [ngValue]="date" *ngFor="let date of dates">{{ date.format('DD-MM-YYYY')}} </option>
+        <option [ngValue]="date" *ngFor="let date of dates">{{date}} </option>
       </select>
     </div>
     <div class="stats-charts mt-30 flex fullWidth gap-30">

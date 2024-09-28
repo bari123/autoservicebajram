@@ -65,9 +65,7 @@
           </ng-container>
           <ng-container cdkColumnDef="price">
             <cdk-header-cell *cdkHeaderCellDef class="example-header-cell textCenter"><h3>Cmimi</h3></cdk-header-cell>
-            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer" [appTooltip]="row.price + 'den / ' +
-               Math.round(row.price / 61.5 ) + 'euro'">{{ row.price + 'den / ' +
-            Math.round(row.price / 61.5) + 'euro' | truncate:10}}
+            <cdk-cell *cdkCellDef="let row" class="example-cell textCenter cursor-pointer" [appTooltip]="row.price + 'den / '" >{{ row.price + 'den / ' | truncate:10}}
             </cdk-cell>
           </ng-container>
           <ng-container cdkColumnDef="carAndYear">

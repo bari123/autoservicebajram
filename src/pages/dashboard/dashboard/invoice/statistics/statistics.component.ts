@@ -13,12 +13,9 @@ export class StatisticsComponent implements OnInit {
   soldItem: any
   finalList: any[] = []
   totalSold: any
-  monthStats: any
   currentDate: moment.Moment;
-  dates?: moment.Moment[];
+  dates?: any
   selectedDate:any
-
-
 
   constructor(private globalService: GlobalService) {
     this.currentDate = moment();
@@ -26,27 +23,25 @@ export class StatisticsComponent implements OnInit {
   }
 
   async ngOnInit() {
-
-    this.monthStats = await this.globalService.getLastMonthStats()
     this.soldItem = (await this.globalService.getSoldItems(new Date().toLocaleDateString())).data
     for (const items of this.soldItem) {
       for (const innerItem of items.items) {
         this.finalList.push({...innerItem.item, qnt: innerItem.count})
       }
     }
-
-    console.log(this.monthStats)
-
     this.sumSoldItems()
   }
 
   generateDates() {
-    this.dates = [];
-    let currentDate = moment(this.currentDate).startOf('week').add(1, 'day').locale('sq');
+    const last10Days = [];
+
     for (let i = 0; i < 10; i++) {
-      this.dates.push(currentDate.clone());
-      currentDate.add(1, 'day');
+      last10Days.push(moment().subtract(i, 'days'));
     }
+
+    last10Days.reverse();
+
+   this.dates = last10Days.map(day => day.format('YYYY-MM-DD'));
   }
 
   async loadSales(){

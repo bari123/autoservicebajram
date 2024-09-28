@@ -99,7 +99,7 @@
                 <input type="text" id="name" name="name" required [(ngModel)]="newInvoice.clientName">
               </div>
               <div class="fullWidth">
-                <h3>Telefoni:</h3>
+                <h3>Tipi Motorit:</h3>
                 <input type="tel" id="phone" name="phone" [(ngModel)]="newInvoice.phone">
               </div>
             </div>
@@ -151,11 +151,6 @@
           <h2>Shto Artikull</h2>
           <app-icon iconName="add"></app-icon>
         </div>
-        <div class="fullWidth">
-          <h3>Zbritje:</h3>
-          <input type="number" id="disc" name="disc" [(ngModel)]="newInvoice.discount">
-        </div>
-
         <div class="flex align-items-center gap-40">
           <h3>E paguar</h3>
           <input class="checkbox" [(ngModel)]="newInvoice.status" type="checkbox">
@@ -276,7 +271,7 @@
               Emri Klientit:
               <span class="title"> {{invoiceToPrint?.clientName}}</span>
               <span *ngIf="invoiceToPrint.phone">
-              Telefoni i Klientit:
+              Tipi Motorit:
               <span class="title"> {{invoiceToPrint?.phone}}</span>
             </span>
             </p>
@@ -316,26 +311,11 @@
 
           <div class="section mb-30">
             <div class="title">Kontrolli</div>
-            <p *ngIf="invoiceToPrint?.discount">
-              Totali pa zbritje: {{invoiceToPrint?.totalPrice}}<br>
-              <span *ngIf="invoiceToPrint?.discount">
-        Zbritje: {{invoiceToPrint?.discount}} %
-        </span>
-            </p>
+            <p>Totali: {{invoiceToPrint?.totalPrice}}</p>
             <div class="totals">
               <div class="total-row">
                 <span>Per pages MKD:</span>
-                <span *ngIf="!invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice}} MKD</span>
-                <span
-                  *ngIf="invoiceToPrint?.discount">{{invoiceToPrint?.totalPrice - ((invoiceToPrint?.discount / 100) * invoiceToPrint?.totalPrice)}}
-                  MKD</span>
-              </div>
-              <div class="total-row">
-                <span>Per pages ne euro:</span>
-                <span *ngIf="!invoiceToPrint?.discount">{{(invoiceToPrint?.totalPrice / 61.4).toFixed(2)}} EURO</span>
-                <span
-                  *ngIf="invoiceToPrint?.discount">{{((invoiceToPrint.totalPrice - ((invoiceToPrint?.discount / 100) * invoiceToPrint?.totalPrice)) / 61.4).toFixed(2)}}
-                  EURO</span>
+                <span>{{invoiceToPrint?.totalPrice}} MKD</span>
               </div>
             </div>
           </div>
@@ -351,7 +331,6 @@
             </div>
           </div>
           <div class="footer">
-            <p>Vlera e perdorur per te konvertuar Denarin ne euro eshte 61.4</p>
             <p>Me ne gjithmone te sigurte</p>
             <p>Ju falemnderit</p>
           </div>

@@ -2,22 +2,14 @@
   <nav class="main-menu">
     <ul>
       <li *ngFor="let info of routes">
-        <a [routerLink]="info.route" *ngIf="info.role.includes(localStorage.getItem('role')!)">
-          <app-icon class="fa" [iconName]="info.icon"></app-icon>
-          <span class="nav-text">
-                            {{info.name}}
-                        </span>
+        <a [routerLink]="info.route" *ngIf="info.role.includes(localStorage.getItem('role')!)"><app-icon class="fa" [iconName]="info.icon"></app-icon>
+          <span class="nav-text">{{info.name}}</span>
         </a>
       </li>
     </ul>
     <ul class="logout">
       <li>
-        <a (click)="logOut()">
-          <span class=" fa material-symbols-outlined">power_settings_new</span>
-          <span class="nav-text">
-                            Dil
-                        </span>
-        </a>
+        <a (click)="logOut()"><span class=" fa material-symbols-outlined">power_settings_new</span><span class="nav-text">Dil</span></a>
       </li>
     </ul>
   </nav>

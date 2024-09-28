@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import axios from "axios";
 import {environment} from "../environments/environment";
-import {retry} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -78,10 +77,6 @@ export class GlobalService {
   async addService(newService: any, clientId: string | null) {
     return await this.axiosInstance.post(`/clients/${clientId}/service`, newService).then(res => {
     })
-  }
-
-  async addServiceFromInvoice(invoiceId: string, clientId: string | null) {
-    return await this.axiosInstance.post(`/clients/${clientId}/service/invoice/${invoiceId}`)
   }
 
   async getServices(clientId: string | null) {
@@ -167,23 +162,8 @@ export class GlobalService {
     return await this.axiosInstance.post(`items/get/sold`, {date})
   }
 
-  async getStats() {
-    const {data} = await this.axiosInstance.get(`items/sold/stats`)
-    return data
-  }
-
   async getLastMonthStats() {
     const {data} = await this.axiosInstance.get(`items/sold/stats/month`)
-    return data
-  }
-
-  async getClientStats(){
-    const {data} = await this.axiosInstance.get(`invoice/stats/clients`)
-    return data
-  }
-
-  async getPeakSales(){
-    const {data} = await this.axiosInstance.get(`invoice/stats/peakSales`)
     return data
   }
 
@@ -203,10 +183,6 @@ export class GlobalService {
 
   async saveInvoice(invoice: any) {
     return await this.axiosInstance.post('invoice', invoice)
-  }
-
-  async updateInvoice(invoice: any, id: string) {
-    return await this.axiosInstance.patch(`invoice/${id}`, invoice)
   }
 
   async deleteInvoice(id: string) {

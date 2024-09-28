@@ -24,7 +24,7 @@
         <span class="title"> {{data?.clientName}}</span>
       </p>
       <p *ngIf="data.phone">
-        Telefoni i Klientit:
+        Tipi Motorit:
         <span class="title"> {{data?.phone}}</span>
       </p>
       <p *ngIf="data.car">
@@ -62,21 +62,12 @@
     <div class="section mb-30">
       <div class="title">Kontrolli</div>
       <p>
-        Totali pa zbritje: {{data?.totalPrice}}<br>
-        <span *ngIf="data?.discount">
-        Zbritje: {{data?.discount}} %
-        </span>
+        Totali : {{data?.totalPrice}}<br>
       </p>
       <div class="totals">
         <div class="total-row">
           <span>Per pages MKD:</span>
-          <span *ngIf="!data?.discount">{{data?.totalPrice}} MKD</span>
-          <span *ngIf="data?.discount">{{data?.totalPrice - ((data?.discount/100)*data?.totalPrice)}} MKD</span>
-        </div>
-        <div class="total-row">
-          <span>Per pages ne euro:</span>
-          <span *ngIf="!data?.discount">{{(data?.totalPrice / 61.4).toFixed(2)}} EURO</span>
-          <span *ngIf="data?.discount">{{((data.totalPrice -((data?.discount/100)*data?.totalPrice))/61.4).toFixed(2)}} EURO</span>
+          <span >{{data?.totalPrice}} MKD</span>
         </div>
       </div>
     </div>
@@ -92,7 +83,6 @@
       </div>
     </div>
     <div class="footer">
-      <p>Vlera e perdorur per te konvertuar Denarin ne euro eshte 61.4</p>
       <p>Me ne gjithmone te sigurte</p>
       <p>Ju falemnderit</p>
     </div>
